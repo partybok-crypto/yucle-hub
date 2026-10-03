@@ -116,6 +116,15 @@ dialog.sub h3{margin:0 0 10px;font-size:16px}
 .fchip{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;width:68px;text-decoration:none;color:var(--text)}
 .fchip .ic{width:44px;height:44px;font-size:23px}
 .fchip span{font-size:11px;line-height:1.2;text-align:center;word-break:keep-all}
+/* 서버 감시 줄 · 최근 · 하단 탭바 · 변경일 */
+#srvLine{font-size:13px;margin:-8px 0 10px;color:var(--sub);min-height:18px}
+#srvLine.bad{color:#b91c1c;font-weight:700}
+#srvLine.ok{color:#15803d}
+@media(prefers-color-scheme:dark){#srvLine.bad{color:#fca5a5}#srvLine.ok{color:#86efac}}
+.chg{margin-left:auto;font-size:11.5px;color:var(--sub);white-space:nowrap}
+.chg.stale{color:#92400e;background:#fef3c7;padding:3px 8px;border-radius:7px;font-weight:700}
+@media(prefers-color-scheme:dark){.chg.stale{color:#fde68a;background:#4a3410}}
+#tabbar{display:none}
 dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw);background:var(--card);color:var(--text)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
 dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--card);color:var(--text)}
@@ -138,6 +147,16 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
  .del{position:absolute;top:0;left:0;font-size:13px;padding:4px 6px}
  .mv{padding:2px 10px}
  .grp{margin:8px 0 0;font-size:13px}
+ #topbar{display:none}
+ #srvLine{margin:0 0 8px;font-size:12px}
+ body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+ #toast{bottom:calc(78px + env(safe-area-inset-bottom))}
+ #tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+ #tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;color:var(--sub);padding:6px 2px;font-size:11px;cursor:pointer}
+ #tabbar button b{font-size:19px;line-height:1.1;font-weight:400}
+ #tabbar button.on{color:var(--blue);font-weight:700}
+ #tabbar button:disabled{opacity:.35}
+ .chg{font-size:10.5px}
  #favSec{position:sticky;top:0;z-index:20;background:var(--bg2);margin:0 -10px;padding:6px 10px 2px;border-bottom:1px solid var(--line)}
  #favSec h2{display:none}
  .subbtn{position:absolute;left:0;top:0;font-size:17px;padding:4px 8px}
@@ -169,8 +188,9 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   </div>
   <h1><b>유클</b> 업무 허브</h1>
   <p class="desc">필요한 업무를 한곳에서</p>
+  <div id="srvLine"></div>
 
-  <div class="bar">
+  <div class="bar" id="topbar">
     <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vFlow">데이터 흐름</button></div>
     <span class="sp"></span>
     <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2</button></div>
@@ -180,6 +200,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 
   <div id="linksView">
     <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
+    <div id="recSec" hidden><h2>최근 연 프로그램</h2><div class="favbar" id="rec"></div></div>
     <div class="tabs" id="tabs"></div>
     <div class="grid" id="list"></div>
   </div>
@@ -198,6 +219,13 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   </div>
 </div>
 
+<nav id="tabbar">
+  <button id="tbLinks"><b>🔗</b><span>바로가기</span></button>
+  <button id="tbFlow"><b>🗺️</b><span>데이터 흐름</span></button>
+  <button id="tbTheme"><b>🖼️</b><span class="tl">테마</span></button>
+  <button id="tbStatus"><b>🟢</b><span class="tl">상태 확인</span></button>
+  <button id="tbEdit"><b>↕️</b><span class="tl">순서 편집</span></button>
+</nav>
 <div id="toast"></div>
 <dialog id="subDlg" class="sub"><h3 id="subTitle"></h3><div class="sublist" id="subList"></div><div class="dr" style="margin-top:12px"><button id="subClose" style="padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer">닫기</button></div></dialog>
 <dialog id="dlg">
@@ -210,7 +238,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 
 <script>
 const CATS=["공장·배송","정산·관리","영업·마케팅","기타"];
-const BASE=[{"n": "배송 입력", "d": "배송·수거 입력", "u": "https://yuseong-delivery-production.up.railway.app/", "c": "공장·배송", "i": "🚚"}, {"n": "포장 입력", "d": "포장기록·라벨", "u": "https://yuseong-packing-production.up.railway.app", "c": "공장·배송", "i": "📦"}, {"n": "건조기 관리", "d": "건조기 현황", "u": "https://yuseong-dryer-production.up.railway.app", "c": "공장·배송", "i": "🧺"}, {"n": "출퇴근 관리", "d": "출퇴근기·명단", "u": "https://yuseong-attendance-production.up.railway.app/", "c": "공장·배송", "i": "👥"}, {"n": "공장 전광판", "d": "현장 진행 확인", "u": "https://yuseong-display-board-production.up.railway.app", "c": "공장·배송", "i": "🖥️", "subs": [{"t": "실시간 관리", "u": "https://yuseong-display-board-production.up.railway.app/admin"}, {"t": "진행률", "u": "https://yuseong-display-board-production.up.railway.app/admin/progress"}, {"t": "세탁물 찾기", "u": "https://yuseong-display-board-production.up.railway.app/admin/search"}, {"t": "완료 현황", "u": "https://yuseong-display-board-production.up.railway.app/admin/completed"}, {"t": "모니터 설정", "u": "https://yuseong-display-board-production.up.railway.app/admin/displays"}, {"t": "알림톡", "u": "https://yuseong-display-board-production.up.railway.app/admin/alimtalk"}, {"t": "차량 위치", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles"}, {"t": "가스 카메라", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera"}]}, {"n": "배송 현황", "d": "배송경로·현황", "u": "https://yuseong-shipping-status-production.up.railway.app", "c": "공장·배송", "i": "🗺️"}, {"n": "차량 위치 관리", "d": "CarLive 차량·송출", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles", "c": "공장·배송", "i": "🚐"}, {"n": "가스 카메라", "d": "가스계량기 촬영", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera", "c": "공장·배송", "i": "📷"}, {"n": "현황지 출력", "d": "현황지 인쇄", "u": "https://partybok-crypto.github.io/print_status_sheet/", "c": "공장·배송", "i": "🖨️"}, {"n": "재무관리", "d": "일일결산·청구·미수금", "u": "https://yucle-finance-live-production.up.railway.app/", "c": "정산·관리", "i": "💰", "subs": [{"t": "일일결산", "u": "https://yucle-finance-live-production.up.railway.app/daily-close"}, {"t": "미수금", "u": "https://yucle-finance-live-production.up.railway.app/receivables"}, {"t": "청구", "u": "https://yucle-finance-live-production.up.railway.app/billing"}, {"t": "비용", "u": "https://yucle-finance-live-production.up.railway.app/expenses"}, {"t": "은행", "u": "https://yucle-finance-live-production.up.railway.app/bank"}, {"t": "연동", "u": "https://yucle-finance-live-production.up.railway.app/connections"}]}, {"n": "마케팅 스튜디오", "d": "마케팅OS", "u": "https://yuseong-marketing-os-review-production.up.railway.app", "c": "영업·마케팅", "i": "📣", "subs": [{"t": "모듈 관리", "u": "https://yuseong-marketing-os-review-production.up.railway.app/modules"}, {"t": "콘텐츠 스튜디오", "u": "https://yuseong-marketing-os-review-production.up.railway.app/content-studio"}, {"t": "파워링크", "u": "https://yuseong-marketing-os-review-production.up.railway.app/powerlink"}, {"t": "메타 광고", "u": "https://yuseong-marketing-os-review-production.up.railway.app/meta-ads"}, {"t": "광고 성과", "u": "https://yuseong-marketing-os-review-production.up.railway.app/performance"}, {"t": "조달", "u": "https://yuseong-marketing-os-review-production.up.railway.app/procurement"}, {"t": "오류 로그", "u": "https://yuseong-marketing-os-review-production.up.railway.app/logs"}]}, {"n": "영업 허브", "d": "영업관리 명단", "u": "https://yuseong-sales-hub-production.up.railway.app", "c": "영업·마케팅", "i": "🤝", "subs": [{"t": "업체 DB", "u": "https://yuseong-sales-hub-production.up.railway.app/business"}, {"t": "관심 고객", "u": "https://yuseong-sales-hub-production.up.railway.app/interested"}, {"t": "DB 찾기", "u": "https://yuseong-sales-hub-production.up.railway.app/db-search"}, {"t": "AI 발신 통계", "u": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats"}, {"t": "수신거부", "u": "https://yuseong-sales-hub-production.up.railway.app/dnc"}, {"t": "설정", "u": "https://yuseong-sales-hub-production.up.railway.app/settings"}]}, {"n": "AI 전화상담", "d": "AI 발신·통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor", "c": "영업·마케팅", "i": "🤖", "subs": [{"t": "대량발신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/bulk"}, {"t": "통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/calls"}, {"t": "관심고객", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/interested"}, {"t": "안내멘트", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/script"}, {"t": "요금", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/billing"}, {"t": "수신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/inbound"}]}, {"n": "회사전화", "d": "070 전화 CRM", "u": "https://yuseong-phone-production.up.railway.app", "c": "영업·마케팅", "i": "📞", "subs": [{"t": "통화기록", "u": "https://yuseong-phone-production.up.railway.app/calls"}, {"t": "거래처", "u": "https://yuseong-phone-production.up.railway.app/customers"}, {"t": "관리", "u": "https://yuseong-phone-production.up.railway.app/admin"}]}, {"n": "청과 수입 판단", "d": "세척당근 수입·판매 판단", "u": "https://web-production-f53da.up.railway.app", "c": "기타", "i": "🥕"}, {"n": "출판 (Bookforge)", "d": "소설·시집 자가출판", "u": "https://bookforge-production-27f6.up.railway.app", "c": "기타", "i": "📚"}, {"n": "내편지도", "d": "관계 지도 바이럴 서비스", "u": "https://web-production-304b2.up.railway.app", "c": "기타", "i": "🗺️"}, {"n": "사주도령", "d": "사주 서비스", "u": "https://doryeong.app/n", "c": "기타", "i": "🔮"}];
+const BASE=[{"n": "배송 입력", "d": "배송·수거 입력", "u": "https://yuseong-delivery-production.up.railway.app/", "c": "공장·배송", "i": "🚚"}, {"n": "포장 입력", "d": "포장기록·라벨", "u": "https://yuseong-packing-production.up.railway.app", "c": "공장·배송", "i": "📦"}, {"n": "건조기 관리", "d": "건조기 현황", "u": "https://yuseong-dryer-production.up.railway.app", "c": "공장·배송", "i": "🧺"}, {"n": "출퇴근 관리", "d": "출퇴근기·명단", "u": "https://yuseong-attendance-production.up.railway.app/", "c": "공장·배송", "i": "👥"}, {"n": "공장 전광판", "d": "현장 진행 확인", "u": "https://yuseong-display-board-production.up.railway.app", "c": "공장·배송", "i": "🖥️", "subs": [{"t": "실시간 관리", "u": "https://yuseong-display-board-production.up.railway.app/admin"}, {"t": "진행률", "u": "https://yuseong-display-board-production.up.railway.app/admin/progress"}, {"t": "세탁물 찾기", "u": "https://yuseong-display-board-production.up.railway.app/admin/search"}, {"t": "완료 현황", "u": "https://yuseong-display-board-production.up.railway.app/admin/completed"}, {"t": "모니터 설정", "u": "https://yuseong-display-board-production.up.railway.app/admin/displays"}, {"t": "알림톡", "u": "https://yuseong-display-board-production.up.railway.app/admin/alimtalk"}, {"t": "차량 위치", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles"}, {"t": "가스 카메라", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera"}]}, {"n": "배송 현황", "d": "배송경로·현황", "u": "https://yuseong-shipping-status-production.up.railway.app", "c": "공장·배송", "i": "🗺️"}, {"n": "차량 위치 관리", "d": "CarLive 차량·송출", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles", "c": "공장·배송", "i": "🚐"}, {"n": "가스 카메라", "d": "가스계량기 촬영", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera", "c": "공장·배송", "i": "📷"}, {"n": "현황지 출력", "d": "현황지 인쇄", "u": "https://partybok-crypto.github.io/print_status_sheet/", "c": "공장·배송", "i": "🖨️"}, {"n": "재무관리", "d": "일일결산·청구·미수금", "u": "https://yucle-finance-live-production.up.railway.app/", "c": "정산·관리", "i": "💰", "subs": [{"t": "일일결산", "u": "https://yucle-finance-live-production.up.railway.app/daily-close"}, {"t": "미수금", "u": "https://yucle-finance-live-production.up.railway.app/receivables"}, {"t": "청구", "u": "https://yucle-finance-live-production.up.railway.app/billing"}, {"t": "비용", "u": "https://yucle-finance-live-production.up.railway.app/expenses"}, {"t": "은행", "u": "https://yucle-finance-live-production.up.railway.app/bank"}, {"t": "연동", "u": "https://yucle-finance-live-production.up.railway.app/connections"}]}, {"n": "마케팅 스튜디오", "d": "마케팅OS", "u": "https://yuseong-marketing-os-review-production.up.railway.app", "c": "영업·마케팅", "i": "📣", "subs": [{"t": "모듈 관리", "u": "https://yuseong-marketing-os-review-production.up.railway.app/modules"}, {"t": "콘텐츠 스튜디오", "u": "https://yuseong-marketing-os-review-production.up.railway.app/content-studio"}, {"t": "파워링크", "u": "https://yuseong-marketing-os-review-production.up.railway.app/powerlink"}, {"t": "메타 광고", "u": "https://yuseong-marketing-os-review-production.up.railway.app/meta-ads"}, {"t": "광고 성과", "u": "https://yuseong-marketing-os-review-production.up.railway.app/performance"}, {"t": "조달", "u": "https://yuseong-marketing-os-review-production.up.railway.app/procurement"}, {"t": "오류 로그", "u": "https://yuseong-marketing-os-review-production.up.railway.app/logs"}]}, {"n": "영업 허브", "d": "영업관리 명단", "u": "https://yuseong-sales-hub-production.up.railway.app", "c": "영업·마케팅", "i": "🤝", "subs": [{"t": "업체 DB", "u": "https://yuseong-sales-hub-production.up.railway.app/business"}, {"t": "관심 고객", "u": "https://yuseong-sales-hub-production.up.railway.app/interested"}, {"t": "DB 찾기", "u": "https://yuseong-sales-hub-production.up.railway.app/db-search"}, {"t": "AI 발신 통계", "u": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats"}, {"t": "수신거부", "u": "https://yuseong-sales-hub-production.up.railway.app/dnc"}, {"t": "설정", "u": "https://yuseong-sales-hub-production.up.railway.app/settings"}]}, {"n": "AI 전화상담", "d": "AI 발신·통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor", "c": "영업·마케팅", "i": "🤖", "subs": [{"t": "대량발신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/bulk"}, {"t": "통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/calls"}, {"t": "관심고객", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/interested"}, {"t": "안내멘트", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/script"}, {"t": "요금", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/billing"}, {"t": "수신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/inbound"}]}, {"n": "회사전화", "d": "070 전화 CRM", "u": "https://yuseong-phone-production.up.railway.app", "c": "영업·마케팅", "i": "📞", "subs": [{"t": "통화기록", "u": "https://yuseong-phone-production.up.railway.app/calls"}, {"t": "거래처", "u": "https://yuseong-phone-production.up.railway.app/customers"}, {"t": "관리", "u": "https://yuseong-phone-production.up.railway.app/admin"}]}, {"n": "청과 수입 판단", "d": "세척당근 수입·판매 판단", "u": "https://web-production-f53da.up.railway.app", "c": "기타", "i": "🥕"}, {"n": "출판 (Bookforge)", "d": "소설·시집 자가출판", "u": "https://bookforge-production-27f6.up.railway.app", "c": "기타", "i": "📚"}, {"n": "내편지도", "d": "관계 지도 바이럴 서비스", "u": "https://web-production-304b2.up.railway.app", "c": "기타", "i": "🗺️"}, {"n": "사주도령", "d": "사주 서비스", "u": "https://doryeong.app/n", "c": "기타", "i": "🔮", "watch": false}];
 const FLOW=[
  {n:"공통 구조 (현장 시트)",i:"🧭",store:["구글시트"],
   in:"배송입력·포장기록·건조기·출퇴근기 4개 앱이 모두 같은 구글 스프레드시트 '세탁공장 현장입력'에 기록.",
@@ -370,6 +398,8 @@ const SHORT={
 };
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
+const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-03", "차량 위치 (CarLive)": "2026-10-02", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-03", "현황지 출력": "2026-09-12", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-04", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-09-26", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const FLOW_DATE="2026-10-03";
 
 const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
@@ -377,6 +407,17 @@ const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
 let theme=location.hash==="#t2"?"2":load("hub_theme","1");
 const info={};
+let srv=null;
+const srvItem=n=>srv&&srv.items&&srv.items[n];
+const srvAge=()=>srv&&srv.checked_at?(Date.now()-new Date(srv.checked_at.replace(" ","T")+"+09:00").getTime())/3600000:99;
+const fresh=()=>srvAge()<3;
+function eff(n){const s=status[n]||"",v=srvItem(n);if((s==="ok"||s==="slow"||s==="")&&v&&v.s==="error"&&fresh())return "down";return s}
+const CHO="ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
+const initials=t=>[...t].map(c=>{const k=c.charCodeAt(0)-0xAC00;return k>=0&&k<11172?CHO[Math.floor(k/588)]:c}).join("");
+function match(q,text,short){if(!q)return true;if(/^[ㄱ-ㅎ]+$/.test(q))return initials(short||text).includes(q);return text.toLowerCase().includes(q)}
+let recent=load("hub_recent",[]);
+function pushRecent(n){recent=[n,...recent.filter(x=>x!==n)].slice(0,6);save("hub_recent",recent)}
+const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
 const isMob=()=>matchMedia("(max-width:600px)").matches;
 let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -387,24 +428,24 @@ function all(){
   return a.map((p,k)=>[p,k]).sort((x,y)=>idx(x[0].n)-idx(y[0].n)||x[1]-y[1]).map(x=>x[0]);
 }
 function tcard(p){
-  const on=favs.includes(p.n), st=status[p.n]||"", img=(typeof SHOTS!=="undefined")&&SHOTS[p.n];
+  const on=favs.includes(p.n), st=eff(p.n), img=(typeof SHOTS!=="undefined")&&SHOTS[p.n];
   const shot=`<div class="shot">${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
   const meta=`<div class="tmeta"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
     return `<div class="tcard">${shot}${meta}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
   }
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
-  return `<a class="tcard" href="${esc(p.u)}">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
+  return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
 }
 function card(p){
   if(theme==="2")return tcard(p);
-  const on=favs.includes(p.n), st=status[p.n]||"";
+  const on=favs.includes(p.n), st=eff(p.n);
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
   const nm=`<div class="ic">${p.i||"🔗"}</div><div class="nm"><b><i class="dot ${st}" data-dot="${esc(p.n)}"></i>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
     return `<div class="card">${nm}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
   }
-  return `<a class="card" href="${esc(p.u)}">${nm}
+  return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}">${nm}
     ${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
     ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
     <span class="go">→</span></a>`;
@@ -416,24 +457,32 @@ function renderLinks(){
   const bar=isMob();
   $("#fav").className=bar?"favbar":(theme==="2"?"tgrid":"grid")+" fav";
   $("#list").className=theme==="2"?"tgrid":"grid";
-  $("#fav").innerHTML=bar?fav.map(p=>`<a class="fchip" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`).join(""):fav.map(card).join("");
+  $("#fav").innerHTML=bar?fav.map(chip).join(""):fav.map(card).join("");
+  const rec=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
+  $("#recSec").hidden=!(rec.length&&!q&&!edit);
+  $("#rec").innerHTML=rec.map(chip).join("");
   $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
-  const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&(!q||(p.n+p.d+p.c).toLowerCase().includes(q)));
+  const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&match(q,p.n+" "+p.d+" "+p.c,p.n+" "+p.d));
   if(tab==="전체"&&!q){
     $("#list").innerHTML=CATS.map(c=>{const r=rows.filter(p=>p.c===c);return r.length?`<h3 class="grp">${c}</h3>`+r.map(card).join(""):""}).join("");
   }else{
     $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
   }
 }
+function chgTag(f){
+  const c=typeof CHG!=="undefined"&&CHG[f.n];if(!c)return"";
+  const stale=c>(f.v||FLOW_DATE);
+  return `<span class="chg ${stale?"stale":""}">${stale?"설명 점검 필요 · ":""}코드 변경 ${c.slice(5)}</span>`;
+}
 function renderFlow(){
   const q=$("#q").value.trim().toLowerCase();
   const list=FLOW.filter(f=>SHORT[f.n]);
   const tags=["전체",...new Set(list.flatMap(f=>f.store))];
   $("#chips").innerHTML=tags.map(t=>`<button class="chip ${t===tag?"on":""}" data-g="${esc(t)}">${esc(t)}</button>`).join("");
-  const rows=list.filter(f=>(tag==="전체"||f.store.includes(tag))&&(!q||JSON.stringify(f).toLowerCase().includes(q)));
+  const rows=list.filter(f=>(tag==="전체"||f.store.includes(tag))&&match(q,f.n+" "+JSON.stringify(f),f.n));
   const r=(k,v)=>v?`<div class="row"><i>${k}</i><div>${esc(v)}</div></div>`:"";
   const col=(cls,lab,arr)=>`<div class="pc ${cls}"><label>${lab}</label>${arr.map(x=>`<span class="ch">${esc(x)}</span>`).join("")||'<span class="ch" style="opacity:.5">없음</span>'}</div>`;
-  $("#flow").innerHTML=rows.map(f=>{const h=SHORT[f.n];return `<div class="fc"><div class="fh"><div class="ic">${f.i||"🔗"}</div><b>${esc(f.n)}</b></div>
+  $("#flow").innerHTML=rows.map(f=>{const h=SHORT[f.n];return `<div class="fc"><div class="fh"><div class="ic">${f.i||"🔗"}</div><b>${esc(f.n)}</b>${chgTag(f)}</div>
     <div class="pipe">${col("c1","입력",h.a)}<span class="arrow">→</span>${col("c2","저장",h.b)}<span class="arrow">→</span>${col("c3","읽는 곳",h.c)}</div>
     <details class="more"><summary>자세히 보기</summary><div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details></div>`}).join("")||'<div class="empty">결과가 없습니다</div>';
 }
@@ -444,6 +493,9 @@ function render(){
   $("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
   $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
   $("#addBtn").style.display=view==="links"?"":"none";
+  $("#tbLinks").classList.toggle("on",view==="links"); $("#tbFlow").classList.toggle("on",view==="flow");
+  $("#tbTheme").querySelector(".tl").textContent="테마"+(theme==="2"?"2":"1"); $("#tbTheme").disabled=view!=="links";
+  $("#tbEdit").disabled=view!=="links"; $("#tbEdit").classList.toggle("on",edit); $("#tbEdit").querySelector(".tl").textContent=edit?"편집 완료":"순서 편집";
   view==="links"?renderLinks():renderFlow();
 }
 function move(n,dir){
@@ -455,7 +507,7 @@ function move(n,dir){
   order=L.map(x=>x.n); save("hub_order",order); render();
 }
 /* 상태 확인: 서버가 응답하면 초록, 응답 없으면 빨강 */
-function setDot(n){document.querySelectorAll('[data-dot="'+CSS.escape(n)+'"]').forEach(e=>e.className="dot "+(status[n]||""))}
+function setDot(n){document.querySelectorAll('[data-dot="'+CSS.escape(n)+'"]').forEach(e=>e.className="dot "+eff(n))}
 function checkAll(){
   return Promise.all(all().map(p=>{
     status[p.n]="";info[p.n]=null;setDot(p.n);
@@ -467,16 +519,33 @@ function checkAll(){
   }));
 }
 async function manualCheck(){
-  const b=$("#btnStatus");if(b.disabled)return;
-  b.disabled=true;b.textContent="확인 중…";
+  const b=$("#btnStatus"),tb=$("#tbStatus");if(b.disabled)return;
+  b.disabled=true;b.textContent="확인 중…";tb.querySelector(".tl").textContent="확인 중…";
   await checkAll();
   const v=Object.values(status),c=k=>v.filter(x=>x===k).length;
-  b.disabled=false;b.textContent="상태 확인";
+  b.disabled=false;b.textContent="상태 확인";tb.querySelector(".tl").textContent="상태 확인";
   toast(`확인 완료 — 정상 ${c("ok")} · 느림 ${c("slow")} · 응답 없음 ${c("down")}`);
+}
+function applySrv(){
+  const e=$("#srvLine");
+  if(!srv||!srv.items){e.textContent="";e.className="";return}
+  const t=srv.checked_at.slice(5,16).replace("-","/");
+  if(srvAge()>5){e.className="";e.textContent="서버 감시 정보가 오래됨 (마지막 "+t+")";return}
+  const bad=BASE.filter(p=>p.watch!==false&&srvItem(p.n)&&(srvItem(p.n).s==="down"||srvItem(p.n).s==="error")).map(p=>p.n+(srvItem(p.n).s==="error"?"(오류)":"(응답없음)"));
+  if(bad.length){e.className="bad";e.textContent="⚠ 서버 이상 "+bad.length+"건 — "+bad.join(", ")+" · "+t+" 기준"}
+  else{e.className="ok";e.textContent="✓ 서버 감시: 이상 없음 · "+t+" 기준"}
+}
+function loadSrv(){
+  fetch("status.json?"+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j){srv=j;applySrv();render()}}).catch(()=>{});
 }
 let toastT;
 function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),3800)}
 function why(n){
+  const sv=srvItem(n);
+  if(sv&&sv.s==="error"&&fresh()&&(status[n]==="ok"||status[n]==="slow"||!status[n]))return n+": 열리긴 하지만 서버 오류입니다 (HTTP "+sv.code+", 서버 감시 "+srv.checked_at.slice(11)+")";
+  return why0(n)+((sv&&sv.s==="down"&&fresh())?" · 서버 감시 "+srv.checked_at.slice(11)+"에도 응답 없음":"");
+}
+function why0(n){
   const st=status[n],i=info[n];
   if(!st&&!i)return n+": 아직 확인 전입니다. '상태 확인'을 눌러 보세요";
   const sec=i?(i.ms/1000).toFixed(1)+"초":"";
@@ -492,6 +561,7 @@ function openSub(n){
   $("#subDlg").showModal();
 }
 document.addEventListener("click",e=>{
+  const an=e.target.closest("a[data-n]");if(an&&!e.target.closest("button"))pushRecent(an.dataset.n);
   const x=e.target.closest("[data-x]"), dt=e.target.closest(".dot[data-dot]");
   if(x){e.preventDefault();openSub(x.dataset.x);return}
   if(dt){e.preventDefault();toast(why(dt.dataset.dot));return}
@@ -510,6 +580,11 @@ $("#th1").onclick=()=>{theme="1";save("hub_theme",theme);render()};
 $("#th2").onclick=()=>{theme="2";save("hub_theme",theme);render()};
 $("#btnEdit").onclick=()=>{edit=!edit;render()};
 $("#btnStatus").onclick=manualCheck;
+$("#tbLinks").onclick=()=>$("#vLinks").click();
+$("#tbFlow").onclick=()=>$("#vFlow").click();
+$("#tbTheme").onclick=()=>(theme==="2"?$("#th1"):$("#th2")).click();
+$("#tbStatus").onclick=manualCheck;
+$("#tbEdit").onclick=()=>$("#btnEdit").click();
 $("#subClose").onclick=()=>$("#subDlg").close();
 $("#subDlg").addEventListener("click",e=>{if(e.target===$("#subDlg"))$("#subDlg").close()});
 document.addEventListener("contextmenu",e=>{const c=e.target.closest("a.card,a.tcard");if(!c)return;const b=c.querySelector("[data-x]");if(b){e.preventDefault();openSub(b.dataset.x)}});
@@ -523,8 +598,13 @@ $("#fSave").onclick=()=>{
   if(!n||!u)return;if(!/^https?:\/\//.test(u))u="https://"+u;
   custom.push({n,u,c:$("#fCat").value,d:$("#fCat").value});save("hub_custom",custom);$("#dlg").close();render();
 };
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&view==="links")checkAll()});
-render();checkAll();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){loadSrv();if(view==="links")checkAll()}});
+render();checkAll();loadSrv();setInterval(loadSrv,300000);
+if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)){
+  const had=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{if(had)location.reload()});
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
 if(location.hash.startsWith("#sub=")){try{openSub(decodeURIComponent(location.hash.slice(5)))}catch(e){}}
 </script>
 </body>

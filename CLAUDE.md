@@ -11,11 +11,18 @@
 - `tools/blur.json` : 캡처에서 흐리게 할 영역(이름·금액·연락처·위치)
 - `tools/capture.py` : 전체 화면 캡처 → 흐림 → shots/
 - `tools/build.py` : 위 파일들로 index.html 생성
-- `tools/refresh.py` : 캡처 + 빌드 + 커밋 + 푸시 (`python tools/refresh.py`, 캡처 생략은 `--no-capture`)
+- `tools/refresh.py` : 캡처 + 빌드 + 커밋 + 푸시 (`python tools/refresh.py`, 캡처 생략은 `--no-capture`). 문제가 있으면 메일 발송
+- `tools/monitor.py` : 서버 감시(링크 전체를 curl로 점검) → `status.json` 갱신 → 연속 2회(약 10분) 이상이면 메일, 복구 시 메일. 변화가 있거나 2시간마다만 허브에 푸시
+- `tools/notify.py` : 메일 발송(마케팅OS 서버의 Brevo 설정을 Railway에서 그때그때 읽음 — 파일에 저장하지 않음)
+- `tools/projects.json` : 데이터 흐름 항목 ↔ 프로그램 폴더 연결(코드 마지막 변경일 표시용). 변경일이 설명 점검일(`FLOW_DATE` 또는 항목의 `v`)보다 늦으면 카드에 "설명 점검 필요"
+- `sw.js`(자동 생성) : 오프라인·빠른 로딩용 서비스 워커
+- 파이썬 기본 인증서 확인이 Railway 인증서를 만료로 오판하므로 점검은 윈도우 curl을 쓴다
 
 ## 작업 규칙
 - 프로그램의 주소·화면·입력/저장 구조를 바꾸면 이 허브도 같이 고친다: links.json / flow_part*.js / short.js 수정 → `python tools/build.py` → 푸시.
 - 새 프로그램을 추가하면 links.json에 넣고, blur.json에서 개인정보가 보이는 화면인지 확인한 뒤 `refresh.py`로 캡처한다.
 - 푸시는 `git -C /c/Users/123/Desktop/AUTO/링크허브 ...` 형식으로 한다(설정에 허용 규칙 있음). 사용자에게 `!` 명령을 보내지 않는다.
 - 개인정보(이름·금액·연락처·거래처·실시간 위치)가 보이는 캡처는 반드시 흐리게 처리한 뒤 올린다. 시트 ID·키 이름은 데이터 흐름 문구에 넣지 않는다.
-- 매주 일요일 07:00 작업 스케줄러(YucleHub_Refresh)가 refresh.py를 실행해 캡처를 갱신한다.
+- 작업 스케줄러: YucleHub_Monitor(10분마다 monitor.py), YucleHub_Refresh(일요일 07:00 refresh.py). 둘 다 pythonw(창 없음).
+- 데이터 흐름 항목을 고쳐서 설명을 다시 확인했다면 flow_part의 해당 항목에 `v:"YYYY-MM-DD"`를 넣어 점검일을 갱신한다.
+- 메일 받는 곳은 마케팅OS의 EMAIL_TO(sinijini1@naver.com). 알림 테스트: `python tools/notify.py`

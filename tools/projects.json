@@ -1,0 +1,23 @@
+{
+ "배송 입력": "yuseong-attendance/delivery",
+ "포장 입력": "yuseong-attendance/packing",
+ "건조기 관리": "yuseong-attendance/dryer",
+ "출퇴근 관리": "yuseong-attendance/attendance",
+ "공장 전광판": "1-전광판",
+ "차량 위치 (CarLive)": "carlive",
+ "가스 카메라": "가스계량기 원격촬영 시스템",
+ "배송 현황": "배송경로 최적화",
+ "현황지 출력": "1-Print_status_sheet",
+ "보조컴퓨터 (포장랭킹 카톡)": "보조컴퓨터",
+ "재무관리": "재무관리os",
+ "마케팅 스튜디오 (마케팅OS)": "마케팅os",
+ "영업 허브": "DB_TM",
+ "AI 전화상담": "ai-counselor",
+ "회사전화": "CRM",
+ "청과 수입 판단": "청과",
+ "출판 (Bookforge)": "출판",
+ "내편지도": "바이럴앱/naepyeon-map",
+ "쿠팡 주문내역 취합기": "쿠팡주문내역취합기",
+ "forwarder.kr 수집기": "forwarder-kr-collector",
+ "한글 폰트 변환기": "손글씨 Handwriting"
+}
