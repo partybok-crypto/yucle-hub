@@ -21,7 +21,7 @@ run([py, os.path.join(HERE, "build.py")])
 g = ["git", "-C", HUB]
 run(g + ["add", "index.html", "shots", "tools", ".gitignore"])
 if run(g + ["status", "--porcelain"]).stdout.strip():
-    msg = f"허브 자동 갱신 {datetime.datetime.now():%Y-%m-%d}\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
+    msg = f"hub auto refresh {datetime.datetime.now():%Y-%m-%d}\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
     run(g + ["commit", "-m", msg])
     run(g + ["push"])
     print("푸시 완료")

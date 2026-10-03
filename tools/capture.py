@@ -20,21 +20,29 @@ EDGE = next((p for p in (r"C:\Program Files (x86)\Microsoft\Edge\Application\mse
 if not EDGE:
     sys.exit("Edge를 찾을 수 없습니다")
 
-def shoot(i, url):
-    png = os.path.join(RAW, f"{i}.png")
-    if os.path.exists(png): os.remove(png)
-    prof = tempfile.mkdtemp(prefix="hubshot_")
-    cmd = [EDGE, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1280,800",
-           "--timeout=15000", f"--user-data-dir={prof}", f"--screenshot={png}", url]
+def _run(cmd, wait):
     p = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
-        p.wait(timeout=70)
+        p.wait(timeout=wait)
     except subprocess.TimeoutExpired:
         pass
     finally:
         subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        shutil.rmtree(prof, ignore_errors=True)
-    return png if os.path.exists(png) else None
+
+def shoot(i, url):
+    png = os.path.join(RAW, f"{i}.png")
+    base = [EDGE, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1280,800"]
+    # 1차: 가상 시간으로 데이터 로딩을 충분히 기다림. 멈추면 2차: 일반 타임아웃
+    for extra, wait in ((["--virtual-time-budget=12000"], 50), (["--timeout=15000"], 40)):
+        if os.path.exists(png): os.remove(png)
+        prof = tempfile.mkdtemp(prefix="hubshot_")
+        try:
+            _run(base + extra + [f"--user-data-dir={prof}", f"--screenshot={png}", url], wait)
+        finally:
+            shutil.rmtree(prof, ignore_errors=True)
+        if os.path.exists(png):
+            return png
+    return None
 
 def process(i, p):
     png = shoot(i, p["u"])
