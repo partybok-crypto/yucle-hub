@@ -37,7 +37,22 @@ dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px 
 dialog .row{display:flex;gap:8px;justify-content:flex-end}
 dialog button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:14px;cursor:pointer}
 dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
-@media(max-width:600px){h1{font-size:28px}.logo small{display:none}.add span{display:none}}
+.grp{grid-column:1/-1;font-size:15px;margin:14px 0 0;color:var(--sub)}
+@media(max-width:600px){
+ .wrap{padding:12px 10px 40px}
+ h1{font-size:22px;margin:14px 0 2px}.desc{font-size:14px;margin:0 0 10px}
+ h2{font-size:14px;margin:12px 0 8px}
+ .add span{display:none}.add{padding:11px 14px}
+ .tabs{margin:10px 0;gap:6px}.tab{padding:7px 12px;font-size:13px}
+ .grid,.grid.fav{grid-template-columns:repeat(3,1fr);gap:8px}
+ .card,.fav .card{flex-direction:column;justify-content:center;text-align:center;gap:6px;padding:12px 4px 10px;position:relative;min-height:96px}
+ .ic,.fav .ic{width:42px;height:42px;font-size:22px}
+ .nm b,.fav .nm b{font-size:13px;line-height:1.25;word-break:keep-all}
+ .nm small,.go{display:none}
+ .star{position:absolute;top:0;right:0;font-size:16px;padding:4px 6px}
+ .del{position:absolute;top:0;left:0;font-size:13px;padding:4px 6px}
+ .grp{margin:8px 0 0;font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -80,7 +95,11 @@ const BASE=[
  {n:"마케팅 스튜디오",d:"마케팅OS",u:"https://yuseong-marketing-os-review-production.up.railway.app",c:"영업·마케팅",i:"📣"},
  {n:"영업 허브",d:"영업관리 명단",u:"https://yuseong-sales-hub-production.up.railway.app",c:"영업·마케팅",i:"🤝"},
  {n:"AI 전화상담",d:"AI 발신·통화기록",u:"https://server-production-8d8f.up.railway.app/ai-counselor",c:"영업·마케팅",i:"🤖"},
- {n:"회사전화",d:"070 전화 CRM",u:"https://yuseong-phone-production.up.railway.app",c:"영업·마케팅",i:"📞"}
+ {n:"회사전화",d:"070 전화 CRM",u:"https://yuseong-phone-production.up.railway.app",c:"영업·마케팅",i:"📞"},
+ {n:"청과 수입 판단",d:"세척당근 수입·판매 판단",u:"https://web-production-f53da.up.railway.app",c:"기타",i:"🥕"},
+ {n:"출판 (Bookforge)",d:"소설·시집 자가출판",u:"https://bookforge-production-27f6.up.railway.app",c:"기타",i:"📚"},
+ {n:"내편지도",d:"관계 지도 바이럴 서비스",u:"https://web-production-304b2.up.railway.app",c:"기타",i:"🗺️"},
+ {n:"사주도령",d:"사주 서비스",u:"https://doryeong.app/n",c:"기타",i:"🔮"}
 ];
 const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
@@ -105,7 +124,11 @@ function render(){
   $("#fav").innerHTML=fav.map(card).join("");
   $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
   const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&(!q||(p.n+p.d+p.c).toLowerCase().includes(q)));
-  $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
+  if(tab==="전체"&&!q){
+    $("#list").innerHTML=CATS.map(c=>{const r=rows.filter(p=>p.c===c);return r.length?`<h3 class="grp">${c}</h3>`+r.map(card).join(""):""}).join("");
+  }else{
+    $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
+  }
 }
 document.addEventListener("click",e=>{
   const s=e.target.closest("[data-s]"),d=e.target.closest("[data-d]"),t=e.target.closest("[data-t]");
