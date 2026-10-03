@@ -2,56 +2,91 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>유클 업무 허브</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1d5be6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="유클">
 <style>
-:root{--bg:#eef5fc;--card:#fff;--text:#0f172a;--sub:#64748b;--line:#e5eaf2;--blue:#1d5be6}
+:root{--bg1:#dcebf9;--bg2:#f4f8fd;--card:#fff;--text:#0f172a;--sub:#64748b;--line:#e5eaf2;--blue:#1d5be6;--icbg:#e8f0fe;--chip:#eef2f9}
+@media(prefers-color-scheme:dark){:root{--bg1:#0b1220;--bg2:#0b1220;--card:#162033;--text:#e8eef9;--sub:#93a1b8;--line:#243049;--blue:#4c86ff;--icbg:#1f2e4a;--chip:#1f2b42}}
 *{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#dcebf9,#f4f8fd 320px);color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;min-height:100vh}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg2) linear-gradient(180deg,var(--bg1),var(--bg2) 320px) no-repeat;color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
 .wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
 .top{display:flex;gap:12px;align-items:center}
 .logo{font-weight:800;font-size:20px;white-space:nowrap}
-.search{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;min-width:0}
+.search{flex:1;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;min-width:0}
 .add{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap}
 h1{font-size:34px;margin:28px 0 4px}h1 b{color:var(--blue)}
-.desc{color:var(--sub);margin:0 0 24px;font-size:18px}
+.desc{color:var(--sub);margin:0 0 18px;font-size:18px}
 h2{font-size:17px;margin:24px 0 12px}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:18px 0}
-.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-size:14px;cursor:pointer;white-space:nowrap;color:var(--text)}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.seg{display:flex;background:var(--chip);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;color:var(--sub);padding:9px 18px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}
+.seg button.on{background:var(--card);color:var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.sm{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;cursor:pointer}
+.sm.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sp{flex:1}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:14px 0}
+.tab{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 16px;font-size:14px;cursor:pointer;white-space:nowrap;color:var(--text)}
 .tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:inherit;transition:.15s}
-.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px)}
-.ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px;flex:none;background:#e8f0fe}
+.card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:inherit;transition:.15s;position:relative}
+a.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px)}
+.ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px;flex:none;background:var(--icbg)}
 .nm{flex:1;min-width:0}
 .nm b{display:block;font-size:16px}
 .nm small{color:var(--sub);font-size:13px}
-.star,.del{background:none;border:0;font-size:20px;cursor:pointer;color:#b8c2d3;padding:4px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#9aa6ba;margin-right:6px;vertical-align:1px}
+.dot.ok{background:#22c55e}.dot.down{background:#ef4444}
+.star,.del,.mv{background:none;border:0;font-size:20px;cursor:pointer;color:#b8c2d3;padding:4px}
 .star.on{color:#f5a623}
+.mv{color:var(--blue);font-size:22px;font-weight:700}
 .go{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--sub);flex:none}
 .fav .card{padding:18px}.fav .ic{width:56px;height:56px;font-size:28px}.fav .nm b{font-size:18px}
 .empty{color:var(--sub);padding:20px 0}
-dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw)}
-dialog::backdrop{background:rgba(0,0,0,.35)}
-dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:15px}
-dialog .row{display:flex;gap:8px;justify-content:flex-end}
-dialog button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:14px;cursor:pointer}
-dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 .grp{grid-column:1/-1;font-size:15px;margin:14px 0 0;color:var(--sub)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tag{display:inline-block;background:var(--chip);color:var(--sub);border-radius:6px;padding:2px 7px;font-size:12px;margin:2px 4px 0 0}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px}
+details.fc{background:var(--card);border:1px solid var(--line);border-radius:16px}
+details.fc summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:14px}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"▾";color:var(--sub);margin-left:auto}
+details.fc[open] summary::after{content:"▴"}
+.fb{padding:2px 16px 16px;display:grid;gap:10px}
+.row{display:grid;grid-template-columns:70px 1fr;gap:8px;font-size:14px;line-height:1.5}
+.row i{font-style:normal;color:var(--sub);font-weight:700}
+dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw);background:var(--card);color:var(--text)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--card);color:var(--text)}
+dialog .dr{display:flex;gap:8px;justify-content:flex-end}
+dialog button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:14px;cursor:pointer}
+dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 @media(max-width:600px){
  .wrap{padding:12px 10px 40px}
  h1{font-size:22px;margin:14px 0 2px}.desc{font-size:14px;margin:0 0 10px}
  h2{font-size:14px;margin:12px 0 8px}
  .add span{display:none}.add{padding:11px 14px}
+ .seg button{padding:8px 14px;font-size:14px}
  .tabs{margin:10px 0;gap:6px}.tab{padding:7px 12px;font-size:13px}
- .grid,.grid.fav{grid-template-columns:repeat(3,1fr);gap:8px}
- .card,.fav .card{flex-direction:column;justify-content:center;text-align:center;gap:6px;padding:12px 4px 10px;position:relative;min-height:96px}
+ .grid,.grid.fav{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .card,.fav .card{flex-direction:column;justify-content:center;text-align:center;gap:6px;padding:12px 4px 10px;min-height:96px}
  .ic,.fav .ic{width:42px;height:42px;font-size:22px}
  .nm b,.fav .nm b{font-size:13px;line-height:1.25;word-break:keep-all}
  .nm small,.go{display:none}
  .star{position:absolute;top:0;right:0;font-size:16px;padding:4px 6px}
  .del{position:absolute;top:0;left:0;font-size:13px;padding:4px 6px}
+ .mv{padding:2px 10px}
  .grp{margin:8px 0 0;font-size:13px}
+ .flow{grid-template-columns:1fr}
+ .row{grid-template-columns:58px 1fr;font-size:13px}
 }
 </style>
 </head>
@@ -59,16 +94,30 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 <div class="wrap">
   <div class="top">
     <div class="logo">유클</div>
-    <input id="q" class="search" placeholder="프로그램 검색" autocomplete="off">
+    <input id="q" class="search" placeholder="검색" autocomplete="off">
     <button class="add" id="addBtn">＋<span> 바로가기 추가</span></button>
   </div>
   <h1><b>유클</b> 업무 허브</h1>
   <p class="desc">필요한 업무를 한곳에서</p>
 
-  <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
+  <div class="bar">
+    <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vFlow">데이터 흐름</button></div>
+    <span class="sp"></span>
+    <button class="sm" id="btnStatus">상태 확인</button>
+    <button class="sm" id="btnEdit">순서 편집</button>
+  </div>
 
-  <div class="tabs" id="tabs"></div>
-  <div class="grid" id="list"></div>
+  <div id="linksView">
+    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="grid" id="list"></div>
+  </div>
+
+  <div id="flowView" hidden>
+    <div class="bar" style="margin-top:6px"><span style="color:var(--sub);font-size:14px">프로그램마다 데이터가 어디서 들어와 어디에 저장되는지</span><span class="sp"></span><button class="sm" id="btnOpenAll">모두 펼치기</button></div>
+    <div class="chips" id="chips"></div>
+    <div class="flow" id="flow"></div>
+  </div>
 </div>
 
 <dialog id="dlg">
@@ -76,7 +125,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   <label>이름<input id="fName"></label>
   <label>주소<input id="fUrl" placeholder="https://"></label>
   <label>분류<select id="fCat"></select></label>
-  <div class="row"><button id="fCancel">취소</button><button class="pri" id="fSave">추가</button></div>
+  <div class="dr"><button id="fCancel">취소</button><button class="pri" id="fSave">추가</button></div>
 </dialog>
 
 <script>
@@ -101,26 +150,167 @@ const BASE=[
  {n:"내편지도",d:"관계 지도 바이럴 서비스",u:"https://web-production-304b2.up.railway.app",c:"기타",i:"🗺️"},
  {n:"사주도령",d:"사주 서비스",u:"https://doryeong.app/n",c:"기타",i:"🔮"}
 ];
+const FLOW=[
+ {n:"공통 구조 (현장 시트)",i:"🧭",store:["구글시트"],
+  in:"배송입력·포장기록·건조기·출퇴근기 4개 앱이 모두 같은 구글 스프레드시트 '세탁공장 현장입력'에 기록.",
+  save:"구글시트가 사실상 중앙 저장소. 각 앱의 SQLite는 대부분 시트 쓰기 실패에 대비한 임시 보관함(예외: 건조기 진행 중 타이머, 출퇴근기 attendance.db는 1차 저장소).",
+  ext:"서비스 계정으로 시트 접근. 4개 앱 자체에는 카톡·알림톡·메일 발송이 없음(알림톡은 전광판).",
+  auto:"앱마다 크론은 없고 서버 내부 스레드가 30초~180초 주기로 재전송·캐시 갱신.",
+  link:"탭별 흐름: 근태입력 → 포장기록·건조기·전광판·재무관리가 읽음 / 포장기록·건조기기록·포대수량 → 전광판·재무관리·보조컴퓨터가 읽음 / 거래처명단 및 배송기사 → 배송입력·포장기록이 읽음. 운영 볼륨 마운트 여부는 Railway에서 확인 필요."},
+ {n:"배송 입력",i:"🚚",store:["구글시트","SQLite(보관함)"],
+  in:"현장 관리자가 터치모니터 웹화면에서 차량·기사·코스·배송지 수·업체번호별 포대 수를 입력. 브라우저에 임시저장한 뒤 '제출' 버튼으로 일괄 전송.",
+  save:"구글시트 탭: 배송지수량, 포대수량, 현장기사등록, 현장코스등록. 제출 실패 대비 SQLite 보관함(submit_outbox.db).",
+  ext:"구글시트만 사용. 읽기는 '거래처명단 및 배송기사' 탭.",
+  auto:"30초마다 미전송 제출을 자동 재전송.",
+  link:"배송 현황이 배송지수량·포대수량을 읽고, 전광판이 포대수량으로 수거 대상을 계산. 포장기록은 거래처명단 탭을 읽음."},
+ {n:"포장 입력",i:"📦",store:["구글시트","SQLite(보관함)","라벨 프린터"],
+  in:"10인치 태블릿에서 업체번호 입력 후 출근 중인 담당자를 터치. 저장 직후 라벨 출력 앱이 딥링크로 호출되어 TSC 프린터로 출력.",
+  save:"구글시트 '포장기록' 탭(작업일자·시간·업체·포대사이즈·담당자·코스 등). 저장 실패 시 SQLite pending_queue.db에 보관.",
+  ext:"구글시트에서 거래처명단·클레임이력·근태입력 읽기(180초 캐시). 공장 내 프린트 서버로 RAW 출력.",
+  auto:"캐시 갱신 180초, 미전송 재전송 30초.",
+  link:"전광판과 재무관리(인건비·작업량 분석)가 포장기록 탭을 읽음."},
+ {n:"건조기 관리",i:"🧺",store:["SQLite(/data)","구글시트"],
+  in:"건조기 옆 태블릿 앱에서 작업자가 거래처 투입·건조 완료·덜마름 입력. 관리자 설정은 PIN 보호.",
+  save:"서버 SQLite dryer.db(진행 중 배치·투입 이력·설정·이벤트·재시도 큐)와 구글시트 '건조기기록' 탭(24개 열, 추가 기록).",
+  ext:"구글시트: 근태입력에서 출근 작업자 읽기, 별도 현황지 시트의 '거래처' 탭에서 거래처 정보 읽기. 알림은 태블릿 알림음만.",
+  auto:"시트 쓰기 재시도 30초, 거래처 캐시 180초, 근태 캐시 30초. 영업일은 13시 기준으로 전날 처리. 태블릿 앱은 30분마다 업데이트 확인, 인터넷이 3분 이상 끊기면 와이파이 재시작.",
+  link:"전광판(포장 준비 상태)과 재무관리(완료 배치·실제시간 집계)가 건조기기록을 읽음."},
+ {n:"출퇴근 관리",i:"👥",store:["SQLite(/data)","구글시트"],
+  in:"현장 웹앱에서 직원이 출근·퇴근을 기록, 신입은 현장에서 등록.",
+  save:"SQLite attendance.db에 먼저 저장 후 구글시트 '근태입력'(출퇴근)·'현장신규등록'(신규 직원)에 동기화. 인터넷이 끊기면 로컬 저장 후 나중에 재동기화.",
+  ext:"구글시트 '근무자명단' 탭 읽기(수식 전용), 근태입력·현장신규등록에 쓰기.",
+  auto:"서버 시작 시 1회 동기화, 출퇴근 직후 자동 동기화, 화면 버튼으로 수동 재전송.",
+  link:"포장기록(오늘 출근 담당자)·건조기(출근 작업자)·전광판·재무관리(인건비)가 근태입력 탭을 읽음."},
+ {n:"공장 전광판",i:"🖥️",store:["구글시트","SQLite(/data)","Drive 사진"],
+  in:"직원이 시트에 입력한 포대수량·포장기록·근태를 읽어옴. 관리자·CS가 /admin에서 찾기요청·공지·설정 입력. 차량폰·가스촬영폰이 API로 전송. 거래처가 방문일정 변경 신청.",
+  save:"구글시트 '세탁공장 현장입력'의 전광판_ 전용 6개 탭(찾기요청·발견기록·설정·공지사항·작업로그·포장상세). 가스 시트 '도시가스' 탭 일부 열. SQLite 3개(camera.db·alimtalk.db·vehicles.db, 운영 /data/camera). 사진은 Drive 폴더.",
+  ext:"구글시트·Drive, 건조기 API(20초), 솔라피 알림톡, Claude 비전 OCR(대체용), YouTube(차량 방송 생성), 카카오맵, Google Geolocation(WiFi 위치), 알림 메일",
+  auto:"시트 45초마다 읽어 캐시, 일정표 300초. 알림톡 스케줄러 매일 13:00 발송(켜짐 여부는 화면에서 확인). 공장 PC 로그온 시 Chrome 키오스크 모니터 자동 실행.",
+  link:"허브 역할. 차량·가스촬영·건조기·시트 데이터를 모아 보여줌. 재무관리가 가스 시트를 읽어감."},
+ {n:"차량 위치 (CarLive)",i:"🚐",store:["폰 설정","SQLite(/data)"],
+  in:"시거잭 전원(ACC) 연결·해제가 송출 시작·종료. 설정 화면에서 스트림키·해상도 등 입력.",
+  save:"앱 설정은 폰 내부(SharedPreferences). 영상은 저장 없이 YouTube로 송출. 위치는 전광판 서버 vehicles.db에 누적.",
+  ext:"YouTube RTMP 송출, 전광판 /api/vehicles(30초마다 위치), WiFi 위치 추정, Brevo 메일(시작·종료·배터리), GitHub 릴리스(원격 업데이트)",
+  auto:"전원 연결·부팅 시 송출 시작, 5초 워치독 재연결, 6시간마다 업데이트 확인, 방송 중 30초마다 위치 전송",
+  link:"전광판 /admin/vehicles 지도로 위치 전달"},
+ {n:"가스 카메라",i:"📷",store:["구글시트","SQLite(/data)","Drive 사진"],
+  in:"관리자가 PC에서 /factory-camera로 촬영 명령. 촬영폰이 후면(계량기)·전면(공장) 사진 촬영.",
+  save:"사진은 Drive 폴더에 보관(로컬 사본 포함). 이력은 SQLite camera.db. 판독값은 가스 시트 '도시가스' 탭 오늘 행(계량기값·OCR 상태). 차액·가스비는 시트 수식.",
+  ext:"폰↔서버 WebSocket·HTTP 업로드, 기기 OCR(기본)·Claude 비전(대체), Drive·Sheets, 알림 메일",
+  auto:"폰은 포그라운드 서비스로 15초 heartbeat. 고정 촬영 스케줄은 확인되지 않음(수동 명령 위주).",
+  link:"전광판 서버에 내장. 보조컴퓨터(카톡 사진 판독)도 같은 '도시가스' 탭에 기록. 재무관리가 일일 가스비를 읽어감."},
+ {n:"배송 현황",i:"🗺️",store:["SQLite(/data)","구글시트"],
+  in:"관리자가 시트 새로고침·최적화·기사 링크 배정. 기사가 기사링크(/d/토큰)에서 수거량 입력 후 '공장 도착·배송 종료'.",
+  save:"SQLite app-data.sqlite3(좌표 캐시·최적화 결과·변경이력·기사·배정·기사 입력). 현장입력 시트의 기사링크 전용 탭에 기록. 거래처 원장은 저장 안 하고 항상 시트에서 읽음.",
+  ext:"구글시트('세탁물 현황' 탭 읽기), TMAP, 카카오모빌리티 길찾기, 기사링크용 도메인(CNAME)",
+  auto:"운행일은 한국시간 오후 1시 기준으로 넘어가고 월요일은 휴무. 그날 담당 코스가 자동으로 열림. 별도 스케줄 없음.",
+  link:"'세탁물 현황'을 읽고, 쓴 포대수량 등은 전광판·보조컴퓨터가 읽음. 알림톡은 전광판 모듈이 담당."},
+ {n:"현황지 출력",i:"🖨️",store:["브라우저 저장","구글시트(읽기)"],
+  in:"화면에서 요일·날짜·코스를 고르고 배송순서·기사·업체 추가/제외·코멘트를 편집.",
+  save:"원본 시트에는 쓰지 않음. 편집값은 이 브라우저 localStorage에만 저장(날짜별 초안·마지막 코스·출력 이력).",
+  ext:"Google Apps Script 웹앱이 시트의 '세탁물 현황'·'거래처' 탭을 읽어 전달(읽기 전용)",
+  auto:"없음(수동 출력)",
+  link:"전광판 알림톡 모듈·배송 현황과 같은 시트 탭을 원본으로 공유"},
+ {n:"보조컴퓨터 (포장랭킹 카톡)",i:"💬",store:["구글시트","PC 로컬"],
+  in:"직원이 시트 '근태입력'에 퇴근시간을 넣으면 트리거. 직원이 카톡방에 올린 가스계량기 사진도 입력.",
+  save:"PC 로컬 파일(state.json·logs·가스 차트 이미지). 가스 시트 '도시가스' 탭에 판독값을 새 행으로 추가.",
+  ext:"구글시트(포장기록·근태입력·거래처명단 읽기), 카카오톡 PC 자동화, Claude 비전(계량기 사진 판독)",
+  auto:"PC에서 상시 실행, 시트를 90초마다 확인. 출근자 전원 퇴근시간이 채워지면 하루 1회 포장랭킹·가스비 그래프 발송.",
+  link:"가스 시트 '도시가스' 탭을 가스 카메라와 공유(사진 판독 경로 2개). 현장 앱들이 쓴 포장기록을 읽음."},
+ {n:"청과 수입 판단",i:"🥕",store:["Postgres","PC 백업"],
+  in:"aT 공영도매시장 정산정보 API 자동 수집 + 화면 직접 입력(매입·비용·판매·계획) + 환율 자동 조회 + 엑셀 업로드.",
+  save:"Railway PostgreSQL(원본 수집·매입 배치·비용·판매·계획·감사 로그 등). 직접 입력 기록은 PC backups/에 json.gz 백업.",
+  ext:"data.go.kr(katSale), 환율 API, Anthropic API(AI 가져오기용)",
+  auto:"매일 09:00(KST) 최근 7일 재수집, 환율 하루 1회. PC 작업 스케줄러가 매일 22:00 서버 백업 호출.",
+  link:"다른 프로그램과 연결 없음(독립)"},
+ {n:"출판 (Bookforge)",i:"📚",store:["SQLite(/data)","PC 로컬"],
+  in:"화면에서 작품 종류·주제를 입력하면 LLM이 기획·집필·교정을 자동 진행.",
+  save:"SQLite bookforge.sqlite3와 projects/ 출력물(PDF·EPUB). 로컬은 data/, Railway 공개본은 볼륨 /data.",
+  ext:"Anthropic, OpenAI, Ollama(로컬 LLM), EPUBCheck",
+  auto:"스케줄 없음(작업 큐). 완료·정지 시 Windows 알림.",
+  link:"독립. PC 로컬판(127.0.0.1:8765)이 기본, Railway 공개본도 있음."},
+ {n:"내편지도",i:"🗺️",store:["Postgres"],
+  in:"방문자가 별명+생년월일 입력, 친구가 링크로 참여. 관계 유형·케미는 자체 알고리즘으로 계산. 관리자는 /admin.",
+  save:"Railway PostgreSQL(Prisma): 지도·참여자·궁합 결과·프리미엄 리포트·결제·웹훅·공유/클릭 이벤트·감사 로그 등. 공유 이미지는 서버가 생성.",
+  ext:"Toss Payments(990원 상세 궁합 결제·웹훅), Kakao SDK·채널",
+  auto:"없음",
+  link:"독립"},
+ {n:"사주도령",i:"🔮",store:["외부 서비스"],
+  in:"외부 서비스(doryeong.app)",
+  save:"해당 서비스 쪽에서 관리. 이 PC에는 코드가 없고 디자인 참고 자료만 있음.",
+  ext:"", auto:"", link:"독립"},
+ {n:"쿠팡 주문내역 취합기",i:"🛒",store:["PC 로컬"],
+  in:"로그인한 쿠팡 마이페이지의 주문내역 JSON을 크롬 확장 또는 Python(Playwright)으로 수집.",
+  save:"쿠팡_주문내역.xlsx(주문내역·월별·품목별 집계, 증분 병합), 크롬 확장은 chrome.storage.local, 로그 파일.",
+  ext:"쿠팡 사이트만", auto:"없음(수동 실행)", link:"독립. PC 로컬 도구."},
+ {n:"forwarder.kr 수집기",i:"🌐",store:["PC 로컬"],
+  in:"forwarder.kr 공개 업체 목록·상세 페이지 크롤링(업종·지역 선택).",
+  save:"로컬 SQLite data/forwarder_kr.db, 엑셀은 exports/, 로그는 logs/.",
+  ext:"forwarder.kr만", auto:"없음(수동 실행)", link:"독립. PC 로컬 GUI 프로그램."},
+ {n:"한글 폰트 변환기",i:"✍️",store:["PC 로컬"],
+  in:"기존 .gfont 샘플과 나눔 글꼴을 읽어 필기 로봇용 .gfont로 변환.",
+  save:"로컬 파일(결과 korean_custom.gfont).", ext:"없음(오프라인)", auto:"없음", link:"독립. 변환한 폰트는 로봇 PC 소프트웨어에 수동 복사."},
+ {n:"재무관리",i:"💰",store:["SQLite(/data)","구글시트"],
+  in:"그랜터 CSV(서버가 자동 로그인해 받음, 화면 업로드도 가능). 구글시트 읽기(거래처·매출수거량·급여대장·근태입력·손익참고). 화면 입력(청구 확정·미수금 매칭·수기 입금·비용 분류). 은행 직접조회(Apps Script 중계). 네이버 광고비 API. 토스 미니앱이 결제를 호출.",
+  save:"Railway 볼륨 /data/dev.db(SQLite): 거래처·청구·입금·미수금 매칭, 그랜터 거래, 일일결산 스냅샷·마케팅비·고정비, 직원·근태·급여, 은행 거래, 토스페이 링크·결제, 감사 로그. 그랜터 원본은 구글시트 '그랜터_계좌·세금계산서·현금영수증' 탭에도 누적(백업).",
+  ext:"그랜터(2026-10-10 종료 예정, 은행 직접 연동으로 대체 중), 구글시트, CODEF·BankAPI, 토스페이 미니앱, 솔라피(청구 알림톡·결제완료 문자), 네이버 검색광고, 쿠팡, Brevo(결과 메일)",
+  auto:"매일 08:30 그랜터 자동 반영 → 09:00 실데이터 전체 동기화(청구 계산·일일결산). 3시간마다 네이버 광고 사용액 갱신. 5분마다 토스페이 결제 상태 재조회. 은행 자동조회는 설정을 켠 경우만.",
+  link:"전광판 가스 시트를 읽어 가스비 반영. 마케팅OS와 같은 네이버 광고 계정을 읽음(DB 연동은 아님). 토스 미니앱 결제가 들어오면 입금·미수금이 자동 생성."},
+ {n:"마케팅 스튜디오 (마케팅OS)",i:"📣",store:["구글시트","볼륨 파일","노트북 실행기"],
+  in:"관제 화면에서 모듈 ON/OFF·요일·AI 개선제안 승인. 외부 API·크롤링(네이버 검색광고·Meta·Threads·TikTok·YouTube·조달청·K-apt·블로그 RSS·아임웹·숨고). 브라우저 자동화로 블로그·인스타·아임웹·숨고에 발행·팔로우.",
+  save:"메인 저장소는 구글시트 'naver_blog_auto'(탭 30개 안팎: 모듈관리·콘텐츠작업·성과수집·광고성과·비용관리·오류로그·설정·조달공고·콘텐츠스튜디오·인스타 이력·모듈성과 등). 로컬 파일은 data/(상태·로그·내보내기). Railway 볼륨에 카드 이미지·쿠키 파일.",
+  ext:"네이버(검색광고·블로그·검색), Meta/인스타, Threads, TikTok, YouTube, Google Sheets·GSC, 아임웹, 숨고, 나라장터·K-apt, AI API, Brevo 메일",
+  auto:"매일 09:00 전 모듈 성과 수집. 10:00 인스타 요청 생성·파워링크 순위·조달/K-apt 수집·아임웹 발행. 매시간 모듈 지표·Threads 게시. 5분마다 노트북 파워링크 결과 메일 확인. 일일요약 메일(기본 19:00).",
+  link:"인스타·네이버 직접 작업은 시트 '실행요청' 큐를 통해 노트북 실행기가 처리. 재무관리가 같은 광고 계정을 읽음. 영업 허브는 키가 비면 마케팅OS 키를 폴백으로 사용."},
+ {n:"영업 허브",i:"🤝",store:["SQLite(/data)","구글시트"],
+  in:"공공데이터(LOCALDATA CSV·경기 오픈데이터), 네이버·카카오 API로 업체 번호 찾기, 구글시트 '토스견적신청' 읽기, 화면 수동 입력, AI 전화상담의 통화 결과.",
+  save:"Railway 볼륨 /data/sales_hub.db(SQLite): 업체 마스터·번호 후보·매칭 로그·수신거부·AI 발신 명단/결과·설정. 일일 gzip 백업 7일치(PC가 매일 받아옴). 구글시트 '영업DB' 탭은 보조 보기용.",
+  ext:"네이버, 카카오, 공공데이터포털, 구글시트. 전화 발신은 AI 전화상담이 담당.",
+  auto:"하루 1회 DB 백업. 10분마다 AI 전화상담 결과 가져오기. 서버 시작 시 전화번호 백필 1회.",
+  link:"AI 전화상담과 양방향: 발신 명단 보내기(사람이 시작 버튼), 결과·수신거부 동기화, 관심고객 '연락함' 반영."},
+ {n:"AI 전화상담",i:"🤖",store:["구글시트","볼륨 파일"],
+  in:"ClawOps 070 번호의 통화 웹훅·미디어 스트림. 대량발신 명단(영업 허브에서 받거나 화면에 붙여넣기). 회사전화 앱이 넘기는 되걸기 웹훅. 화면 입력(안내멘트·목소리·속도).",
+  save:"구글시트: 상담이력·고객마스터·담당자_라우팅·모델2설정·수신거부. Railway 볼륨 /data: 대량발신 진행 상황(bulk-job.json)·미리 만든 음성 캐시. 녹음은 ClawOps에서 가져와 재생.",
+  ext:"ClawOps(발·수신·녹음), Naver Clova(음성인식), OpenAI(대화), Fish Audio(음성), 구글시트, 솔라피·NCP SENS(알림), Brevo(관심고객 메일)",
+  auto:"시각 스케줄 없음. 대량발신은 사람이 시작하고 월 발신 한도(기본 100분) 근접 시 자동 정지. 상담이력 기록 대기열은 주기적으로 flush.",
+  link:"영업 허브와 명단·결과 교환. 회사전화 앱이 070 수신을 먼저 받고 되걸기만 이쪽으로 물어봄."},
+ {n:"회사전화",i:"📞",store:["SQLite(/data)","녹음 파일"],
+  in:"ClawOps 통화 웹훅(수신·동시 울림·부재중·상태). 직원 화면에서 로그인·수신 ON/OFF·거래처 관리·CSV 가져오기. 구글시트 Apps Script가 거래처를 자동 동기화.",
+  save:"Railway 볼륨 /data: phone.db(직원·거래처·통화·설정)와 recordings/ 녹음 파일(ClawOps는 90일 후 삭제, 여기는 계속 보관).",
+  ext:"ClawOps(수신·녹음·받아쓰기·요약), 솔라피(부재중 문자), 구글시트 Apps Script, AI 전화상담",
+  auto:"시각 스케줄 없음. 통화 후 20초·90초·5분·15분 간격으로 재시도하며 녹음·요약 가져옴.",
+  link:"AI 전화상담의 모델2 되걸기 중계(14일 안에 되건 번호는 AI 안내, 아니면 직원 폰 연결)."},
+];
+const FO=["공통 구조 (현장 시트)", "배송 입력", "포장 입력", "건조기 관리", "출퇴근 관리", "공장 전광판", "차량 위치 (CarLive)", "가스 카메라", "배송 현황", "현황지 출력", "보조컴퓨터 (포장랭킹 카톡)", "재무관리", "마케팅 스튜디오 (마케팅OS)", "영업 허브", "AI 전화상담", "회사전화", "청과 수입 판단", "출판 (Bookforge)", "내편지도", "사주도령", "쿠팡 주문내역 취합기", "forwarder.kr 수집기", "한글 폰트 변환기"];
+FLOW.sort((a,b)=>{const i=FO.indexOf(a.n),j=FO.indexOf(b.n);return (i<0?99:i)-(j<0?99:j)});
+
 const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), tab="전체";
-const all=()=>[...BASE,...custom.map(x=>({...x,custom:1}))];
-const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
+let tab="전체", view=location.hash==="#flow"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
+function all(){
+  const a=[...BASE,...custom.map(x=>({...x,custom:1}))];
+  const idx=n=>{const i=order.indexOf(n);return i<0?1e6:i};
+  return a.map((p,k)=>[p,k]).sort((x,y)=>idx(x[0].n)-idx(y[0].n)||x[1]-y[1]).map(x=>x[0]);
+}
 function card(p){
-  const on=favs.includes(p.n);
-  return `<a class="card" href="${esc(p.u)}" target="_blank" rel="noopener">
-    <div class="ic">${p.i||"🔗"}</div>
-    <div class="nm"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>
+  const on=favs.includes(p.n), st=status[p.n]||"";
+  const nm=`<div class="ic">${p.i||"🔗"}</div><div class="nm"><b><i class="dot ${st}" data-dot="${esc(p.n)}"></i>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
+  if(edit){
+    return `<div class="card">${nm}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
+  }
+  return `<a class="card" href="${esc(p.u)}">${nm}
     <button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
     ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
     <span class="go">→</span></a>`;
 }
-function render(){
+function renderLinks(){
   const q=$("#q").value.trim().toLowerCase(), a=all();
   const fav=a.filter(p=>favs.includes(p.n));
-  $("#favSec").style.display=fav.length&&!q?"":"none";
+  $("#favSec").style.display=fav.length&&!q&&!edit?"":"none";
   $("#fav").innerHTML=fav.map(card).join("");
   $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
   const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&(!q||(p.n+p.d+p.c).toLowerCase().includes(q)));
@@ -130,14 +320,57 @@ function render(){
     $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
   }
 }
+function renderFlow(){
+  const q=$("#q").value.trim().toLowerCase();
+  const tags=["전체",...new Set(FLOW.flatMap(f=>f.store))];
+  $("#chips").innerHTML=tags.map(t=>`<button class="chip ${t===tag?"on":""}" data-g="${esc(t)}">${esc(t)}</button>`).join("");
+  const rows=FLOW.filter(f=>(tag==="전체"||f.store.includes(tag))&&(!q||JSON.stringify(f).toLowerCase().includes(q)));
+  const r=(k,v)=>v?`<div class="row"><i>${k}</i><div>${esc(v)}</div></div>`:"";
+  $("#flow").innerHTML=rows.map(f=>`<details class="fc"><summary><div class="ic">${f.i||"🔗"}</div><div class="nm"><b>${esc(f.n)}</b><div>${f.store.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div></div></summary>
+    <div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details>`).join("")||'<div class="empty">결과가 없습니다</div>';
+}
+function render(){
+  $("#linksView").hidden=view!=="links"; $("#flowView").hidden=view!=="flow";
+  $("#vLinks").classList.toggle("on",view==="links"); $("#vFlow").classList.toggle("on",view==="flow");
+  $("#btnStatus").style.display=$("#btnEdit").style.display=view==="links"?"":"none";
+  $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
+  $("#addBtn").style.display=view==="links"?"":"none";
+  view==="links"?renderLinks():renderFlow();
+}
+function move(n,dir){
+  const L=all(), p=L.find(x=>x.n===n), same=L.filter(x=>x.c===p.c);
+  const i=same.findIndex(x=>x.n===n), j=i+dir;
+  if(j<0||j>=same.length)return;
+  const a=L.indexOf(same[i]), b=L.indexOf(same[j]);
+  [L[a],L[b]]=[L[b],L[a]];
+  order=L.map(x=>x.n); save("hub_order",order); render();
+}
+/* 상태 확인: 서버가 응답하면 초록, 응답 없으면 빨강 */
+function setDot(n){document.querySelectorAll('[data-dot="'+CSS.escape(n)+'"]').forEach(e=>e.className="dot "+(status[n]||""))}
+function checkAll(){
+  all().forEach(p=>{
+    status[p.n]="";setDot(p.n);
+    const ac=new AbortController(), t=setTimeout(()=>ac.abort(),10000);
+    fetch(p.u,{mode:"no-cors",cache:"no-store",signal:ac.signal})
+      .then(()=>{status[p.n]="ok"}).catch(()=>{status[p.n]="down"})
+      .finally(()=>{clearTimeout(t);setDot(p.n)});
+  });
+}
 document.addEventListener("click",e=>{
-  const s=e.target.closest("[data-s]"),d=e.target.closest("[data-d]"),t=e.target.closest("[data-t]");
+  const s=e.target.closest("[data-s]"),d=e.target.closest("[data-d]"),t=e.target.closest("[data-t]"),m=e.target.closest("[data-m]"),g=e.target.closest("[data-g]");
   if(s){e.preventDefault();const n=s.dataset.s;favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];save("hub_favs",favs);render()}
   else if(d){e.preventDefault();custom=custom.filter(x=>x.n!==d.dataset.d);save("hub_custom",custom);render()}
+  else if(m){const [dir,n]=m.dataset.m.split("|");move(n,+dir)}
   else if(t){tab=t.dataset.t;render()}
+  else if(g){tag=g.dataset.g;render()}
 });
 $("#q").addEventListener("input",render);
-$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){const a=document.querySelector("#list .card");if(a)window.open(a.href,"_blank")}});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card");if(a)location.href=a.href}});
+$("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
+$("#vFlow").onclick=()=>{view="flow";edit=false;save("hub_view",view);render()};
+$("#btnEdit").onclick=()=>{edit=!edit;render()};
+$("#btnStatus").onclick=checkAll;
+$("#btnOpenAll").onclick=()=>{const ds=[...document.querySelectorAll("details.fc")],open=ds.some(x=>!x.open);ds.forEach(x=>x.open=open);$("#btnOpenAll").textContent=open?"모두 접기":"모두 펼치기"};
 $("#fCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
 $("#addBtn").onclick=()=>{$("#fName").value="";$("#fUrl").value="";$("#dlg").showModal()};
 $("#fCancel").onclick=()=>$("#dlg").close();
@@ -146,7 +379,8 @@ $("#fSave").onclick=()=>{
   if(!n||!u)return;if(!/^https?:\/\//.test(u))u="https://"+u;
   custom.push({n,u,c:$("#fCat").value,d:$("#fCat").value});save("hub_custom",custom);$("#dlg").close();render();
 };
-render();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&view==="links")checkAll()});
+render();checkAll();
 </script>
 </body>
 </html>
