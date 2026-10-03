@@ -457,14 +457,22 @@ function move(n,dir){
 /* 상태 확인: 서버가 응답하면 초록, 응답 없으면 빨강 */
 function setDot(n){document.querySelectorAll('[data-dot="'+CSS.escape(n)+'"]').forEach(e=>e.className="dot "+(status[n]||""))}
 function checkAll(){
-  all().forEach(p=>{
+  return Promise.all(all().map(p=>{
     status[p.n]="";info[p.n]=null;setDot(p.n);
     const ac=new AbortController(), t0=performance.now(), t=setTimeout(()=>ac.abort(),10000);
-    fetch(p.u,{mode:"no-cors",cache:"no-store",signal:ac.signal})
+    return fetch(p.u,{mode:"no-cors",cache:"no-store",signal:ac.signal})
       .then(()=>{const ms=performance.now()-t0;status[p.n]=ms>5000?"slow":"ok";info[p.n]={ms}})
       .catch(e=>{status[p.n]="down";info[p.n]={ms:performance.now()-t0,timeout:ac.signal.aborted}})
       .finally(()=>{clearTimeout(t);setDot(p.n)});
-  });
+  }));
+}
+async function manualCheck(){
+  const b=$("#btnStatus");if(b.disabled)return;
+  b.disabled=true;b.textContent="확인 중…";
+  await checkAll();
+  const v=Object.values(status),c=k=>v.filter(x=>x===k).length;
+  b.disabled=false;b.textContent="상태 확인";
+  toast(`확인 완료 — 정상 ${c("ok")} · 느림 ${c("slow")} · 응답 없음 ${c("down")}`);
 }
 let toastT;
 function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),3800)}
@@ -501,7 +509,7 @@ $("#vFlow").onclick=()=>{view="flow";edit=false;save("hub_view",view);render()};
 $("#th1").onclick=()=>{theme="1";save("hub_theme",theme);render()};
 $("#th2").onclick=()=>{theme="2";save("hub_theme",theme);render()};
 $("#btnEdit").onclick=()=>{edit=!edit;render()};
-$("#btnStatus").onclick=checkAll;
+$("#btnStatus").onclick=manualCheck;
 $("#subClose").onclick=()=>$("#subDlg").close();
 $("#subDlg").addEventListener("click",e=>{if(e.target===$("#subDlg"))$("#subDlg").close()});
 document.addEventListener("contextmenu",e=>{const c=e.target.closest("a.card,a.tcard");if(!c)return;const b=c.querySelector("[data-x]");if(b){e.preventDefault();openSub(b.dataset.x)}});
