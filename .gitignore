@@ -1,1 +1,5 @@
 shots_raw/
+tools/raw/
+tools/refresh.log
+tools/_*.py
+tools/_list_old.json

@@ -1,0 +1,284 @@
+[
+ {
+  "n": "배송 입력",
+  "d": "배송·수거 입력",
+  "u": "https://yuseong-delivery-production.up.railway.app/",
+  "c": "공장·배송",
+  "i": "🚚"
+ },
+ {
+  "n": "포장 입력",
+  "d": "포장기록·라벨",
+  "u": "https://yuseong-packing-production.up.railway.app",
+  "c": "공장·배송",
+  "i": "📦"
+ },
+ {
+  "n": "건조기 관리",
+  "d": "건조기 현황",
+  "u": "https://yuseong-dryer-production.up.railway.app",
+  "c": "공장·배송",
+  "i": "🧺"
+ },
+ {
+  "n": "출퇴근 관리",
+  "d": "출퇴근기·명단",
+  "u": "https://yuseong-attendance-production.up.railway.app/",
+  "c": "공장·배송",
+  "i": "👥"
+ },
+ {
+  "n": "공장 전광판",
+  "d": "현장 진행 확인",
+  "u": "https://yuseong-display-board-production.up.railway.app",
+  "c": "공장·배송",
+  "i": "🖥️",
+  "subs": [
+   {
+    "t": "실시간 관리",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin"
+   },
+   {
+    "t": "진행률",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin/progress"
+   },
+   {
+    "t": "세탁물 찾기",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin/search"
+   },
+   {
+    "t": "완료 현황",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin/completed"
+   },
+   {
+    "t": "모니터 설정",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin/displays"
+   },
+   {
+    "t": "알림톡",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin/alimtalk"
+   },
+   {
+    "t": "차량 위치",
+    "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles"
+   },
+   {
+    "t": "가스 카메라",
+    "u": "https://yuseong-display-board-production.up.railway.app/factory-camera"
+   }
+  ]
+ },
+ {
+  "n": "배송 현황",
+  "d": "배송경로·현황",
+  "u": "https://yuseong-shipping-status-production.up.railway.app",
+  "c": "공장·배송",
+  "i": "🗺️"
+ },
+ {
+  "n": "차량 위치 관리",
+  "d": "CarLive 차량·송출",
+  "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles",
+  "c": "공장·배송",
+  "i": "🚐"
+ },
+ {
+  "n": "가스 카메라",
+  "d": "가스계량기 촬영",
+  "u": "https://yuseong-display-board-production.up.railway.app/factory-camera",
+  "c": "공장·배송",
+  "i": "📷"
+ },
+ {
+  "n": "현황지 출력",
+  "d": "현황지 인쇄",
+  "u": "https://partybok-crypto.github.io/print_status_sheet/",
+  "c": "공장·배송",
+  "i": "🖨️"
+ },
+ {
+  "n": "재무관리",
+  "d": "일일결산·청구·미수금",
+  "u": "https://yucle-finance-live-production.up.railway.app/",
+  "c": "정산·관리",
+  "i": "💰",
+  "subs": [
+   {
+    "t": "일일결산",
+    "u": "https://yucle-finance-live-production.up.railway.app/daily-close"
+   },
+   {
+    "t": "미수금",
+    "u": "https://yucle-finance-live-production.up.railway.app/receivables"
+   },
+   {
+    "t": "청구",
+    "u": "https://yucle-finance-live-production.up.railway.app/billing"
+   },
+   {
+    "t": "비용",
+    "u": "https://yucle-finance-live-production.up.railway.app/expenses"
+   },
+   {
+    "t": "은행",
+    "u": "https://yucle-finance-live-production.up.railway.app/bank"
+   },
+   {
+    "t": "연동",
+    "u": "https://yucle-finance-live-production.up.railway.app/connections"
+   }
+  ]
+ },
+ {
+  "n": "마케팅 스튜디오",
+  "d": "마케팅OS",
+  "u": "https://yuseong-marketing-os-review-production.up.railway.app",
+  "c": "영업·마케팅",
+  "i": "📣",
+  "subs": [
+   {
+    "t": "모듈 관리",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/modules"
+   },
+   {
+    "t": "콘텐츠 스튜디오",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/content-studio"
+   },
+   {
+    "t": "파워링크",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/powerlink"
+   },
+   {
+    "t": "메타 광고",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/meta-ads"
+   },
+   {
+    "t": "광고 성과",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/performance"
+   },
+   {
+    "t": "조달",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/procurement"
+   },
+   {
+    "t": "오류 로그",
+    "u": "https://yuseong-marketing-os-review-production.up.railway.app/logs"
+   }
+  ]
+ },
+ {
+  "n": "영업 허브",
+  "d": "영업관리 명단",
+  "u": "https://yuseong-sales-hub-production.up.railway.app",
+  "c": "영업·마케팅",
+  "i": "🤝",
+  "subs": [
+   {
+    "t": "업체 DB",
+    "u": "https://yuseong-sales-hub-production.up.railway.app/business"
+   },
+   {
+    "t": "관심 고객",
+    "u": "https://yuseong-sales-hub-production.up.railway.app/interested"
+   },
+   {
+    "t": "DB 찾기",
+    "u": "https://yuseong-sales-hub-production.up.railway.app/db-search"
+   },
+   {
+    "t": "AI 발신 통계",
+    "u": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats"
+   },
+   {
+    "t": "수신거부",
+    "u": "https://yuseong-sales-hub-production.up.railway.app/dnc"
+   },
+   {
+    "t": "설정",
+    "u": "https://yuseong-sales-hub-production.up.railway.app/settings"
+   }
+  ]
+ },
+ {
+  "n": "AI 전화상담",
+  "d": "AI 발신·통화기록",
+  "u": "https://server-production-8d8f.up.railway.app/ai-counselor",
+  "c": "영업·마케팅",
+  "i": "🤖",
+  "subs": [
+   {
+    "t": "대량발신",
+    "u": "https://server-production-8d8f.up.railway.app/ai-counselor/bulk"
+   },
+   {
+    "t": "통화기록",
+    "u": "https://server-production-8d8f.up.railway.app/ai-counselor/calls"
+   },
+   {
+    "t": "관심고객",
+    "u": "https://server-production-8d8f.up.railway.app/ai-counselor/interested"
+   },
+   {
+    "t": "안내멘트",
+    "u": "https://server-production-8d8f.up.railway.app/ai-counselor/script"
+   },
+   {
+    "t": "요금",
+    "u": "https://server-production-8d8f.up.railway.app/ai-counselor/billing"
+   },
+   {
+    "t": "수신",
+    "u": "https://server-production-8d8f.up.railway.app/ai-counselor/inbound"
+   }
+  ]
+ },
+ {
+  "n": "회사전화",
+  "d": "070 전화 CRM",
+  "u": "https://yuseong-phone-production.up.railway.app",
+  "c": "영업·마케팅",
+  "i": "📞",
+  "subs": [
+   {
+    "t": "통화기록",
+    "u": "https://yuseong-phone-production.up.railway.app/calls"
+   },
+   {
+    "t": "거래처",
+    "u": "https://yuseong-phone-production.up.railway.app/customers"
+   },
+   {
+    "t": "관리",
+    "u": "https://yuseong-phone-production.up.railway.app/admin"
+   }
+  ]
+ },
+ {
+  "n": "청과 수입 판단",
+  "d": "세척당근 수입·판매 판단",
+  "u": "https://web-production-f53da.up.railway.app",
+  "c": "기타",
+  "i": "🥕"
+ },
+ {
+  "n": "출판 (Bookforge)",
+  "d": "소설·시집 자가출판",
+  "u": "https://bookforge-production-27f6.up.railway.app",
+  "c": "기타",
+  "i": "📚"
+ },
+ {
+  "n": "내편지도",
+  "d": "관계 지도 바이럴 서비스",
+  "u": "https://web-production-304b2.up.railway.app",
+  "c": "기타",
+  "i": "🗺️"
+ },
+ {
+  "n": "사주도령",
+  "d": "사주 서비스",
+  "u": "https://doryeong.app/n",
+  "c": "기타",
+  "i": "🔮"
+ }
+]

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>유클 업무 허브</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1d5be6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="유클">
+<style>
+:root{--bg1:#dcebf9;--bg2:#f4f8fd;--card:#fff;--text:#0f172a;--sub:#64748b;--line:#e5eaf2;--blue:#1d5be6;--icbg:#e8f0fe;--chip:#eef2f9}
+@media(prefers-color-scheme:dark){:root{--bg1:#0b1220;--bg2:#0b1220;--card:#162033;--text:#e8eef9;--sub:#93a1b8;--line:#243049;--blue:#4c86ff;--icbg:#1f2e4a;--chip:#1f2b42}}
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg2) linear-gradient(180deg,var(--bg1),var(--bg2) 320px) no-repeat;color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+.top{display:flex;gap:12px;align-items:center}
+.logo{font-weight:800;font-size:20px;white-space:nowrap}
+.search{flex:1;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;min-width:0}
+.add{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap}
+h1{font-size:34px;margin:28px 0 4px}h1 b{color:var(--blue)}
+.desc{color:var(--sub);margin:0 0 18px;font-size:18px}
+h2{font-size:17px;margin:24px 0 12px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.seg{display:flex;background:var(--chip);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;color:var(--sub);padding:9px 18px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}
+.seg button.on{background:var(--card);color:var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.sm{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;cursor:pointer}
+.sm.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sp{flex:1}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:14px 0}
+.tab{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 16px;font-size:14px;cursor:pointer;white-space:nowrap;color:var(--text)}
+.tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:inherit;transition:.15s;position:relative}
+a.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px)}
+.ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px;flex:none;background:var(--icbg)}
+.nm{flex:1;min-width:0}
+.nm b{display:block;font-size:16px}
+.nm small{color:var(--sub);font-size:13px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#9aa6ba;margin-right:6px;vertical-align:1px}
+.dot.ok{background:#22c55e}.dot.down{background:#ef4444}
+.star,.del,.mv{background:none;border:0;font-size:20px;cursor:pointer;color:#b8c2d3;padding:4px}
+.star.on{color:#f5a623}
+.mv{color:var(--blue);font-size:22px;font-weight:700}
+.go{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--sub);flex:none}
+.fav .card{padding:18px}.fav .ic{width:56px;height:56px;font-size:28px}.fav .nm b{font-size:18px}
+.empty{color:var(--sub);padding:20px 0}
+.grp{grid-column:1/-1;font-size:15px;margin:14px 0 0;color:var(--sub)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tag{display:inline-block;background:var(--chip);color:var(--sub);border-radius:6px;padding:2px 7px;font-size:12px;margin:2px 4px 0 0}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px}
+.fc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.fh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.fh b{font-size:16px}
+.fh .ic{width:38px;height:38px;font-size:20px}
+.pipe{display:flex;align-items:stretch;gap:6px}
+.pc{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.pc label{font-size:11px;font-weight:700;color:var(--sub)}
+.pc.mid{flex:1.1}
+.pc span.ch{background:var(--chip);border-radius:8px;padding:6px 8px;font-size:12.5px;line-height:1.3;word-break:keep-all}
+.pc.c1 span.ch{background:#e7f6ec;color:#14532d}.pc.c2 span.ch{background:#e8f0fe;color:#1e3a8a}.pc.c3 span.ch{background:#fdf0e1;color:#7c3d06}
+@media(prefers-color-scheme:dark){.pc.c1 span.ch{background:#173826;color:#bbf7d0}.pc.c2 span.ch{background:#1c2c52;color:#c7d8ff}.pc.c3 span.ch{background:#3b2a14;color:#fcd9a8}}
+.arrow{align-self:center;color:var(--sub);font-size:20px;flex:none}
+.more{margin-top:10px}
+.more summary{cursor:pointer;color:var(--sub);font-size:12.5px;list-style:none}
+.more summary::-webkit-details-marker{display:none}
+.more summary::before{content:"▸ "}
+.more[open] summary::before{content:"▾ "}
+.fb{padding:8px 0 0;display:grid;gap:8px}
+.row{display:grid;grid-template-columns:62px 1fr;gap:8px;font-size:13px;line-height:1.5}
+.row i{font-style:normal;color:var(--sub);font-weight:700}
+.ov{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0 14px;display:grid;gap:10px}
+.ov h3{margin:0;font-size:14px;color:var(--sub)}
+.orow{display:flex;align-items:center;gap:8px}
+.oin{display:flex;align-items:center;gap:5px;flex:1;min-width:0}
+.oin .obox{flex:1;min-width:0}
+.oin .arrow{font-size:16px}
+.olab{width:48px;font-size:12px;font-weight:700;color:var(--sub);flex:none}
+.obox{background:var(--chip);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700;line-height:1.3}
+.obox small{display:block;font-weight:400;color:var(--sub);font-size:11.5px}
+.obox.hot{background:#e7f6ec;color:#14532d}
+@media(prefers-color-scheme:dark){.obox.hot{background:#173826;color:#bbf7d0}}
+/* 테마 2 : 화면 캡처 카드 */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.tcard{display:block;position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:.15s}
+a.tcard:hover{box-shadow:0 8px 22px rgba(30,60,120,.16);transform:translateY(-2px)}
+.shot{position:relative;aspect-ratio:16/10;background:var(--icbg);display:grid;place-items:center;font-size:46px;overflow:hidden}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+.shot .dot{position:absolute;left:10px;top:10px;margin:0;width:11px;height:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.tcard .star{position:absolute;right:6px;top:6px;background:rgba(255,255,255,.88);border-radius:999px;width:34px;height:34px;padding:0;font-size:19px;line-height:34px;text-align:center}
+.tcard .del{position:absolute;left:6px;bottom:50px;background:rgba(255,255,255,.9);border-radius:999px;font-size:13px;color:#ef4444}
+.tmeta{padding:10px 12px 12px}
+.tmeta b{display:block;font-size:15px}
+.tmeta small{color:var(--sub);font-size:12.5px}
+.tedit{display:flex;justify-content:center;gap:6px;padding:0 0 10px}
+.tedit .mv{background:var(--chip);border-radius:10px;padding:4px 18px}
+/* 하위 메뉴 · 상태 · 토스트 · 모바일 즐겨찾기 띠 */
+.dot.slow{background:#f59e0b}
+.subbtn{background:none;border:0;color:var(--sub);font-size:20px;font-weight:800;cursor:pointer;padding:4px 6px;line-height:1}
+.tcard .subbtn{position:absolute;right:6px;bottom:6px;background:var(--chip);border-radius:8px;font-size:16px;padding:2px 9px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0f172a;color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;z-index:50;max-width:92vw;box-shadow:0 6px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
+dialog.sub{padding:16px 16px 12px}
+dialog.sub h3{margin:0 0 10px;font-size:16px}
+.sublist{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sublist a{display:block;padding:12px 10px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--text);font-size:14px;font-weight:600;text-align:center;background:var(--card)}
+.sublist a:active{background:var(--chip)}
+.sublist a.main{grid-column:1/-1;background:var(--blue);color:#fff;border-color:var(--blue)}
+.favbar{display:flex;gap:8px;overflow-x:auto;padding:2px 0 4px}
+.fchip{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;width:68px;text-decoration:none;color:var(--text)}
+.fchip .ic{width:44px;height:44px;font-size:23px}
+.fchip span{font-size:11px;line-height:1.2;text-align:center;word-break:keep-all}
+dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw);background:var(--card);color:var(--text)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--card);color:var(--text)}
+dialog .dr{display:flex;gap:8px;justify-content:flex-end}
+dialog button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:14px;cursor:pointer}
+dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
+@media(max-width:600px){
+ .wrap{padding:12px 10px 40px}
+ h1{font-size:22px;margin:14px 0 2px}.desc{font-size:14px;margin:0 0 10px}
+ h2{font-size:14px;margin:12px 0 8px}
+ .add span{display:none}.add{padding:11px 14px}
+ .seg button{padding:8px 14px;font-size:14px}
+ .tabs{margin:10px 0;gap:6px}.tab{padding:7px 12px;font-size:13px}
+ .grid,.grid.fav{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .card,.fav .card{flex-direction:column;justify-content:center;text-align:center;gap:6px;padding:12px 4px 10px;min-height:96px}
+ .ic,.fav .ic{width:42px;height:42px;font-size:22px}
+ .nm b,.fav .nm b{font-size:13px;line-height:1.25;word-break:keep-all}
+ .nm small,.go{display:none}
+ .star{position:absolute;top:0;right:0;font-size:16px;padding:4px 6px}
+ .del{position:absolute;top:0;left:0;font-size:13px;padding:4px 6px}
+ .mv{padding:2px 10px}
+ .grp{margin:8px 0 0;font-size:13px}
+ #favSec{position:sticky;top:0;z-index:20;background:var(--bg2);margin:0 -10px;padding:6px 10px 2px;border-bottom:1px solid var(--line)}
+ #favSec h2{display:none}
+ .subbtn{position:absolute;left:0;top:0;font-size:17px;padding:4px 8px}
+ .tgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .tmeta{padding:8px 9px 10px}
+ .tmeta b{font-size:13.5px}
+ .tmeta small{display:none}
+ .shot{font-size:34px}
+ .tcard .star{width:30px;height:30px;line-height:30px;font-size:17px}
+ .flow{grid-template-columns:1fr}
+ .pipe{flex-direction:column}
+ .pipe>.arrow{transform:rotate(90deg);align-self:center;font-size:18px;margin:-2px 0}
+ .orow{flex-direction:column;align-items:stretch;gap:4px}
+ .olab{width:auto}
+ .oin .obox{font-size:12px;padding:7px 6px}
+ .oin .obox small{font-size:10.5px}
+ .pc span.ch{font-size:13px}
+ .olab{width:100%}
+ .row{grid-template-columns:58px 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">유클</div>
+    <input id="q" class="search" placeholder="검색" autocomplete="off">
+    <button class="add" id="addBtn">＋<span> 바로가기 추가</span></button>
+  </div>
+  <h1><b>유클</b> 업무 허브</h1>
+  <p class="desc">필요한 업무를 한곳에서</p>
+
+  <div class="bar">
+    <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vFlow">데이터 흐름</button></div>
+    <span class="sp"></span>
+    <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2</button></div>
+    <button class="sm" id="btnStatus">상태 확인</button>
+    <button class="sm" id="btnEdit">순서 편집</button>
+  </div>
+
+  <div id="linksView">
+    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="grid" id="list"></div>
+  </div>
+
+  <div id="flowView" hidden>
+    <div class="bar" style="margin-top:6px"><span style="color:var(--sub);font-size:14px">프로그램마다 데이터가 어디서 들어와 어디에 저장되는지</span><span class="sp"></span><button class="sm" id="btnOpenAll">모두 펼치기</button></div>
+    <div class="ov">
+      <h3>전체 지도 — 데이터가 흐르는 길</h3>
+      <div class="orow"><span class="olab">현장</span><div class="oin"><div class="obox">현장 앱 4개<small>배송·포장·건조기·출퇴근</small></div><span class="arrow">→</span><div class="obox hot">📊 구글시트<small>세탁공장 현장입력</small></div><span class="arrow">→</span><div class="obox">전광판 · 재무관리<small>배송현황 · 보조컴퓨터</small></div></div></div>
+      <div class="orow"><span class="olab">가스</span><div class="oin"><div class="obox">가스 카메라<small>또는 카톡 사진</small></div><span class="arrow">→</span><div class="obox hot">📊 시트 '도시가스'</div><span class="arrow">→</span><div class="obox">재무관리<small>일일 가스비</small></div></div></div>
+      <div class="orow"><span class="olab">영업</span><div class="oin"><div class="obox">영업 허브</div><span class="arrow">⇄</span><div class="obox">AI 전화상담</div><span class="arrow">⇄</span><div class="obox">회사전화<small>070 되걸기</small></div></div></div>
+      <div class="orow"><span class="olab">마케팅</span><div class="oin"><div class="obox">마케팅 OS</div><span class="arrow">⇄</span><div class="obox hot">📊 실행요청 시트</div><span class="arrow">⇄</span><div class="obox">노트북 실행기<small>인스타·네이버</small></div></div></div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="flow" id="flow"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<dialog id="subDlg" class="sub"><h3 id="subTitle"></h3><div class="sublist" id="subList"></div><div class="dr" style="margin-top:12px"><button id="subClose" style="padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer">닫기</button></div></dialog>
+<dialog id="dlg">
+  <h3 style="margin:0 0 10px">바로가기 추가</h3>
+  <label>이름<input id="fName"></label>
+  <label>주소<input id="fUrl" placeholder="https://"></label>
+  <label>분류<select id="fCat"></select></label>
+  <div class="dr"><button id="fCancel">취소</button><button class="pri" id="fSave">추가</button></div>
+</dialog>
+
+<script>
+const CATS=["공장·배송","정산·관리","영업·마케팅","기타"];
+/*BASE*/
+/*FLOW*/
+/*SHORT*/
+/*SHOTS*/
+
+const $=s=>document.querySelector(s);
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
+let theme=location.hash==="#t2"?"2":load("hub_theme","1");
+const info={};
+const isMob=()=>matchMedia("(max-width:600px)").matches;
+let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function all(){
+  const a=[...BASE,...custom.map(x=>({...x,custom:1}))];
+  const idx=n=>{const i=order.indexOf(n);return i<0?1e6:i};
+  return a.map((p,k)=>[p,k]).sort((x,y)=>idx(x[0].n)-idx(y[0].n)||x[1]-y[1]).map(x=>x[0]);
+}
+function tcard(p){
+  const on=favs.includes(p.n), st=status[p.n]||"", img=(typeof SHOTS!=="undefined")&&SHOTS[p.n];
+  const shot=`<div class="shot">${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
+  const meta=`<div class="tmeta"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
+  if(edit){
+    return `<div class="tcard">${shot}${meta}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
+  }
+  const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
+  return `<a class="tcard" href="${esc(p.u)}">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
+}
+function card(p){
+  if(theme==="2")return tcard(p);
+  const on=favs.includes(p.n), st=status[p.n]||"";
+  const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
+  const nm=`<div class="ic">${p.i||"🔗"}</div><div class="nm"><b><i class="dot ${st}" data-dot="${esc(p.n)}"></i>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
+  if(edit){
+    return `<div class="card">${nm}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
+  }
+  return `<a class="card" href="${esc(p.u)}">${nm}
+    ${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
+    ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
+    <span class="go">→</span></a>`;
+}
+function renderLinks(){
+  const q=$("#q").value.trim().toLowerCase(), a=all();
+  const fav=a.filter(p=>favs.includes(p.n));
+  $("#favSec").style.display=fav.length&&!q&&!edit?"":"none";
+  const bar=isMob();
+  $("#fav").className=bar?"favbar":(theme==="2"?"tgrid":"grid")+" fav";
+  $("#list").className=theme==="2"?"tgrid":"grid";
+  $("#fav").innerHTML=bar?fav.map(p=>`<a class="fchip" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`).join(""):fav.map(card).join("");
+  $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
+  const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&(!q||(p.n+p.d+p.c).toLowerCase().includes(q)));
+  if(tab==="전체"&&!q){
+    $("#list").innerHTML=CATS.map(c=>{const r=rows.filter(p=>p.c===c);return r.length?`<h3 class="grp">${c}</h3>`+r.map(card).join(""):""}).join("");
+  }else{
+    $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
+  }
+}
+function renderFlow(){
+  const q=$("#q").value.trim().toLowerCase();
+  const list=FLOW.filter(f=>SHORT[f.n]);
+  const tags=["전체",...new Set(list.flatMap(f=>f.store))];
+  $("#chips").innerHTML=tags.map(t=>`<button class="chip ${t===tag?"on":""}" data-g="${esc(t)}">${esc(t)}</button>`).join("");
+  const rows=list.filter(f=>(tag==="전체"||f.store.includes(tag))&&(!q||JSON.stringify(f).toLowerCase().includes(q)));
+  const r=(k,v)=>v?`<div class="row"><i>${k}</i><div>${esc(v)}</div></div>`:"";
+  const col=(cls,lab,arr)=>`<div class="pc ${cls}"><label>${lab}</label>${arr.map(x=>`<span class="ch">${esc(x)}</span>`).join("")||'<span class="ch" style="opacity:.5">없음</span>'}</div>`;
+  $("#flow").innerHTML=rows.map(f=>{const h=SHORT[f.n];return `<div class="fc"><div class="fh"><div class="ic">${f.i||"🔗"}</div><b>${esc(f.n)}</b></div>
+    <div class="pipe">${col("c1","입력",h.a)}<span class="arrow">→</span>${col("c2","저장",h.b)}<span class="arrow">→</span>${col("c3","읽는 곳",h.c)}</div>
+    <details class="more"><summary>자세히 보기</summary><div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details></div>`}).join("")||'<div class="empty">결과가 없습니다</div>';
+}
+function render(){
+  $("#linksView").hidden=view!=="links"; $("#flowView").hidden=view!=="flow";
+  $("#vLinks").classList.toggle("on",view==="links"); $("#vFlow").classList.toggle("on",view==="flow");
+  $("#btnStatus").style.display=$("#btnEdit").style.display=view==="links"?"":"none";
+  $("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
+  $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
+  $("#addBtn").style.display=view==="links"?"":"none";
+  view==="links"?renderLinks():renderFlow();
+}
+function move(n,dir){
+  const L=all(), p=L.find(x=>x.n===n), same=L.filter(x=>x.c===p.c);
+  const i=same.findIndex(x=>x.n===n), j=i+dir;
+  if(j<0||j>=same.length)return;
+  const a=L.indexOf(same[i]), b=L.indexOf(same[j]);
+  [L[a],L[b]]=[L[b],L[a]];
+  order=L.map(x=>x.n); save("hub_order",order); render();
+}
+/* 상태 확인: 서버가 응답하면 초록, 응답 없으면 빨강 */
+function setDot(n){document.querySelectorAll('[data-dot="'+CSS.escape(n)+'"]').forEach(e=>e.className="dot "+(status[n]||""))}
+function checkAll(){
+  all().forEach(p=>{
+    status[p.n]="";info[p.n]=null;setDot(p.n);
+    const ac=new AbortController(), t0=performance.now(), t=setTimeout(()=>ac.abort(),10000);
+    fetch(p.u,{mode:"no-cors",cache:"no-store",signal:ac.signal})
+      .then(()=>{const ms=performance.now()-t0;status[p.n]=ms>5000?"slow":"ok";info[p.n]={ms}})
+      .catch(e=>{status[p.n]="down";info[p.n]={ms:performance.now()-t0,timeout:ac.signal.aborted}})
+      .finally(()=>{clearTimeout(t);setDot(p.n)});
+  });
+}
+let toastT;
+function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),3800)}
+function why(n){
+  const st=status[n],i=info[n];
+  if(!st&&!i)return n+": 아직 확인 전입니다. '상태 확인'을 눌러 보세요";
+  const sec=i?(i.ms/1000).toFixed(1)+"초":"";
+  if(st==="ok")return n+": 정상 응답 ("+sec+")";
+  if(st==="slow")return n+": 응답은 하지만 느립니다 ("+sec+"). 서버가 깨어나는 중일 수 있어요";
+  if(st==="down")return n+(i&&i.timeout?": 10초 안에 응답이 없습니다. 서버가 꺼져 있거나 매우 느립니다":": 연결에 실패했습니다. 서버가 꺼져 있거나 주소가 바뀌었을 수 있습니다");
+  return n+": 확인 중…";
+}
+function openSub(n){
+  const p=all().find(x=>x.n===n);if(!p||!p.subs)return;
+  $("#subTitle").textContent=p.n;
+  $("#subList").innerHTML=`<a class="main" href="${esc(p.u)}">${esc(p.n)} 열기</a>`+p.subs.map(x=>`<a href="${esc(x.u)}">${esc(x.t)}</a>`).join("");
+  $("#subDlg").showModal();
+}
+document.addEventListener("click",e=>{
+  const x=e.target.closest("[data-x]"), dt=e.target.closest(".dot[data-dot]");
+  if(x){e.preventDefault();openSub(x.dataset.x);return}
+  if(dt){e.preventDefault();toast(why(dt.dataset.dot));return}
+  const s=e.target.closest("[data-s]"),d=e.target.closest("[data-d]"),t=e.target.closest("[data-t]"),m=e.target.closest("[data-m]"),g=e.target.closest("[data-g]");
+  if(s){e.preventDefault();const n=s.dataset.s;favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];save("hub_favs",favs);render()}
+  else if(d){e.preventDefault();custom=custom.filter(x=>x.n!==d.dataset.d);save("hub_custom",custom);render()}
+  else if(m){const [dir,n]=m.dataset.m.split("|");move(n,+dir)}
+  else if(t){tab=t.dataset.t;render()}
+  else if(g){tag=g.dataset.g;render()}
+});
+$("#q").addEventListener("input",render);
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card, #list a.tcard");if(a)location.href=a.href}});
+$("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
+$("#vFlow").onclick=()=>{view="flow";edit=false;save("hub_view",view);render()};
+$("#th1").onclick=()=>{theme="1";save("hub_theme",theme);render()};
+$("#th2").onclick=()=>{theme="2";save("hub_theme",theme);render()};
+$("#btnEdit").onclick=()=>{edit=!edit;render()};
+$("#btnStatus").onclick=checkAll;
+$("#subClose").onclick=()=>$("#subDlg").close();
+$("#subDlg").addEventListener("click",e=>{if(e.target===$("#subDlg"))$("#subDlg").close()});
+document.addEventListener("contextmenu",e=>{const c=e.target.closest("a.card,a.tcard");if(!c)return;const b=c.querySelector("[data-x]");if(b){e.preventDefault();openSub(b.dataset.x)}});
+matchMedia("(max-width:600px)").addEventListener("change",()=>render());
+$("#btnOpenAll").onclick=()=>{const ds=[...document.querySelectorAll("details.more")],open=ds.some(x=>!x.open);ds.forEach(x=>x.open=open);$("#btnOpenAll").textContent=open?"모두 접기":"모두 펼치기"};
+$("#fCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
+$("#addBtn").onclick=()=>{$("#fName").value="";$("#fUrl").value="";$("#dlg").showModal()};
+$("#fCancel").onclick=()=>$("#dlg").close();
+$("#fSave").onclick=()=>{
+  const n=$("#fName").value.trim();let u=$("#fUrl").value.trim();
+  if(!n||!u)return;if(!/^https?:\/\//.test(u))u="https://"+u;
+  custom.push({n,u,c:$("#fCat").value,d:$("#fCat").value});save("hub_custom",custom);$("#dlg").close();render();
+};
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&view==="links")checkAll()});
+render();checkAll();
+if(location.hash.startsWith("#sub=")){try{openSub(decodeURIComponent(location.hash.slice(5)))}catch(e){}}
+</script>
+</body>
+</html>
