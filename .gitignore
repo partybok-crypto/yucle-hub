@@ -1,5 +1,8 @@
 shots_raw/
 tools/raw/
 tools/refresh.log
+tools/monitor.log
+tools/monitor_state.json
+tools/*.lock
 tools/_*.py
 tools/_list_old.json
