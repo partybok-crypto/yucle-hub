@@ -54,15 +54,38 @@ a.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px
 .chip{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
 .chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .tag{display:inline-block;background:var(--chip);color:var(--sub);border-radius:6px;padding:2px 7px;font-size:12px;margin:2px 4px 0 0}
-.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px}
-details.fc{background:var(--card);border:1px solid var(--line);border-radius:16px}
-details.fc summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:14px}
-details.fc summary::-webkit-details-marker{display:none}
-details.fc summary::after{content:"▾";color:var(--sub);margin-left:auto}
-details.fc[open] summary::after{content:"▴"}
-.fb{padding:2px 16px 16px;display:grid;gap:10px}
-.row{display:grid;grid-template-columns:70px 1fr;gap:8px;font-size:14px;line-height:1.5}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px}
+.fc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.fh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.fh b{font-size:16px}
+.fh .ic{width:38px;height:38px;font-size:20px}
+.pipe{display:flex;align-items:stretch;gap:6px}
+.pc{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.pc label{font-size:11px;font-weight:700;color:var(--sub)}
+.pc.mid{flex:1.1}
+.pc span.ch{background:var(--chip);border-radius:8px;padding:6px 8px;font-size:12.5px;line-height:1.3;word-break:keep-all}
+.pc.c1 span.ch{background:#e7f6ec;color:#14532d}.pc.c2 span.ch{background:#e8f0fe;color:#1e3a8a}.pc.c3 span.ch{background:#fdf0e1;color:#7c3d06}
+@media(prefers-color-scheme:dark){.pc.c1 span.ch{background:#173826;color:#bbf7d0}.pc.c2 span.ch{background:#1c2c52;color:#c7d8ff}.pc.c3 span.ch{background:#3b2a14;color:#fcd9a8}}
+.arrow{align-self:center;color:var(--sub);font-size:20px;flex:none}
+.more{margin-top:10px}
+.more summary{cursor:pointer;color:var(--sub);font-size:12.5px;list-style:none}
+.more summary::-webkit-details-marker{display:none}
+.more summary::before{content:"▸ "}
+.more[open] summary::before{content:"▾ "}
+.fb{padding:8px 0 0;display:grid;gap:8px}
+.row{display:grid;grid-template-columns:62px 1fr;gap:8px;font-size:13px;line-height:1.5}
 .row i{font-style:normal;color:var(--sub);font-weight:700}
+.ov{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0 14px;display:grid;gap:10px}
+.ov h3{margin:0;font-size:14px;color:var(--sub)}
+.orow{display:flex;align-items:center;gap:8px}
+.oin{display:flex;align-items:center;gap:5px;flex:1;min-width:0}
+.oin .obox{flex:1;min-width:0}
+.oin .arrow{font-size:16px}
+.olab{width:48px;font-size:12px;font-weight:700;color:var(--sub);flex:none}
+.obox{background:var(--chip);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700;line-height:1.3}
+.obox small{display:block;font-weight:400;color:var(--sub);font-size:11.5px}
+.obox.hot{background:#e7f6ec;color:#14532d}
+@media(prefers-color-scheme:dark){.obox.hot{background:#173826;color:#bbf7d0}}
 dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw);background:var(--card);color:var(--text)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
 dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--card);color:var(--text)}
@@ -86,7 +109,15 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
  .mv{padding:2px 10px}
  .grp{margin:8px 0 0;font-size:13px}
  .flow{grid-template-columns:1fr}
- .row{grid-template-columns:58px 1fr;font-size:13px}
+ .pipe{flex-direction:column}
+ .pipe>.arrow{transform:rotate(90deg);align-self:center;font-size:18px;margin:-2px 0}
+ .orow{flex-direction:column;align-items:stretch;gap:4px}
+ .olab{width:auto}
+ .oin .obox{font-size:12px;padding:7px 6px}
+ .oin .obox small{font-size:10.5px}
+ .pc span.ch{font-size:13px}
+ .olab{width:100%}
+ .row{grid-template-columns:58px 1fr}
 }
 </style>
 </head>
@@ -115,6 +146,13 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 
   <div id="flowView" hidden>
     <div class="bar" style="margin-top:6px"><span style="color:var(--sub);font-size:14px">프로그램마다 데이터가 어디서 들어와 어디에 저장되는지</span><span class="sp"></span><button class="sm" id="btnOpenAll">모두 펼치기</button></div>
+    <div class="ov">
+      <h3>전체 지도 — 데이터가 흐르는 길</h3>
+      <div class="orow"><span class="olab">현장</span><div class="oin"><div class="obox">현장 앱 4개<small>배송·포장·건조기·출퇴근</small></div><span class="arrow">→</span><div class="obox hot">📊 구글시트<small>세탁공장 현장입력</small></div><span class="arrow">→</span><div class="obox">전광판 · 재무관리<small>배송현황 · 보조컴퓨터</small></div></div></div>
+      <div class="orow"><span class="olab">가스</span><div class="oin"><div class="obox">가스 카메라<small>또는 카톡 사진</small></div><span class="arrow">→</span><div class="obox hot">📊 시트 '도시가스'</div><span class="arrow">→</span><div class="obox">재무관리<small>일일 가스비</small></div></div></div>
+      <div class="orow"><span class="olab">영업</span><div class="oin"><div class="obox">영업 허브</div><span class="arrow">⇄</span><div class="obox">AI 전화상담</div><span class="arrow">⇄</span><div class="obox">회사전화<small>070 되걸기</small></div></div></div>
+      <div class="orow"><span class="olab">마케팅</span><div class="oin"><div class="obox">마케팅 OS</div><span class="arrow">⇄</span><div class="obox hot">📊 실행요청 시트</div><span class="arrow">⇄</span><div class="obox">노트북 실행기<small>인스타·네이버</small></div></div></div>
+    </div>
     <div class="chips" id="chips"></div>
     <div class="flow" id="flow"></div>
   </div>
@@ -283,12 +321,37 @@ const FLOW=[
 ];
 const FO=["공통 구조 (현장 시트)", "배송 입력", "포장 입력", "건조기 관리", "출퇴근 관리", "공장 전광판", "차량 위치 (CarLive)", "가스 카메라", "배송 현황", "현황지 출력", "보조컴퓨터 (포장랭킹 카톡)", "재무관리", "마케팅 스튜디오 (마케팅OS)", "영업 허브", "AI 전화상담", "회사전화", "청과 수입 판단", "출판 (Bookforge)", "내편지도", "사주도령", "쿠팡 주문내역 취합기", "forwarder.kr 수집기", "한글 폰트 변환기"];
 FLOW.sort((a,b)=>{const i=FO.indexOf(a.n),j=FO.indexOf(b.n);return (i<0?99:i)-(j<0?99:j)});
+const SHORT={
+ "배송 입력":{a:["✍️ 터치모니터 입력"],b:["📊 시트 배송지수량·포대수량","🛟 보관함(재전송)"],c:["배송 현황","전광판"]},
+ "포장 입력":{a:["📱 태블릿 터치"],b:["📊 시트 포장기록","🖨️ 라벨 출력"],c:["전광판","재무관리"]},
+ "건조기 관리":{a:["📱 태블릿 앱"],b:["💾 서버 DB","📊 시트 건조기기록"],c:["전광판","재무관리"]},
+ "출퇴근 관리":{a:["👆 출퇴근 터치"],b:["💾 서버 DB","📊 시트 근태입력"],c:["포장","건조기","전광판","재무관리"]},
+ "공장 전광판":{a:["📊 현장 시트","📡 차량·카메라폰","✍️ 관리자 입력"],b:["📊 시트 전광판_ 탭","💾 SQLite","🖼️ Drive 사진"],c:["공장 모니터","거래처 알림톡"]},
+ "차량 위치 (CarLive)":{a:["🔌 시거잭 전원"],b:["📺 YouTube 송출","💾 위치 DB(전광판)"],c:["전광판 지도"]},
+ "가스 카메라":{a:["👤 관리자 촬영명령","📷 촬영폰"],b:["🖼️ Drive 사진","📊 시트 도시가스"],c:["재무관리 가스비"]},
+ "배송 현황":{a:["📊 시트 세탁물 현황","📱 기사링크 입력"],b:["💾 SQLite","📊 시트 기사링크 탭"],c:["기사 폰","전광판"]},
+ "현황지 출력":{a:["📊 시트(읽기만)"],b:["🌐 브라우저 임시저장"],c:["🖨️ 인쇄"]},
+ "보조컴퓨터 (포장랭킹 카톡)":{a:["📊 시트 근태입력","💬 카톡 가스사진"],b:["📊 시트 도시가스","🖥️ PC 파일"],c:["💬 카톡 랭킹 발송"]},
+ "재무관리":{a:["🏦 그랜터·은행","📊 구글시트","✍️ 화면 입력","💳 토스 결제"],b:["💾 /data DB","📊 시트 백업"],c:["일일결산","청구·미수금"]},
+ "마케팅 스튜디오 (마케팅OS)":{a:["🌐 네이버·Meta 등 API","🤖 노트북 실행기","✍️ 관제 화면"],b:["📊 시트 naver_blog_auto","🖼️ 볼륨 이미지"],c:["블로그·인스타 발행","재무관리(광고비)"]},
+ "영업 허브":{a:["🏛️ 공공데이터","🔎 네이버·카카오","🤖 AI상담 결과"],b:["💾 /data DB","📊 시트 영업DB"],c:["AI 전화상담"]},
+ "AI 전화상담":{a:["📞 070 통화","📋 영업허브 명단"],b:["📊 시트 상담이력","💾 /data 볼륨"],c:["영업 허브","담당자 알림"]},
+ "회사전화":{a:["📞 070 수신","✍️ 직원 화면","📊 거래처 시트"],b:["💾 /data DB","🎙️ 녹음 파일"],c:["직원 폰","AI 상담(되걸기)"]},
+ "청과 수입 판단":{a:["🏛️ aT 도매시장 API","✍️ 화면 입력","💱 환율"],b:["🐘 Postgres","🗄️ PC 백업"],c:["본인 화면"]},
+ "출판 (Bookforge)":{a:["✍️ 주제 입력","🤖 LLM"],b:["💾 SQLite","📄 PDF·EPUB"],c:["본인"]},
+ "내편지도":{a:["🙋 방문자 입력","💳 결제"],b:["🐘 Postgres"],c:["공유 링크"]},
+ "사주도령":{a:["🌐 외부 서비스"],b:["외부에서 관리"],c:[]},
+ "쿠팡 주문내역 취합기":{a:["🛒 쿠팡 주문"],b:["📄 엑셀 파일(PC)"],c:[]},
+ "forwarder.kr 수집기":{a:["🌐 forwarder.kr"],b:["💾 SQLite·엑셀(PC)"],c:[]},
+ "한글 폰트 변환기":{a:["🔤 나눔 글꼴"],b:["📄 .gfont(PC)"],c:[]}
+};
+
 
 const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
-let tab="전체", view=location.hash==="#flow"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
+let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function all(){
@@ -322,12 +385,15 @@ function renderLinks(){
 }
 function renderFlow(){
   const q=$("#q").value.trim().toLowerCase();
-  const tags=["전체",...new Set(FLOW.flatMap(f=>f.store))];
+  const list=FLOW.filter(f=>SHORT[f.n]);
+  const tags=["전체",...new Set(list.flatMap(f=>f.store))];
   $("#chips").innerHTML=tags.map(t=>`<button class="chip ${t===tag?"on":""}" data-g="${esc(t)}">${esc(t)}</button>`).join("");
-  const rows=FLOW.filter(f=>(tag==="전체"||f.store.includes(tag))&&(!q||JSON.stringify(f).toLowerCase().includes(q)));
+  const rows=list.filter(f=>(tag==="전체"||f.store.includes(tag))&&(!q||JSON.stringify(f).toLowerCase().includes(q)));
   const r=(k,v)=>v?`<div class="row"><i>${k}</i><div>${esc(v)}</div></div>`:"";
-  $("#flow").innerHTML=rows.map(f=>`<details class="fc"><summary><div class="ic">${f.i||"🔗"}</div><div class="nm"><b>${esc(f.n)}</b><div>${f.store.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div></div></summary>
-    <div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details>`).join("")||'<div class="empty">결과가 없습니다</div>';
+  const col=(cls,lab,arr)=>`<div class="pc ${cls}"><label>${lab}</label>${arr.map(x=>`<span class="ch">${esc(x)}</span>`).join("")||'<span class="ch" style="opacity:.5">없음</span>'}</div>`;
+  $("#flow").innerHTML=rows.map(f=>{const h=SHORT[f.n];return `<div class="fc"><div class="fh"><div class="ic">${f.i||"🔗"}</div><b>${esc(f.n)}</b></div>
+    <div class="pipe">${col("c1","입력",h.a)}<span class="arrow">→</span>${col("c2","저장",h.b)}<span class="arrow">→</span>${col("c3","읽는 곳",h.c)}</div>
+    <details class="more"><summary>자세히 보기</summary><div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details></div>`}).join("")||'<div class="empty">결과가 없습니다</div>';
 }
 function render(){
   $("#linksView").hidden=view!=="links"; $("#flowView").hidden=view!=="flow";
@@ -370,7 +436,7 @@ $("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
 $("#vFlow").onclick=()=>{view="flow";edit=false;save("hub_view",view);render()};
 $("#btnEdit").onclick=()=>{edit=!edit;render()};
 $("#btnStatus").onclick=checkAll;
-$("#btnOpenAll").onclick=()=>{const ds=[...document.querySelectorAll("details.fc")],open=ds.some(x=>!x.open);ds.forEach(x=>x.open=open);$("#btnOpenAll").textContent=open?"모두 접기":"모두 펼치기"};
+$("#btnOpenAll").onclick=()=>{const ds=[...document.querySelectorAll("details.more")],open=ds.some(x=>!x.open);ds.forEach(x=>x.open=open);$("#btnOpenAll").textContent=open?"모두 접기":"모두 펼치기"};
 $("#fCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
 $("#addBtn").onclick=()=>{$("#fName").value="";$("#fUrl").value="";$("#dlg").showModal()};
 $("#fCancel").onclick=()=>$("#dlg").close();
