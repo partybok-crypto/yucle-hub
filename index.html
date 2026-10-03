@@ -86,6 +86,20 @@ a.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px
 .obox small{display:block;font-weight:400;color:var(--sub);font-size:11.5px}
 .obox.hot{background:#e7f6ec;color:#14532d}
 @media(prefers-color-scheme:dark){.obox.hot{background:#173826;color:#bbf7d0}}
+/* 테마 2 : 화면 캡처 카드 */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.tcard{display:block;position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:.15s}
+a.tcard:hover{box-shadow:0 8px 22px rgba(30,60,120,.16);transform:translateY(-2px)}
+.shot{position:relative;aspect-ratio:16/10;background:var(--icbg);display:grid;place-items:center;font-size:46px;overflow:hidden}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+.shot .dot{position:absolute;left:10px;top:10px;margin:0;width:11px;height:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.tcard .star{position:absolute;right:6px;top:6px;background:rgba(255,255,255,.88);border-radius:999px;width:34px;height:34px;padding:0;font-size:19px;line-height:34px;text-align:center}
+.tcard .del{position:absolute;left:6px;bottom:50px;background:rgba(255,255,255,.9);border-radius:999px;font-size:13px;color:#ef4444}
+.tmeta{padding:10px 12px 12px}
+.tmeta b{display:block;font-size:15px}
+.tmeta small{color:var(--sub);font-size:12.5px}
+.tedit{display:flex;justify-content:center;gap:6px;padding:0 0 10px}
+.tedit .mv{background:var(--chip);border-radius:10px;padding:4px 18px}
 dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw);background:var(--card);color:var(--text)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
 dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--card);color:var(--text)}
@@ -108,6 +122,12 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
  .del{position:absolute;top:0;left:0;font-size:13px;padding:4px 6px}
  .mv{padding:2px 10px}
  .grp{margin:8px 0 0;font-size:13px}
+ .tgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .tmeta{padding:8px 9px 10px}
+ .tmeta b{font-size:13.5px}
+ .tmeta small{display:none}
+ .shot{font-size:34px}
+ .tcard .star{width:30px;height:30px;line-height:30px;font-size:17px}
  .flow{grid-template-columns:1fr}
  .pipe{flex-direction:column}
  .pipe>.arrow{transform:rotate(90deg);align-self:center;font-size:18px;margin:-2px 0}
@@ -134,6 +154,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   <div class="bar">
     <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vFlow">데이터 흐름</button></div>
     <span class="sp"></span>
+    <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2</button></div>
     <button class="sm" id="btnStatus">상태 확인</button>
     <button class="sm" id="btnEdit">순서 편집</button>
   </div>
@@ -346,11 +367,13 @@ const SHORT={
  "한글 폰트 변환기":{a:["🔤 나눔 글꼴"],b:["📄 .gfont(PC)"],c:[]}
 };
 
+const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
 
 const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
+let theme=location.hash==="#t2"?"2":load("hub_theme","1");
 let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
@@ -359,7 +382,17 @@ function all(){
   const idx=n=>{const i=order.indexOf(n);return i<0?1e6:i};
   return a.map((p,k)=>[p,k]).sort((x,y)=>idx(x[0].n)-idx(y[0].n)||x[1]-y[1]).map(x=>x[0]);
 }
+function tcard(p){
+  const on=favs.includes(p.n), st=status[p.n]||"", img=(typeof SHOTS!=="undefined")&&SHOTS[p.n];
+  const shot=`<div class="shot">${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
+  const meta=`<div class="tmeta"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
+  if(edit){
+    return `<div class="tcard">${shot}${meta}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
+  }
+  return `<a class="tcard" href="${esc(p.u)}">${shot}${meta}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
+}
 function card(p){
+  if(theme==="2")return tcard(p);
   const on=favs.includes(p.n), st=status[p.n]||"";
   const nm=`<div class="ic">${p.i||"🔗"}</div><div class="nm"><b><i class="dot ${st}" data-dot="${esc(p.n)}"></i>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
@@ -374,6 +407,8 @@ function renderLinks(){
   const q=$("#q").value.trim().toLowerCase(), a=all();
   const fav=a.filter(p=>favs.includes(p.n));
   $("#favSec").style.display=fav.length&&!q&&!edit?"":"none";
+  $("#fav").className=(theme==="2"?"tgrid":"grid")+" fav";
+  $("#list").className=theme==="2"?"tgrid":"grid";
   $("#fav").innerHTML=fav.map(card).join("");
   $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
   const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&(!q||(p.n+p.d+p.c).toLowerCase().includes(q)));
@@ -399,6 +434,7 @@ function render(){
   $("#linksView").hidden=view!=="links"; $("#flowView").hidden=view!=="flow";
   $("#vLinks").classList.toggle("on",view==="links"); $("#vFlow").classList.toggle("on",view==="flow");
   $("#btnStatus").style.display=$("#btnEdit").style.display=view==="links"?"":"none";
+  $("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
   $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
   $("#addBtn").style.display=view==="links"?"":"none";
   view==="links"?renderLinks():renderFlow();
@@ -431,9 +467,11 @@ document.addEventListener("click",e=>{
   else if(g){tag=g.dataset.g;render()}
 });
 $("#q").addEventListener("input",render);
-$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card");if(a)location.href=a.href}});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card, #list a.tcard");if(a)location.href=a.href}});
 $("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
 $("#vFlow").onclick=()=>{view="flow";edit=false;save("hub_view",view);render()};
+$("#th1").onclick=()=>{theme="1";save("hub_theme",theme);render()};
+$("#th2").onclick=()=>{theme="2";save("hub_theme",theme);render()};
 $("#btnEdit").onclick=()=>{edit=!edit;render()};
 $("#btnStatus").onclick=checkAll;
 $("#btnOpenAll").onclick=()=>{const ds=[...document.querySelectorAll("details.more")],open=ds.some(x=>!x.open);ds.forEach(x=>x.open=open);$("#btnOpenAll").textContent=open?"모두 접기":"모두 펼치기"};
