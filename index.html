@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>유클 업무 허브</title>
+<style>
+:root{--bg:#eef5fc;--card:#fff;--text:#0f172a;--sub:#64748b;--line:#e5eaf2;--blue:#1d5be6}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#dcebf9,#f4f8fd 320px);color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;min-height:100vh}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+.top{display:flex;gap:12px;align-items:center}
+.logo{font-weight:800;font-size:20px;white-space:nowrap}
+.search{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px;min-width:0}
+.add{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap}
+h1{font-size:34px;margin:28px 0 4px}h1 b{color:var(--blue)}
+.desc{color:var(--sub);margin:0 0 24px;font-size:18px}
+h2{font-size:17px;margin:24px 0 12px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:18px 0}
+.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-size:14px;cursor:pointer;white-space:nowrap;color:var(--text)}
+.tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px)}
+.ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px;flex:none;background:#e8f0fe}
+.nm{flex:1;min-width:0}
+.nm b{display:block;font-size:16px}
+.nm small{color:var(--sub);font-size:13px}
+.star,.del{background:none;border:0;font-size:20px;cursor:pointer;color:#b8c2d3;padding:4px}
+.star.on{color:#f5a623}
+.go{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--sub);flex:none}
+.fav .card{padding:18px}.fav .ic{width:56px;height:56px;font-size:28px}.fav .nm b{font-size:18px}
+.empty{color:var(--sub);padding:20px 0}
+dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.35)}
+dialog input,dialog select{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+dialog .row{display:flex;gap:8px;justify-content:flex-end}
+dialog button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:14px;cursor:pointer}
+dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
+@media(max-width:600px){h1{font-size:28px}.logo small{display:none}.add span{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">유클</div>
+    <input id="q" class="search" placeholder="프로그램 검색" autocomplete="off">
+    <button class="add" id="addBtn">＋<span> 바로가기 추가</span></button>
+  </div>
+  <h1><b>유클</b> 업무 허브</h1>
+  <p class="desc">필요한 업무를 한곳에서</p>
+
+  <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="list"></div>
+</div>
+
+<dialog id="dlg">
+  <h3 style="margin:0 0 10px">바로가기 추가</h3>
+  <label>이름<input id="fName"></label>
+  <label>주소<input id="fUrl" placeholder="https://"></label>
+  <label>분류<select id="fCat"></select></label>
+  <div class="row"><button id="fCancel">취소</button><button class="pri" id="fSave">추가</button></div>
+</dialog>
+
+<script>
+const CATS=["공장·배송","정산·관리","영업·마케팅","기타"];
+const BASE=[
+ {n:"배송 입력",d:"배송·수거 입력",u:"https://yuseong-delivery-production.up.railway.app/",c:"공장·배송",i:"🚚"},
+ {n:"포장 입력",d:"포장기록·라벨",u:"https://yuseong-packing-production.up.railway.app",c:"공장·배송",i:"📦"},
+ {n:"건조기 관리",d:"건조기 현황",u:"https://yuseong-dryer-production.up.railway.app",c:"공장·배송",i:"🧺"},
+ {n:"출퇴근 관리",d:"출퇴근기·명단",u:"https://yuseong-attendance-production.up.railway.app/",c:"공장·배송",i:"👥"},
+ {n:"공장 전광판",d:"현장 진행 확인",u:"https://yuseong-display-board-production.up.railway.app",c:"공장·배송",i:"🖥️"},
+ {n:"배송 현황",d:"배송경로·현황",u:"https://yuseong-shipping-status-production.up.railway.app",c:"공장·배송",i:"🗺️"},
+ {n:"현황지 출력",d:"현황지 인쇄",u:"https://partybok-crypto.github.io/print_status_sheet/",c:"공장·배송",i:"🖨️"},
+ {n:"재무관리",d:"일일결산·청구·미수금",u:"https://yucle-finance-live-production.up.railway.app/",c:"정산·관리",i:"💰"},
+ {n:"마케팅 스튜디오",d:"마케팅OS",u:"https://yuseong-marketing-os-review-production.up.railway.app",c:"영업·마케팅",i:"📣"},
+ {n:"영업 허브",d:"영업관리 명단",u:"https://yuseong-sales-hub-production.up.railway.app",c:"영업·마케팅",i:"🤝"},
+ {n:"AI 전화상담",d:"AI 발신·통화기록",u:"https://server-production-8d8f.up.railway.app/ai-counselor",c:"영업·마케팅",i:"🤖"},
+ {n:"회사전화",d:"070 전화 CRM",u:"https://yuseong-phone-production.up.railway.app",c:"영업·마케팅",i:"📞"}
+];
+const $=s=>document.querySelector(s);
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), tab="전체";
+const all=()=>[...BASE,...custom.map(x=>({...x,custom:1}))];
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function card(p){
+  const on=favs.includes(p.n);
+  return `<a class="card" href="${esc(p.u)}" target="_blank" rel="noopener">
+    <div class="ic">${p.i||"🔗"}</div>
+    <div class="nm"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>
+    <button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
+    ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
+    <span class="go">→</span></a>`;
+}
+function render(){
+  const q=$("#q").value.trim().toLowerCase(), a=all();
+  const fav=a.filter(p=>favs.includes(p.n));
+  $("#favSec").style.display=fav.length&&!q?"":"none";
+  $("#fav").innerHTML=fav.map(card).join("");
+  $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
+  const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&(!q||(p.n+p.d+p.c).toLowerCase().includes(q)));
+  $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
+}
+document.addEventListener("click",e=>{
+  const s=e.target.closest("[data-s]"),d=e.target.closest("[data-d]"),t=e.target.closest("[data-t]");
+  if(s){e.preventDefault();const n=s.dataset.s;favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];save("hub_favs",favs);render()}
+  else if(d){e.preventDefault();custom=custom.filter(x=>x.n!==d.dataset.d);save("hub_custom",custom);render()}
+  else if(t){tab=t.dataset.t;render()}
+});
+$("#q").addEventListener("input",render);
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"){const a=document.querySelector("#list .card");if(a)window.open(a.href,"_blank")}});
+$("#fCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
+$("#addBtn").onclick=()=>{$("#fName").value="";$("#fUrl").value="";$("#dlg").showModal()};
+$("#fCancel").onclick=()=>$("#dlg").close();
+$("#fSave").onclick=()=>{
+  const n=$("#fName").value.trim();let u=$("#fUrl").value.trim();
+  if(!n||!u)return;if(!/^https?:\/\//.test(u))u="https://"+u;
+  custom.push({n,u,c:$("#fCat").value,d:$("#fCat").value});save("hub_custom",custom);$("#dlg").close();render();
+};
+render();
+</script>
+</body>
+</html>
