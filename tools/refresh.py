@@ -14,7 +14,7 @@ LOCK = os.path.join(HERE, "refresh.lock")
 log = open(os.path.join(HERE, "refresh.log"), "a", encoding="utf-8")
 
 def run(cmd, **kw):
-    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", env=ENV, **kw)
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", env=ENV, creationflags=0x08000000, **kw)
     log.write(f"$ {' '.join(cmd)}\n{r.stdout}{r.stderr}\n"); log.flush()
     print(r.stdout, r.stderr)
     return r

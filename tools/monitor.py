@@ -1,5 +1,5 @@
 """서버 감시: 링크 전체를 점검 -> 상태 파일(status.json) 갱신 -> 연속 2회 이상이면 메일 -> 변화가 있거나 2시간마다 허브에 반영
-작업 스케줄러가 10분마다 실행한다(pythonw)."""
+작업 스케줄러가 매일 12:00에 1번 실행한다(pythonw)."""
 import json, os, sys, time, subprocess, datetime
 from concurrent.futures import ThreadPoolExecutor
 
@@ -11,7 +11,7 @@ from notify import send_mail
 STATE = os.path.join(HERE, "monitor_state.json")
 LOG = os.path.join(HERE, "monitor.log")
 LOCK = os.path.join(HERE, "monitor.lock")
-FAIL_LIMIT = 2          # 연속 몇 번 이상이면 알림
+FAIL_LIMIT = 1          # 하루 1번 점검하므로 한 번만 이상해도 알림
 PUSH_EVERY_MIN = 120    # 변화가 없어도 이 간격으로 허브 상태 갱신
 SLOW_SEC = 5.0
 
@@ -25,6 +25,7 @@ def log(m):
         pass
 
 CURL = "C:/Windows/System32/curl.exe"
+NOWIN = 0x08000000  # pythonw에는 콘솔이 없어서 자식 프로세스마다 검은 창이 뜨는 것을 막는다
 
 def check(p):
     # 파이썬 기본 인증서 저장소가 Railway 인증서 체인을 만료로 오판하므로 윈도우 curl(Schannel)로 점검한다
@@ -32,7 +33,7 @@ def check(p):
     try:
         r = subprocess.run([CURL, "-s", "-o", "NUL", "-L", "-m", "25", "-A", "yucle-hub-monitor/1.0",
                             "-w", "%{http_code} %{time_total}", p["u"]],
-                           capture_output=True, text=True, timeout=40)
+                           capture_output=True, text=True, timeout=40, creationflags=NOWIN)
         code_s, _, sec_s = r.stdout.strip().partition(" ")
         code = int(code_s) if code_s.isdigit() else 0
         sec = float(sec_s) if sec_s else time.time() - t0
@@ -78,7 +79,7 @@ def main():
             return f"{n}: " + ("응답 없음" if r["s"] == "down" else f"서버 오류 HTTP {r['code']}")
         if newly_bad:
             send_mail(f"[허브] 서버 이상 {len(newly_bad)}건: " + ", ".join(newly_bad),
-                      "연속 2번(약 10분) 이상이 확인되었습니다.\n\n" + "\n".join(desc(n) for n in newly_bad) +
+                      "점검에서 이상이 확인되었습니다.\n\n" + "\n".join(desc(n) for n in newly_bad) +
                       f"\n\n확인 시각 {now:%Y-%m-%d %H:%M}\n허브: https://partybok-crypto.github.io/yucle-hub/")
             log("알림: " + ", ".join(newly_bad))
         if recovered:
@@ -90,11 +91,11 @@ def main():
         if (sig != st.get("last_sig") or due) and not refresh_busy():
             json.dump(out, open(os.path.join(HUB, "status.json"), "w", encoding="utf-8"), ensure_ascii=False)
             g = ["git", "-C", HUB]
-            subprocess.run(g + ["add", "status.json"], capture_output=True)
-            c = subprocess.run(g + ["commit", "-m", f"status {now:%m-%d %H:%M}", "--", "status.json"], capture_output=True)
+            subprocess.run(g + ["add", "status.json"], capture_output=True, creationflags=NOWIN)
+            c = subprocess.run(g + ["commit", "-m", f"status {now:%m-%d %H:%M}", "--", "status.json"], capture_output=True, creationflags=NOWIN)
             if c.returncode == 0:
-                subprocess.run(g + ["pull", "--rebase", "-q"], capture_output=True)
-                p = subprocess.run(g + ["push", "-q"], capture_output=True, text=True)
+                subprocess.run(g + ["pull", "--rebase", "-q"], capture_output=True, creationflags=NOWIN)
+                p = subprocess.run(g + ["push", "-q"], capture_output=True, text=True, creationflags=NOWIN)
                 log("상태 반영" + ("" if p.returncode == 0 else f" 푸시 실패 {p.stderr[:100]}"))
             st["last_push"], st["last_sig"] = time.time(), sig
         json.dump(st, open(STATE, "w", encoding="utf-8"), ensure_ascii=False)

@@ -25,7 +25,7 @@ def last_change(rel):
     if not os.path.isdir(d):
         return None
     try:
-        r = subprocess.run(["git", "-C", d, "log", "-1", "--format=%cs", "--", "."], capture_output=True, text=True, timeout=30)
+        r = subprocess.run(["git", "-C", d, "log", "-1", "--format=%cs", "--", "."], capture_output=True, text=True, timeout=30, creationflags=0x08000000)
         if r.returncode == 0 and r.stdout.strip():
             return r.stdout.strip()
     except Exception:

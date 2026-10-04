@@ -8,7 +8,7 @@ SERVICE = "yuseong-marketing-os-review"
 def _vars():
     RW = shutil.which("railway") or "C:/Users/123/AppData/Roaming/npm/railway.CMD"
     r = subprocess.run([RW, "variables", "-s", SERVICE, "--json"], cwd=MARKETING_DIR,
-                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60, creationflags=0x08000000)
     d = json.loads(r.stdout)
     return d["BREVO_API_KEY"], d["EMAIL_FROM"], d.get("EMAIL_TO", "sinijini1@naver.com")
 
