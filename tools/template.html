@@ -305,7 +305,8 @@ function renderLinks(){
   $("#recSec").hidden=!(rec.length&&!q&&!edit);
   $("#rec").innerHTML=rec.map(chip).join("");
   $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
-  const rows=a.filter(p=>(tab==="전체"||p.c===tab)&&match(q,p.n+" "+p.d+" "+p.c,p.n+" "+p.d));
+  const showFav=fav.length&&!q&&!edit;
+  const rows=a.filter(p=>!(showFav&&favs.includes(p.n))&&(tab==="전체"||p.c===tab)&&match(q,p.n+" "+p.d+" "+p.c,p.n+" "+p.d));
   if(tab==="전체"&&!q){
     $("#list").innerHTML=CATS.map(c=>{const r=rows.filter(p=>p.c===c);return r.length?`<h3 class="grp">${c}</h3>`+r.map(card).join(""):""}).join("");
   }else{
