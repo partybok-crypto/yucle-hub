@@ -27,6 +27,10 @@ def main():
         if r.returncode != 0:
             problems.append("캡처 프로그램 오류")
         problems += [l.strip() for l in r.stdout.splitlines() if "이전 이미지 유지" in l]
+        r2 = run([py, os.path.join(HERE, "capture_m.py")])
+        if r2.returncode != 0:
+            problems.append("모바일 캡처 프로그램 오류")
+        problems += [l.strip() for l in r2.stdout.splitlines() if "이전 이미지 유지" in l]
     b = run([py, os.path.join(HERE, "build.py")])
     if b.returncode != 0:
         problems.append("index.html 생성 실패")

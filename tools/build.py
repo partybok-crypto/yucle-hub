@@ -1,5 +1,5 @@
 """index.html 생성기: links.json + flow_part*.js + short.js + shots.json + template.html -> ../index.html"""
-import os, json, subprocess, datetime, hashlib, time
+import os, re, json, subprocess, datetime, hashlib, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 HUB = os.path.dirname(HERE)
 rd = lambda p: open(os.path.join(HERE, p), encoding="utf-8").read()
@@ -13,6 +13,7 @@ order = ["공통 구조 (현장 시트)", "배송 입력", "포장 입력", "건
          "쿠팡 주문내역 취합기", "forwarder.kr 수집기", "한글 폰트 변환기"]
 flow = ("const FLOW=[\n" + parts + "];\nconst FO=" + json.dumps(order, ensure_ascii=False) +
         ";\nFLOW.sort((a,b)=>{const i=FO.indexOf(a.n),j=FO.indexOf(b.n);return (i<0?99:i)-(j<0?99:j)});")
+shotsm = "const SHOTSM=" + (rd("shots_m.json") if os.path.exists(os.path.join(HERE, "shots_m.json")) else "{}") + ";"
 shots = "const SHOTS=" + (rd("shots.json") if os.path.exists(os.path.join(HERE, "shots.json")) else "{}") + ";"
 
 
@@ -46,12 +47,29 @@ chg = {n: c for n, rel in projects.items() if (c := last_change(rel))}
 chgjs = "const CHG=" + json.dumps(chg, ensure_ascii=False) + ";" + chr(10) + "const FLOW_DATE=" + json.dumps(FLOW_DATE) + ";"
 
 out = (rd("template.html").replace("/*BASE*/", base).replace("/*FLOW*/", flow)
-       .replace("/*SHORT*/", rd("short.js")).replace("/*SHOTS*/", shots).replace("/*CHG*/", chgjs)
+       .replace("/*SHORT*/", rd("short.js")).replace("/*SHOTS*/", shots + "\n" + shotsm).replace("/*CHG*/", chgjs)
        .replace("/*SITES*/", "const SITES=" + rd("sites.json") + ";").replace("/*MAP*/", "const MAP=" + rd("map.json") + ";"))
+# ---- 연결 검증: 지도·사이트 데이터가 프로그램 목록과 어긋나면 경고 ----
+try:
+    mp = json.load(open(os.path.join(HERE, "map.json"), encoding="utf-8")); st = json.load(open(os.path.join(HERE, "sites.json"), encoding="utf-8"))
+    progs = [x for g in mp["groups"] for x in g["m"]]; flow_names = set(re.findall(r'\bn:"([^"]+)"', parts))
+    known = set(progs) | set(mp["extra"])
+    warn = []
+    warn += [f"지도에 없는 프로그램: {n}" for n in flow_names if n not in progs and not n.startswith("공통")]
+    warn += [f"지도 그룹에 있지만 데이터 흐름에 없음: {n}" for n in progs if n not in flow_names]
+    warn += [f"연결에 모르는 이름: {e[0]} → {e[1]}" for e in mp["edges"] if e[0] not in known or e[1] not in known]
+    names = {x["n"] for x in st}
+    warn += [f"svc에 없는 사이트: {n}" for n in mp["svc"] if n not in names]
+    for x in st:
+        warn += [f"사이트 '{x['n']}'가 모르는 프로그램 '{u}'를 가리킴" for u in x["used"] if u not in set(progs) | {"링크허브", "공통 구조 (현장 시트)", "개발 작업 전반"}]
+    print("연결 검증:", "이상 없음" if not warn else "")
+    for w_ in warn: print("  경고 -", w_)
+except Exception as ex:
+    print("연결 검증 실패:", ex)
 open(os.path.join(HUB, "index.html"), "w", encoding="utf-8").write(out)
 # ---- 서비스 워커(오프라인·빠른 로딩) ----
 ver = hashlib.md5(out.encode("utf-8")).hexdigest()[:10]
-files = ["./", "manifest.json", "icon-192.png", "apple-touch-icon.png"] + sorted(set(json.loads(shots[len("const SHOTS="):-1]).values()))
+files = ["./", "manifest.json", "icon-192.png", "apple-touch-icon.png"] + sorted(set(json.loads(shots[len("const SHOTS="):-1]).values()) | set(json.loads(shotsm[len("const SHOTSM="):-1]).values()))
 sw = f"""const V="hub-{ver}";
 const FILES={json.dumps(files, ensure_ascii=False)};
 self.addEventListener("install",e=>{{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES).catch(()=>{{}})).then(()=>self.skipWaiting()))}});

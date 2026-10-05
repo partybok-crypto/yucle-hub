@@ -9,6 +9,9 @@
 - `tools/short.js` : 데이터 흐름 카드의 짧은 칩(입력→저장→읽는 곳)
 - `tools/template.html` : 화면 코드
 - `tools/blur.json` : 캡처에서 흐리게 할 영역(이름·금액·연락처·위치)
+- `tools/sites.json` : 사이트 탭 목록(프로그램이 쓰는 외부 사이트, `used`=쓰는 프로그램). `tools/map.json` : 연결 지도(그룹·연결 edges·시트 탭별 영향·lanes). build.py가 두 파일과 프로그램 목록이 어긋나면 "연결 검증 경고"를 출력한다
+- `tools/capture_m.py` + `tools/blur_m.json` : 모바일(500x1000) 화면 캡처 → `shots/mN.jpg` + `shots_m.json` (테마2의 PC/모바일 전환용). 캡처 전 HTTP 오류(4xx/5xx)면 이전 이미지 유지. 개인정보 영역은 blur_m.json(500x1000 좌표)에 지정. Edge는 저장 경로를 반드시 절대 경로로 줘야 함
+- 화면 개인 설정(분류 이름·이동·즐겨찾기·추가 항목)은 브라우저 localStorage 저장 → 기기 간에는 "설정 옮기기" 링크로 옮긴다
 - `tools/capture.py` : 전체 화면 캡처 → 흐림 → shots/
 - `tools/build.py` : 위 파일들로 index.html 생성
 - `tools/refresh.py` : 캡처 + 빌드 + 커밋 + 푸시 (`python tools/refresh.py`, 캡처 생략은 `--no-capture`). 문제가 있으면 메일 발송

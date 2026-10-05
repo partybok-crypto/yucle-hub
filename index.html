@@ -132,6 +132,11 @@ dialog.sub h3{margin:0 0 10px;font-size:16px}
 .chg.stale{color:#92400e;background:#fef3c7;padding:3px 8px;border-radius:7px;font-weight:700}
 @media(prefers-color-scheme:dark){.chg.stale{color:#fde68a;background:#4a3410}}
 .catbar[hidden]{display:none}
+.shot.m{aspect-ratio:3/4}
+.shot.m img.fb{object-fit:contain;background:var(--icbg)}
+.tgrid{align-items:start}
+#syncDlg textarea,#syncDlg input{width:100%;padding:10px;margin:6px 0 10px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:var(--card);color:var(--text)}
+#syncDlg p{margin:0 0 6px;color:var(--sub);font-size:13px}
 .catbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px dashed var(--blue);border-radius:12px;padding:10px;margin:10px 0}
 .catbar b{font-size:13px;color:var(--sub);width:100%}
 .cchip{display:inline-flex;align-items:center;gap:2px;background:var(--chip);border-radius:999px;padding:4px 6px 4px 12px;font-size:13px}
@@ -249,6 +254,8 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
     <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vSites">사이트</button><button id="vMap">연결 지도</button></div>
     <span class="sp"></span>
     <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2</button></div>
+    <div class="seg" id="shotSeg"><button id="shPc">💻 PC화면</button><button id="shM">📱 모바일화면</button></div>
+    <button class="sm" id="btnSync">설정 옮기기</button>
     <button class="sm" id="btnStatus">상태 확인</button>
     <button class="sm" id="btnEdit">순서 편집</button>
   </div>
@@ -296,7 +303,12 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 </nav>
 <div id="toast"></div>
 <dialog id="subDlg" class="sub"><h3 id="subTitle"></h3><div class="sublist" id="subList"></div><div class="dr" style="margin-top:12px"><button id="subClose" style="padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer">닫기</button></div></dialog>
-<dialog id="moreDlg" class="sub"><h3>더보기</h3><div class="sublist"><button id="mdStatus">🟢 상태 확인</button><button id="mdTheme">🖼️ 테마</button><button id="mdEdit">↕️ 순서·분류 편집</button><button id="mdCards">📋 프로그램별 카드</button></div><div class="dr" style="margin-top:12px"><button id="mdClose">닫기</button></div></dialog>
+<dialog id="moreDlg" class="sub"><h3>더보기</h3><div class="sublist"><button id="mdStatus">🟢 상태 확인</button><button id="mdTheme">🖼️ 테마</button><button id="mdEdit">↕️ 순서·분류 편집</button><button id="mdShot">📱 캡처: PC/모바일</button><button id="mdSync">🔗 설정 옮기기</button><button id="mdCards">📋 프로그램별 카드</button></div><div class="dr" style="margin-top:12px"><button id="mdClose">닫기</button></div></dialog>
+<dialog id="syncDlg"><h3 style="margin:0 0 6px">설정을 다른 기기로 옮기기</h3>
+<p>① 이 기기의 설정(분류 이름·이동·즐겨찾기·추가한 바로가기/사이트)을 담은 링크입니다. 다른 기기에서 이 링크를 열면 적용할 수 있어요.</p>
+<textarea id="syBox" rows="3" readonly></textarea><div class="dr" style="margin-bottom:12px"><button id="syCopy">링크 복사</button></div>
+<p id="syMsg">② 다른 기기에서 복사한 링크를 여기에 붙여넣고 적용하세요. (이 기기의 현재 설정은 덮어써집니다)</p>
+<input id="syIn" placeholder="링크 붙여넣기"><div class="dr"><button id="syClose">닫기</button><button class="pri" id="syApply">적용</button></div></dialog>
 <dialog id="catDlg"><h3 id="cdTitle" style="margin:0 0 6px"></h3><p id="cdMsg" style="margin:0 0 6px;color:var(--sub);font-size:14px"></p><input id="cdName" maxlength="20"><div class="dr"><button id="cdCancel">취소</button><button class="pri" id="cdOk">확인</button></div></dialog>
 <dialog id="sDlg">
   <h3 style="margin:0 0 10px">사이트 추가</h3>
@@ -476,6 +488,7 @@ const SHORT={
 };
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
+const SHOTSM={"배송 입력": "shots/m0.jpg", "포장 입력": "shots/m1.jpg", "출퇴근 관리": "shots/m3.jpg", "건조기 관리": "shots/m2.jpg", "공장 전광판": "shots/m4.jpg", "차량 위치 관리": "shots/m6.jpg", "가스 카메라": "shots/m7.jpg", "현황지 출력": "shots/m8.jpg", "재무관리": "shots/m9.jpg", "영업 허브": "shots/m11.jpg", "AI 전화상담": "shots/m12.jpg", "마케팅 스튜디오": "shots/m10.jpg", "회사전화": "shots/m13.jpg", "내편지도": "shots/m16.jpg", "청과 수입 판단": "shots/m14.jpg", "사주도령": "shots/m17.jpg", "배송 현황": "shots/m5.jpg"};
 const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-05", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-10-05", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
@@ -1037,126 +1050,6 @@ const MAP={
  ],
  "edges": [
   [
-   "배송 입력",
-   "📊 구글시트 (현장입력)",
-   "배송지수량·포대수량 기록",
-   [
-    "포대수량"
-   ]
-  ],
-  [
-   "포장 입력",
-   "📊 구글시트 (현장입력)",
-   "포장기록 기록",
-   [
-    "포장기록"
-   ]
-  ],
-  [
-   "건조기 관리",
-   "📊 구글시트 (현장입력)",
-   "건조기기록 기록",
-   [
-    "건조기기록"
-   ]
-  ],
-  [
-   "출퇴근 관리",
-   "📊 구글시트 (현장입력)",
-   "근태입력 기록",
-   [
-    "근태입력"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "배송 입력",
-   "거래처명단·기사 읽기",
-   [
-    "거래처명단"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "포장 입력",
-   "거래처·클레임·근태 읽기",
-   [
-    "거래처명단",
-    "근태입력"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "건조기 관리",
-   "근태·거래처 읽기",
-   [
-    "근태입력"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "공장 전광판",
-   "작업·포대수량·건조기 읽기",
-   [
-    "포장기록",
-    "건조기기록",
-    "포대수량",
-    "근태입력"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "배송 현황",
-   "세탁물 현황 읽기",
-   [
-    "세탁물현황"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "현황지 출력",
-   "세탁물 현황·거래처 읽기",
-   [
-    "세탁물현황"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "보조컴퓨터 (포장랭킹 카톡)",
-   "포장기록·근태 읽기",
-   [
-    "포장기록",
-    "근태입력"
-   ]
-  ],
-  [
-   "📊 구글시트 (현장입력)",
-   "재무관리",
-   "시트 읽어 정산 반영",
-   [
-    "포장기록",
-    "건조기기록",
-    "근태입력",
-    "도시가스"
-   ]
-  ],
-  [
-   "가스 카메라",
-   "📊 구글시트 (현장입력)",
-   "도시가스 탭 기록",
-   [
-    "도시가스"
-   ]
-  ],
-  [
-   "보조컴퓨터 (포장랭킹 카톡)",
-   "📊 구글시트 (현장입력)",
-   "카톡 사진 판독 → 도시가스",
-   [
-    "도시가스"
-   ]
-  ],
-  [
    "차량 위치 (CarLive)",
    "공장 전광판",
    "30초마다 위치 전송"
@@ -1214,12 +1107,212 @@ const MAP={
    "공장 전광판",
    "🖥️ 공장 모니터",
    "현장 화면 표시"
+  ],
+  [
+   "배송 입력",
+   "📊 구글시트 (현장입력)",
+   "시트에 기록",
+   [
+    "포대수량",
+    "배송지수량",
+    "현장기사등록"
+   ]
+  ],
+  [
+   "배송 현황",
+   "📊 구글시트 (현장입력)",
+   "시트에 기록",
+   [
+    "포대수량",
+    "배송지수량",
+    "현장기사등록"
+   ]
+  ],
+  [
+   "포장 입력",
+   "📊 구글시트 (현장입력)",
+   "시트에 기록",
+   [
+    "포장기록"
+   ]
+  ],
+  [
+   "건조기 관리",
+   "📊 구글시트 (현장입력)",
+   "시트에 기록",
+   [
+    "건조기기록"
+   ]
+  ],
+  [
+   "출퇴근 관리",
+   "📊 구글시트 (현장입력)",
+   "시트에 기록",
+   [
+    "근태입력"
+   ]
+  ],
+  [
+   "공장 전광판",
+   "📊 구글시트 (현장입력)",
+   "시트에 기록",
+   [
+    "전광판전용"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "배송 입력",
+   "시트에서 읽기",
+   [
+    "거래처명단",
+    "포대수량",
+    "배송지수량",
+    "현장기사등록"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "포장 입력",
+   "시트에서 읽기",
+   [
+    "거래처명단",
+    "근태입력",
+    "클레임이력",
+    "포장기록"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "건조기 관리",
+   "시트에서 읽기",
+   [
+    "근태입력",
+    "건조기기록"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "공장 전광판",
+   "시트에서 읽기",
+   [
+    "포장기록",
+    "건조기기록",
+    "포대수량",
+    "근태입력",
+    "전광판전용"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "배송 현황",
+   "시트에서 읽기",
+   [
+    "거래처명단",
+    "현장기사등록",
+    "포대수량",
+    "배송지수량"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "재무관리",
+   "시트에서 읽기",
+   [
+    "포장기록",
+    "건조기기록",
+    "근태입력",
+    "포대수량",
+    "배송지수량"
+   ]
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "시트에서 읽기",
+   [
+    "포장기록",
+    "근태입력",
+    "거래처명단"
+   ]
+  ],
+  [
+   "가스 카메라",
+   "⛽ 가스 시트",
+   "도시가스 기록",
+   [
+    "도시가스"
+   ]
+  ],
+  [
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "⛽ 가스 시트",
+   "카톡 사진 판독 → 도시가스",
+   [
+    "도시가스"
+   ]
+  ],
+  [
+   "⛽ 가스 시트",
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "최근 가스값 읽기",
+   [
+    "도시가스"
+   ]
+  ],
+  [
+   "⛽ 가스 시트",
+   "재무관리",
+   "일일 가스비 읽기",
+   [
+    "도시가스"
+   ]
+  ],
+  [
+   "📋 현황지 시트",
+   "포장 입력",
+   "거래처·세탁물 현황 읽기",
+   [
+    "현황지"
+   ]
+  ],
+  [
+   "📋 현황지 시트",
+   "건조기 관리",
+   "거래처·세탁물 현황 읽기",
+   [
+    "현황지"
+   ]
+  ],
+  [
+   "📋 현황지 시트",
+   "공장 전광판",
+   "거래처·세탁물 현황 읽기",
+   [
+    "현황지"
+   ]
+  ],
+  [
+   "📋 현황지 시트",
+   "현황지 출력",
+   "거래처·세탁물 현황 읽기",
+   [
+    "현황지"
+   ]
+  ],
+  [
+   "📋 현황지 시트",
+   "재무관리",
+   "거래처·세탁물 현황 읽기",
+   [
+    "현황지"
+   ]
   ]
  ],
  "extra": {
   "📊 구글시트 (현장입력)": {
    "i": "📊",
-   "d": "4개 현장 앱의 중앙 저장소"
+   "d": "현장 앱들의 중앙 저장소 (세탁공장 현장입력)"
   },
   "📊 실행요청 시트": {
    "i": "📋",
@@ -1232,6 +1325,14 @@ const MAP={
   "🖥️ 공장 모니터": {
    "i": "🖥️",
    "d": "현장 벽걸이 전광판 화면"
+  },
+  "📋 현황지 시트": {
+   "i": "📋",
+   "d": "거래처·세탁물 현황 (직접 관리, 앱은 읽기만)"
+  },
+  "⛽ 가스 시트": {
+   "i": "⛽",
+   "d": "가스 계량 기록 (가스 카메라·보조컴퓨터가 기록)"
   }
  },
  "svc": [
@@ -1265,7 +1366,7 @@ const MAP={
  "lanes": [
   {
    "t": "🏭 현장 데이터 흐름",
-   "d": "현장 앱이 구글시트에 기록 → 화면·정산 프로그램이 읽어 갑니다",
+   "d": "현장 앱이 시트에 기록 → 화면·정산 프로그램이 읽어 갑니다 (코드 확인 2026-10-05)",
    "cols": [
     {
      "h": "① 입력하는 곳",
@@ -1281,7 +1382,9 @@ const MAP={
     {
      "h": "② 저장소",
      "m": [
-      "📊 구글시트 (현장입력)"
+      "📊 구글시트 (현장입력)",
+      "⛽ 가스 시트",
+      "📋 현황지 시트"
      ],
      "a": "→"
     },
@@ -1387,14 +1490,10 @@ const MAP={
   "한글 폰트 변환기"
  ],
  "sub": {
-  "📊 구글시트 (현장입력)": "탭: 근태입력 · 포장기록 · 건조기기록 · 포대수량 · 도시가스 · 거래처명단"
- },
- "summary": [
-  "🏭 현장 앱 5개 → 📊 구글시트 → 전광판·재무관리 등 5곳",
-  "📡 차량·가스 카메라 → 전광판 → 공장 모니터",
-  "📞 영업 허브 ⇄ AI 전화상담 ⇄ 회사전화",
-  "📣 마케팅OS → 실행요청 시트 → 노트북"
- ]
+  "📊 구글시트 (현장입력)": "탭: 근태입력 · 포장기록 · 건조기기록 · 포대수량 · 배송지수량 · 거래처명단 …",
+  "⛽ 가스 시트": "도시가스 — 가스 카메라·보조컴퓨터가 기록, 재무관리가 읽음",
+  "📋 현황지 시트": "세탁물 현황 · 거래처 — 직접 관리, 앱은 읽기만"
+ }
 };
 
 const $=s=>document.querySelector(s);
@@ -1418,6 +1517,7 @@ function pushRecent(n){recent=[n,...recent.filter(x=>x!==n)].slice(0,6);save("hu
 const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
 const isMob=()=>matchMedia("(max-width:600px)").matches;
 let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), sgrp="전체", mapFocus=null, edit=false, status={}, tag="전체";
+let shotMode=load("hub_shot",null)||(matchMedia("(max-width:600px)").matches?"m":"pc");
 let mapSub="lanes", sfavs=load("hub_sfavs",["Railway","GitHub","Google 스프레드시트","Claude (claude.ai)"]);
 if(view==="flow"){view="map";mapSub="cards"}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1429,8 +1529,9 @@ function all(){
 }
 const catSel=p=>`<select class="mvcat" data-mc="${esc(p.n)}" title="분류 이동">${cats.map(c=>`<option ${c===catOf(p)?"selected":""}>${esc(c)}</option>`).join("")}</select>`;
 function tcard(p){
-  const on=favs.includes(p.n), st=eff(p.n), img=(typeof SHOTS!=="undefined")&&SHOTS[p.n];
-  const shot=`<div class="shot">${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
+  const on=favs.includes(p.n), st=eff(p.n), mob=shotMode==="m", im=mob&&typeof SHOTSM!=="undefined"&&SHOTSM[p.n];
+  const img=im||((typeof SHOTS!=="undefined")&&SHOTS[p.n]);
+  const shot=`<div class="shot ${mob?"m":""}">${img?`<img class="${mob&&!im?"fb":""}" src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
   const meta=`<div class="tmeta"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
     return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
@@ -1555,7 +1656,8 @@ function mapLanes(body,q){
   const lane=l=>`<section class="lane"><h3>${esc(l.t)}</h3><p>${esc(l.d)}</p><div class="lcols">`+l.cols.map(c=>`<div class="lcol">${c.h?`<label>${esc(c.h)}</label>`:""}${c.m.map(node).join("")}</div>${c.a?`<div class="larr">${c.a}</div>`:""}`).join("")+`</div></section>`;
   const groups={};graph().svcs.forEach(s=>(groups[s.g]=groups[s.g]||[]).push(s));
   const svcHtml=Object.entries(groups).map(([g,a])=>`<div class="sgrp"><label>${esc(g)}</label><div class="chips">${a.filter(s=>!dim(s.n)).map(s=>mchip(s.n)).join("")}</div></div>`).join("");
-  const sum=`<div class="sumbox">${MAP.summary.map(x=>`<div>${esc(x)}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
+  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
+  const sum=`<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
   body.innerHTML=sum+MAP.lanes.map(lane).join("")+
     `<section class="lane"><h3>🧩 혼자 도는 프로그램</h3><p>다른 프로그램과 데이터를 주고받지 않습니다</p><div class="lcol"><div class="lwrap">${MAP.indep.map(node).join("")}</div></div></section>`+
     `<section class="lane"><h3>🌐 외부 서비스</h3><p>누르면 그 서비스를 쓰는 프로그램과, 멈췄을 때 영향받는 곳이 나옵니다</p>${svcHtml}</section>`;
@@ -1596,6 +1698,8 @@ function render(){
   $("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
   $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
   $("#addBtn").style.display=view==="links"||view==="sites"?"":"none";
+  $("#shotSeg").style.display=view==="links"&&theme==="2"?"":"none";$("#shPc").classList.toggle("on",shotMode!=="m");$("#shM").classList.toggle("on",shotMode==="m");
+  $("#mdShot").style.display=view==="links"&&theme==="2"?"":"none";$("#mdShot").textContent=shotMode==="m"?"💻 캡처: PC화면으로":"📱 캡처: 모바일화면으로";
   $("#mdTheme").textContent="🖼️ 테마 "+(theme==="2"?"2 → 1로":"1 → 2로");
   $("#mdEdit").textContent=edit?"✅ 편집 완료":"↕️ 순서·분류 편집";
   (view==="links"?renderLinks:view==="sites"?renderSites:cards?renderFlow:renderMap)();
@@ -1643,11 +1747,11 @@ function applySrv(){
   }else if(old){
     const live=all().filter(p=>p.watch!==false),done=live.length&&live.every(p=>status[p.n]);
     e.dataset.ban="check";
-    if(done){e.classList.add("ok");e.innerHTML=`✅ 전부 정상 <small>방금 직접 확인한 결과 · 눌러서 다시 확인</small>`}
+    if(done){e.classList.add("ok");e.innerHTML=`✅ 접속 정상 <small>접속만 방금 확인(오류 응답은 서버 감시 ${t||"기록"} 기준) · 눌러서 다시 확인</small>`}
     else{e.classList.add("old");e.innerHTML=`⏳ 서버 확인 중… <small>모든 프로그램 서버에 접속해 보는 중</small>`}
   }else{
     e.classList.add("ok");e.dataset.ban="check";
-    e.innerHTML=`✅ 전부 정상 <small>서버 감시 ${t} 기준 · 눌러서 지금 다시 확인</small>`;
+    e.innerHTML=`✅ 이상 없음 <small>서버 감시 ${t} 기준(오류 응답 포함) · 눌러서 접속 다시 확인</small>`;
   }
 }
 function loadSrv(){
@@ -1727,6 +1831,29 @@ $("#vSites").onclick=()=>{view="sites";edit=false;save("hub_view",view);render()
 $("#vMap").onclick=()=>{view="map";edit=false;save("hub_view",view);render()};
 $("#tbSites").onclick=()=>$("#vSites").click();
 $("#tbMap").onclick=()=>$("#vMap").click();
+$("#shPc").onclick=()=>{shotMode="pc";save("hub_shot",shotMode);render()};
+$("#shM").onclick=()=>{shotMode="m";save("hub_shot",shotMode);render()};
+$("#mdShot").onclick=()=>{$("#moreDlg").close();shotMode=shotMode==="m"?"pc":"m";save("hub_shot",shotMode);render()};
+const CFG_KEYS={hub_cats:"cats",hub_catmap:"catmap",hub_favs:"favs",hub_order:"order",hub_custom:"custom",hub_sites:"customSites",hub_sfavs:"sfavs",hub_theme:"theme",hub_shot:"shot"};
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/"))));
+function cfgLink(){const o={cats,catmap,favs,order,custom,customSites,sfavs,theme,shot:shotMode};return location.origin+location.pathname+"#cfg="+b64e(JSON.stringify(o))}
+function applyCfg(code){
+  let o;try{o=JSON.parse(b64d(code))}catch(e){return false}
+  const A=v=>Array.isArray(v)&&v.every(x=>typeof x==="string"), O=v=>v&&typeof v==="object"&&!Array.isArray(v);
+  const OA=v=>Array.isArray(v)&&v.every(x=>x&&typeof x.n==="string"&&typeof x.u==="string");
+  if(!A(o.cats)||!o.cats.length||!O(o.catmap)||!A(o.favs)||!A(o.order)||!OA(o.custom)||!OA(o.customSites)||!A(o.sfavs))return false;
+  cats=o.cats;catmap=o.catmap;favs=o.favs;order=o.order;custom=o.custom;customSites=o.customSites;sfavs=o.sfavs;
+  if(o.theme==="1"||o.theme==="2")theme=o.theme;if(o.shot==="m"||o.shot==="pc")shotMode=o.shot;
+  save("hub_cats",cats);save("hub_catmap",catmap);save("hub_favs",favs);save("hub_order",order);save("hub_custom",custom);save("hub_sites",customSites);save("hub_sfavs",sfavs);save("hub_theme",theme);save("hub_shot",shotMode);
+  return true;
+}
+function openSync(code){$("#syBox").value=cfgLink();$("#syIn").value=code?location.origin+location.pathname+"#cfg="+code:"";if(code)$("#syMsg").textContent="다른 기기의 설정 링크로 열었습니다. '적용'을 누르면 이 기기의 설정이 바뀝니다.";$("#syncDlg").showModal()}
+$("#btnSync").onclick=()=>openSync();
+$("#mdSync").onclick=()=>{$("#moreDlg").close();openSync()};
+$("#syClose").onclick=()=>$("#syncDlg").close();
+$("#syCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("#syBox").value)}catch(e){$("#syBox").select();document.execCommand("copy")}toast("링크를 복사했어요")};
+$("#syApply").onclick=()=>{const v=$("#syIn").value.trim(),i=v.indexOf("#cfg=");if(i<0||!applyCfg(v.slice(i+5)))return toast("올바른 설정 링크가 아닙니다");$("#syncDlg").close();history.replaceState(null,"",location.pathname);render();toast("설정을 적용했어요")};
 $("#msLanes").onclick=()=>{mapSub="lanes";mapFocus=null;render()};
 $("#msCards").onclick=()=>{mapSub="cards";render()};
 $("#tbMore").onclick=()=>$("#moreDlg").showModal();
@@ -1765,6 +1892,7 @@ if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)){
   navigator.serviceWorker.addEventListener("controllerchange",()=>{if(had)location.reload()});
   navigator.serviceWorker.register("sw.js").catch(()=>{});
 }
+if(location.hash.startsWith("#cfg=")){const c=location.hash.slice(5);history.replaceState(null,"",location.pathname);openSync(c)}
 if(location.hash.startsWith("#sub=")){try{openSub(decodeURIComponent(location.hash.slice(5)))}catch(e){}}
 </script>
 </body>
