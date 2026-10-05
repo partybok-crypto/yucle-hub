@@ -46,7 +46,8 @@ chg = {n: c for n, rel in projects.items() if (c := last_change(rel))}
 chgjs = "const CHG=" + json.dumps(chg, ensure_ascii=False) + ";" + chr(10) + "const FLOW_DATE=" + json.dumps(FLOW_DATE) + ";"
 
 out = (rd("template.html").replace("/*BASE*/", base).replace("/*FLOW*/", flow)
-       .replace("/*SHORT*/", rd("short.js")).replace("/*SHOTS*/", shots).replace("/*CHG*/", chgjs))
+       .replace("/*SHORT*/", rd("short.js")).replace("/*SHOTS*/", shots).replace("/*CHG*/", chgjs)
+       .replace("/*SITES*/", "const SITES=" + rd("sites.json") + ";").replace("/*MAP*/", "const MAP=" + rd("map.json") + ";"))
 open(os.path.join(HUB, "index.html"), "w", encoding="utf-8").write(out)
 # ---- 서비스 워커(오프라인·빠른 로딩) ----
 ver = hashlib.md5(out.encode("utf-8")).hexdigest()[:10]

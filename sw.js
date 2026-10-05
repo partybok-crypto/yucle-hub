@@ -1,4 +1,4 @@
-const V="hub-e8b013afc3";
+const V="hub-bafb13fa16";
 const FILES=["./", "manifest.json", "icon-192.png", "apple-touch-icon.png", "shots/0.jpg", "shots/1.jpg", "shots/10.jpg", "shots/11.jpg", "shots/12.jpg", "shots/13.jpg", "shots/14.jpg", "shots/15.jpg", "shots/16.jpg", "shots/17.jpg", "shots/2.jpg", "shots/3.jpg", "shots/4.jpg", "shots/5.jpg", "shots/6.jpg", "shots/7.jpg", "shots/8.jpg", "shots/9.jpg"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES).catch(()=>{})).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

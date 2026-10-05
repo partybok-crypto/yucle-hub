@@ -124,6 +124,30 @@ dialog.sub h3{margin:0 0 10px;font-size:16px}
 .chg{margin-left:auto;font-size:11.5px;color:var(--sub);white-space:nowrap}
 .chg.stale{color:#92400e;background:#fef3c7;padding:3px 8px;border-radius:7px;font-weight:700}
 @media(prefers-color-scheme:dark){.chg.stale{color:#fde68a;background:#4a3410}}
+.catbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px dashed var(--blue);border-radius:12px;padding:10px;margin:10px 0}
+.catbar b{font-size:13px;color:var(--sub);width:100%}
+.cchip{display:inline-flex;align-items:center;gap:2px;background:var(--chip);border-radius:999px;padding:4px 6px 4px 12px;font-size:13px}
+.cchip button{background:none;border:0;cursor:pointer;color:var(--sub);font-size:14px;padding:2px 5px}
+.mvcat{width:100%;padding:6px;margin-top:4px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font-size:13px}
+.card .mvcat{width:auto;margin:0}
+.tcard .mvcat{width:calc(100% - 16px);margin:0 8px 8px}
+.used{margin-top:4px}
+.site .del{position:static;font-size:13px}
+.mapbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;overflow-x:auto}
+.mapbox svg{display:block;margin:0 auto;min-width:640px;width:100%;height:auto}
+.mapbox text{font-family:inherit;fill:var(--text)}
+.mnode{cursor:pointer}
+.mnode:hover rect{stroke:var(--blue);stroke-width:2.5}
+.focus{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:12px 0}
+.fcol{display:grid;gap:8px}
+.fcol>label{font-size:12px;font-weight:700;color:var(--sub)}
+.fnode{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;cursor:pointer;text-align:left;color:var(--text);font-size:14px;font-weight:700;display:block;width:100%}
+.fnode small{display:block;color:var(--sub);font-weight:400;font-size:12px;margin-top:2px}
+.fnode:hover{border-color:var(--blue)}
+.fcenter{background:var(--blue);color:#fff;border-radius:16px;padding:16px 18px;text-align:center;font-size:17px;font-weight:800;max-width:240px}
+.fcenter small{display:block;font-weight:400;font-size:12px;opacity:.9;margin-top:4px}
+.maphint{color:var(--sub);font-size:13px;margin:4px 0 10px}
+@media(max-width:600px){.focus{grid-template-columns:1fr}.fcenter{max-width:none}.mapbox svg{min-width:560px}}
 #tabbar{display:none}
 dialog{border:0;border-radius:16px;padding:22px;width:min(380px,92vw);background:var(--card);color:var(--text)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
@@ -152,7 +176,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
  #toast{bottom:calc(78px + env(safe-area-inset-bottom))}
  #tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
- #tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;color:var(--sub);padding:6px 2px;font-size:11px;cursor:pointer}
+ #tabbar button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;color:var(--sub);padding:6px 0;font-size:10px;cursor:pointer;white-space:nowrap}
  #tabbar button b{font-size:19px;line-height:1.1;font-weight:400}
  #tabbar button.on{color:var(--blue);font-weight:700}
  #tabbar button:disabled{opacity:.35}
@@ -191,7 +215,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   <div id="srvLine"></div>
 
   <div class="bar" id="topbar">
-    <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vFlow">데이터 흐름</button></div>
+    <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vSites">사이트</button><button id="vMap">연결 지도</button><button id="vFlow">데이터 흐름</button></div>
     <span class="sp"></span>
     <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2</button></div>
     <button class="sm" id="btnStatus">상태 확인</button>
@@ -202,7 +226,19 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
     <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div id="recSec" hidden><h2>최근 연 프로그램</h2><div class="favbar" id="rec"></div></div>
     <div class="tabs" id="tabs"></div>
+    <div class="catbar" id="catEdit" hidden></div>
     <div class="grid" id="list"></div>
+  </div>
+
+  <div id="sitesView" hidden>
+    <div class="bar"><span style="color:var(--sub);font-size:14px">프로그램들이 쓰는 외부 사이트 바로가기 (＋ 버튼으로 직접 추가)</span></div>
+    <div class="chips" id="sChips"></div>
+    <div class="grid" id="sList"></div>
+  </div>
+
+  <div id="mapView" hidden>
+    <div class="maphint" id="mapHint"></div>
+    <div id="mapBody"></div>
   </div>
 
   <div id="flowView" hidden>
@@ -221,13 +257,24 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 
 <nav id="tabbar">
   <button id="tbLinks"><b>🔗</b><span>바로가기</span></button>
-  <button id="tbFlow"><b>🗺️</b><span>데이터 흐름</span></button>
+  <button id="tbSites"><b>🌐</b><span>사이트</span></button>
+  <button id="tbMap"><b>🕸️</b><span>지도</span></button>
+  <button id="tbFlow"><b>🗺️</b><span>흐름</span></button>
   <button id="tbTheme"><b>🖼️</b><span class="tl">테마</span></button>
-  <button id="tbStatus"><b>🟢</b><span class="tl">상태 확인</span></button>
+  <button id="tbStatus"><b>🟢</b><span class="tl">상태</span></button>
   <button id="tbEdit"><b>↕️</b><span class="tl">순서 편집</span></button>
 </nav>
 <div id="toast"></div>
 <dialog id="subDlg" class="sub"><h3 id="subTitle"></h3><div class="sublist" id="subList"></div><div class="dr" style="margin-top:12px"><button id="subClose" style="padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer">닫기</button></div></dialog>
+<dialog id="catDlg"><h3 id="cdTitle" style="margin:0 0 6px"></h3><p id="cdMsg" style="margin:0 0 6px;color:var(--sub);font-size:14px"></p><input id="cdName" maxlength="20"><div class="dr"><button id="cdCancel">취소</button><button class="pri" id="cdOk">확인</button></div></dialog>
+<dialog id="sDlg">
+  <h3 style="margin:0 0 10px">사이트 추가</h3>
+  <label>이름<input id="sName"></label>
+  <label>주소<input id="sUrl" placeholder="https://"></label>
+  <label>설명<input id="sDesc"></label>
+  <label>묶음<select id="sGrp"></select></label>
+  <div class="dr"><button id="sCancel">취소</button><button class="pri" id="sSave">추가</button></div>
+</dialog>
 <dialog id="dlg">
   <h3 style="margin:0 0 10px">바로가기 추가</h3>
   <label>이름<input id="fName"></label>
@@ -237,7 +284,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 </dialog>
 
 <script>
-const CATS=["공장·배송","정산·관리","영업·마케팅","기타"];
+const CATS0=["공장·배송","정산·관리","영업·마케팅","기타"];
 const BASE=[{"n": "배송 입력", "d": "배송·수거 입력", "u": "https://yuseong-delivery-production.up.railway.app/", "c": "공장·배송", "i": "🚚"}, {"n": "포장 입력", "d": "포장기록·라벨", "u": "https://yuseong-packing-production.up.railway.app", "c": "공장·배송", "i": "📦"}, {"n": "건조기 관리", "d": "건조기 현황", "u": "https://yuseong-dryer-production.up.railway.app", "c": "공장·배송", "i": "🧺"}, {"n": "출퇴근 관리", "d": "출퇴근기·명단", "u": "https://yuseong-attendance-production.up.railway.app/", "c": "공장·배송", "i": "👥"}, {"n": "공장 전광판", "d": "현장 진행 확인", "u": "https://yuseong-display-board-production.up.railway.app", "c": "공장·배송", "i": "🖥️", "subs": [{"t": "실시간 관리", "u": "https://yuseong-display-board-production.up.railway.app/admin"}, {"t": "진행률", "u": "https://yuseong-display-board-production.up.railway.app/admin/progress"}, {"t": "세탁물 찾기", "u": "https://yuseong-display-board-production.up.railway.app/admin/search"}, {"t": "완료 현황", "u": "https://yuseong-display-board-production.up.railway.app/admin/completed"}, {"t": "모니터 설정", "u": "https://yuseong-display-board-production.up.railway.app/admin/displays"}, {"t": "알림톡", "u": "https://yuseong-display-board-production.up.railway.app/admin/alimtalk"}, {"t": "차량 위치", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles"}, {"t": "가스 카메라", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera"}]}, {"n": "배송 현황", "d": "배송경로·현황", "u": "https://yuseong-shipping-status-production.up.railway.app", "c": "공장·배송", "i": "🗺️"}, {"n": "차량 위치 관리", "d": "CarLive 차량·송출", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles", "c": "공장·배송", "i": "🚐"}, {"n": "가스 카메라", "d": "가스계량기 촬영", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera", "c": "공장·배송", "i": "📷"}, {"n": "현황지 출력", "d": "현황지 인쇄", "u": "https://partybok-crypto.github.io/print_status_sheet/", "c": "공장·배송", "i": "🖨️"}, {"n": "재무관리", "d": "일일결산·청구·미수금", "u": "https://yucle-finance-live-production.up.railway.app/", "c": "정산·관리", "i": "💰", "subs": [{"t": "일일결산", "u": "https://yucle-finance-live-production.up.railway.app/daily-close"}, {"t": "미수금", "u": "https://yucle-finance-live-production.up.railway.app/receivables"}, {"t": "청구", "u": "https://yucle-finance-live-production.up.railway.app/billing"}, {"t": "비용", "u": "https://yucle-finance-live-production.up.railway.app/expenses"}, {"t": "은행", "u": "https://yucle-finance-live-production.up.railway.app/bank"}, {"t": "연동", "u": "https://yucle-finance-live-production.up.railway.app/connections"}]}, {"n": "마케팅 스튜디오", "d": "마케팅OS", "u": "https://yuseong-marketing-os-review-production.up.railway.app", "c": "영업·마케팅", "i": "📣", "subs": [{"t": "모듈 관리", "u": "https://yuseong-marketing-os-review-production.up.railway.app/modules"}, {"t": "콘텐츠 스튜디오", "u": "https://yuseong-marketing-os-review-production.up.railway.app/content-studio"}, {"t": "파워링크", "u": "https://yuseong-marketing-os-review-production.up.railway.app/powerlink"}, {"t": "메타 광고", "u": "https://yuseong-marketing-os-review-production.up.railway.app/meta-ads"}, {"t": "광고 성과", "u": "https://yuseong-marketing-os-review-production.up.railway.app/performance"}, {"t": "조달", "u": "https://yuseong-marketing-os-review-production.up.railway.app/procurement"}, {"t": "오류 로그", "u": "https://yuseong-marketing-os-review-production.up.railway.app/logs"}]}, {"n": "영업 허브", "d": "영업관리 명단", "u": "https://yuseong-sales-hub-production.up.railway.app", "c": "영업·마케팅", "i": "🤝", "subs": [{"t": "업체 DB", "u": "https://yuseong-sales-hub-production.up.railway.app/business"}, {"t": "관심 고객", "u": "https://yuseong-sales-hub-production.up.railway.app/interested"}, {"t": "DB 찾기", "u": "https://yuseong-sales-hub-production.up.railway.app/db-search"}, {"t": "AI 발신 통계", "u": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats"}, {"t": "수신거부", "u": "https://yuseong-sales-hub-production.up.railway.app/dnc"}, {"t": "설정", "u": "https://yuseong-sales-hub-production.up.railway.app/settings"}]}, {"n": "AI 전화상담", "d": "AI 발신·통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor", "c": "영업·마케팅", "i": "🤖", "subs": [{"t": "대량발신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/bulk"}, {"t": "통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/calls"}, {"t": "관심고객", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/interested"}, {"t": "안내멘트", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/script"}, {"t": "요금", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/billing"}, {"t": "수신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/inbound"}]}, {"n": "회사전화", "d": "070 전화 CRM", "u": "https://yuseong-phone-production.up.railway.app", "c": "영업·마케팅", "i": "📞", "subs": [{"t": "통화기록", "u": "https://yuseong-phone-production.up.railway.app/calls"}, {"t": "거래처", "u": "https://yuseong-phone-production.up.railway.app/customers"}, {"t": "관리", "u": "https://yuseong-phone-production.up.railway.app/admin"}]}, {"n": "청과 수입 판단", "d": "세척당근 수입·판매 판단", "u": "https://web-production-f53da.up.railway.app", "c": "기타", "i": "🥕"}, {"n": "출판 (Bookforge)", "d": "소설·시집 자가출판", "u": "https://bookforge-production-27f6.up.railway.app", "c": "기타", "i": "📚"}, {"n": "내편지도", "d": "관계 지도 바이럴 서비스", "u": "https://web-production-304b2.up.railway.app", "c": "기타", "i": "🗺️"}, {"n": "사주도령", "d": "사주 서비스", "u": "https://doryeong.app/n", "c": "기타", "i": "🔮", "watch": false}];
 const FLOW=[
  {n:"공통 구조 (현장 시트)",i:"🧭",store:["구글시트"],
@@ -398,13 +445,607 @@ const SHORT={
 };
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
-const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-03", "차량 위치 (CarLive)": "2026-10-02", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-03", "현황지 출력": "2026-09-12", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-04", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-09-26", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-03", "차량 위치 (CarLive)": "2026-10-02", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-09-26", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
+const SITES=[
+ {
+  "n": "GitHub",
+  "g": "서버·개발",
+  "u": "https://github.com/partybok-crypto",
+  "d": "코드 저장소 · 허브·현황지 호스팅 · CarLive 업데이트 배포",
+  "i": "🐙",
+  "used": [
+   "현황지 출력",
+   "차량 위치 (CarLive)",
+   "링크허브"
+  ]
+ },
+ {
+  "n": "Railway",
+  "g": "서버·개발",
+  "u": "https://railway.com/dashboard",
+  "d": "프로그램 서버 호스팅·볼륨·환경변수",
+  "i": "🚂",
+  "used": [
+   "배송 입력",
+   "포장 입력",
+   "건조기 관리",
+   "출퇴근 관리",
+   "공장 전광판",
+   "배송 현황",
+   "재무관리",
+   "마케팅 스튜디오 (마케팅OS)",
+   "영업 허브",
+   "AI 전화상담",
+   "회사전화",
+   "청과 수입 판단",
+   "출판 (Bookforge)",
+   "내편지도"
+  ]
+ },
+ {
+  "n": "Google Cloud Console",
+  "g": "서버·개발",
+  "u": "https://console.cloud.google.com/",
+  "d": "서비스 계정·API 키 관리",
+  "i": "☁️",
+  "used": [
+   "공통 구조 (현장 시트)",
+   "공장 전광판"
+  ]
+ },
+ {
+  "n": "Google 스프레드시트",
+  "g": "구글",
+  "u": "https://docs.google.com/spreadsheets/",
+  "d": "현장 데이터 중앙 저장소 (세탁공장 현장입력)",
+  "i": "📊",
+  "used": [
+   "공통 구조 (현장 시트)",
+   "배송 입력",
+   "포장 입력",
+   "건조기 관리",
+   "출퇴근 관리",
+   "공장 전광판",
+   "가스 카메라",
+   "배송 현황",
+   "현황지 출력",
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "재무관리",
+   "영업 허브",
+   "AI 전화상담",
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "Google 드라이브",
+  "g": "구글",
+  "u": "https://drive.google.com/",
+  "d": "사진 보관(전광판·가스 카메라)",
+  "i": "🗂️",
+  "used": [
+   "공장 전광판",
+   "가스 카메라"
+  ]
+ },
+ {
+  "n": "Google Apps Script",
+  "g": "구글",
+  "u": "https://script.google.com/",
+  "d": "시트 읽기 웹앱 · 회사전화 시트 연동",
+  "i": "📜",
+  "used": [
+   "현황지 출력",
+   "회사전화"
+  ]
+ },
+ {
+  "n": "Google Search Console",
+  "g": "구글",
+  "u": "https://search.google.com/search-console",
+  "d": "검색 노출 분석",
+  "i": "🔎",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "YouTube Studio",
+  "g": "구글",
+  "u": "https://studio.youtube.com/",
+  "d": "차량 라이브 방송 · 마케팅 영상",
+  "i": "▶️",
+  "used": [
+   "차량 위치 (CarLive)",
+   "공장 전광판",
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "카카오 개발자",
+  "g": "카카오·네이버",
+  "u": "https://developers.kakao.com/",
+  "d": "Kakao SDK · 지도·길찾기 앱 키",
+  "i": "💬",
+  "used": [
+   "내편지도",
+   "공장 전광판",
+   "배송 현황"
+  ]
+ },
+ {
+  "n": "카카오톡 채널 관리자",
+  "g": "카카오·네이버",
+  "u": "https://center-pf.kakao.com/",
+  "d": "알림톡 발송용 채널",
+  "i": "📨",
+  "used": [
+   "공장 전광판",
+   "재무관리",
+   "내편지도"
+  ]
+ },
+ {
+  "n": "카카오 비즈니스",
+  "g": "카카오·네이버",
+  "u": "https://business.kakao.com/",
+  "d": "카카오 비즈니스 계정·광고",
+  "i": "🟡",
+  "used": [
+   "내편지도"
+  ]
+ },
+ {
+  "n": "네이버 검색광고",
+  "g": "카카오·네이버",
+  "u": "https://searchad.naver.com/",
+  "d": "광고 계정 (마케팅OS·재무관리가 같이 읽음)",
+  "i": "🟢",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)",
+   "재무관리",
+   "영업 허브"
+  ]
+ },
+ {
+  "n": "네이버 서치어드바이저",
+  "g": "카카오·네이버",
+  "u": "https://searchadvisor.naver.com/",
+  "d": "네이버 검색 노출 관리",
+  "i": "🔍",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "네이버 블로그",
+  "g": "카카오·네이버",
+  "u": "https://blog.naver.com/",
+  "d": "블로그 게시·검색",
+  "i": "✍️",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "네이버 클라우드 (NCP)",
+  "g": "카카오·네이버",
+  "u": "https://console.ncloud.com/",
+  "d": "SENS 문자·Clova 음성인식",
+  "i": "☁️",
+  "used": [
+   "AI 전화상담"
+  ]
+ },
+ {
+  "n": "TMAP 개발자",
+  "g": "카카오·네이버",
+  "u": "https://openapi.sk.com/",
+  "d": "배송 경로 최적화",
+  "i": "🧭",
+  "used": [
+   "배송 현황"
+  ]
+ },
+ {
+  "n": "Anthropic Console",
+  "g": "AI",
+  "u": "https://console.anthropic.com/",
+  "d": "Claude API 키·사용량",
+  "i": "🤖",
+  "used": [
+   "공장 전광판",
+   "가스 카메라",
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "청과 수입 판단",
+   "출판 (Bookforge)",
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "OpenAI Platform",
+  "g": "AI",
+  "u": "https://platform.openai.com/",
+  "d": "대화 AI·출판 생성",
+  "i": "🧠",
+  "used": [
+   "AI 전화상담",
+   "출판 (Bookforge)"
+  ]
+ },
+ {
+  "n": "Fish Audio",
+  "g": "AI",
+  "u": "https://fish.audio/",
+  "d": "AI 통화 음성 합성",
+  "i": "🐟",
+  "used": [
+   "AI 전화상담"
+  ]
+ },
+ {
+  "n": "Brevo",
+  "g": "메일·결제·연동",
+  "u": "https://app.brevo.com/",
+  "d": "시스템 알림·결과 메일 발송",
+  "i": "✉️",
+  "used": [
+   "차량 위치 (CarLive)",
+   "재무관리",
+   "마케팅 스튜디오 (마케팅OS)",
+   "AI 전화상담"
+  ]
+ },
+ {
+  "n": "솔라피",
+  "g": "메일·결제·연동",
+  "u": "https://solapi.com/",
+  "d": "알림톡·문자 발송",
+  "i": "📲",
+  "used": [
+   "공장 전광판",
+   "재무관리",
+   "AI 전화상담",
+   "회사전화"
+  ]
+ },
+ {
+  "n": "ClawOps",
+  "g": "메일·결제·연동",
+  "u": "https://clawops.com/",
+  "d": "070 전화 발신·수신·녹음",
+  "i": "☎️",
+  "used": [
+   "AI 전화상담",
+   "회사전화"
+  ]
+ },
+ {
+  "n": "토스페이먼츠 개발자센터",
+  "g": "메일·결제·연동",
+  "u": "https://developers.tosspayments.com/",
+  "d": "내편지도 결제·웹훅",
+  "i": "💳",
+  "used": [
+   "내편지도"
+  ]
+ },
+ {
+  "n": "CODEF",
+  "g": "메일·결제·연동",
+  "u": "https://codef.io/",
+  "d": "은행 거래내역 연동",
+  "i": "🏦",
+  "used": [
+   "재무관리"
+  ]
+ },
+ {
+  "n": "아임웹",
+  "g": "메일·결제·연동",
+  "u": "https://imweb.me/",
+  "d": "쇼핑몰·홈페이지 관리",
+  "i": "🛍️",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "Meta 비즈니스 (인스타)",
+  "g": "마케팅·SNS",
+  "u": "https://business.facebook.com/",
+  "d": "인스타 계정·광고",
+  "i": "📸",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "Threads",
+  "g": "마케팅·SNS",
+  "u": "https://www.threads.net/",
+  "d": "스레드 게시",
+  "i": "🧵",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "TikTok",
+  "g": "마케팅·SNS",
+  "u": "https://www.tiktok.com/",
+  "d": "틱톡 게시",
+  "i": "🎵",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "숨고",
+  "g": "마케팅·SNS",
+  "u": "https://soomgo.com/",
+  "d": "견적 요청 채널",
+  "i": "🙋",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "공공데이터포털",
+  "g": "공공·기타",
+  "u": "https://www.data.go.kr/",
+  "d": "katSale·사업체 데이터",
+  "i": "🏛️",
+  "used": [
+   "청과 수입 판단",
+   "영업 허브"
+  ]
+ },
+ {
+  "n": "나라장터",
+  "g": "공공·기타",
+  "u": "https://www.g2b.go.kr/",
+  "d": "공공 입찰 정보",
+  "i": "📑",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "K-apt (공동주택관리)",
+  "g": "공공·기타",
+  "u": "https://www.k-apt.go.kr/",
+  "d": "아파트 관리 정보",
+  "i": "🏢",
+  "used": [
+   "마케팅 스튜디오 (마케팅OS)"
+  ]
+ },
+ {
+  "n": "쿠팡 Wing",
+  "g": "공공·기타",
+  "u": "https://wing.coupang.com/",
+  "d": "쿠팡 주문·정산",
+  "i": "📦",
+  "used": [
+   "재무관리",
+   "쿠팡 주문내역 취합기"
+  ]
+ },
+ {
+  "n": "forwarder.kr",
+  "g": "공공·기타",
+  "u": "https://forwarder.kr/",
+  "d": "배송 대행 데이터 수집",
+  "i": "🚢",
+  "used": [
+   "forwarder.kr 수집기"
+  ]
+ },
+ {
+  "n": "사주도령",
+  "g": "공공·기타",
+  "u": "https://doryeong.app/n",
+  "d": "사주도령 공개 주소",
+  "i": "🔮",
+  "used": [
+   "사주도령"
+  ]
+ }
+];
+const MAP={
+ "groups": [
+  {
+   "t": "공장·현장",
+   "i": "🏭",
+   "m": [
+    "배송 입력",
+    "포장 입력",
+    "건조기 관리",
+    "출퇴근 관리",
+    "공장 전광판",
+    "차량 위치 (CarLive)",
+    "가스 카메라",
+    "배송 현황",
+    "현황지 출력",
+    "보조컴퓨터 (포장랭킹 카톡)"
+   ]
+  },
+  {
+   "t": "정산·관리",
+   "i": "💰",
+   "m": [
+    "재무관리"
+   ]
+  },
+  {
+   "t": "영업·마케팅",
+   "i": "📣",
+   "m": [
+    "마케팅 스튜디오 (마케팅OS)",
+    "영업 허브",
+    "AI 전화상담",
+    "회사전화"
+   ]
+  },
+  {
+   "t": "독립 프로그램",
+   "i": "🧩",
+   "m": [
+    "청과 수입 판단",
+    "출판 (Bookforge)",
+    "내편지도",
+    "사주도령",
+    "쿠팡 주문내역 취합기",
+    "forwarder.kr 수집기",
+    "한글 폰트 변환기"
+   ]
+  }
+ ],
+ "edges": [
+  [
+   "배송 입력",
+   "📊 구글시트 (현장입력)",
+   "배송지수량·포대수량 기록"
+  ],
+  [
+   "포장 입력",
+   "📊 구글시트 (현장입력)",
+   "포장기록 기록"
+  ],
+  [
+   "건조기 관리",
+   "📊 구글시트 (현장입력)",
+   "건조기기록 기록"
+  ],
+  [
+   "출퇴근 관리",
+   "📊 구글시트 (현장입력)",
+   "근태입력 기록"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "배송 입력",
+   "거래처명단·기사 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "포장 입력",
+   "거래처·클레임·근태 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "건조기 관리",
+   "근태·거래처 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "공장 전광판",
+   "작업·포대수량·건조기 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "배송 현황",
+   "세탁물 현황 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "현황지 출력",
+   "세탁물 현황·거래처 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "포장기록·근태 읽기"
+  ],
+  [
+   "📊 구글시트 (현장입력)",
+   "재무관리",
+   "시트 읽어 정산 반영"
+  ],
+  [
+   "가스 카메라",
+   "📊 구글시트 (현장입력)",
+   "도시가스 탭 기록"
+  ],
+  [
+   "보조컴퓨터 (포장랭킹 카톡)",
+   "📊 구글시트 (현장입력)",
+   "카톡 사진 판독 → 도시가스"
+  ],
+  [
+   "차량 위치 (CarLive)",
+   "공장 전광판",
+   "30초마다 위치 전송"
+  ],
+  [
+   "가스 카메라",
+   "공장 전광판",
+   "전광판 서버에 내장"
+  ],
+  [
+   "마케팅 스튜디오 (마케팅OS)",
+   "📊 실행요청 시트",
+   "인스타·네이버 작업 큐"
+  ],
+  [
+   "📊 실행요청 시트",
+   "💻 노트북 실행기",
+   "큐 읽어 실행"
+  ],
+  [
+   "재무관리",
+   "마케팅 스튜디오 (마케팅OS)",
+   "같은 네이버 광고 계정 공유"
+  ],
+  [
+   "영업 허브",
+   "AI 전화상담",
+   "발신 명단 전달"
+  ],
+  [
+   "AI 전화상담",
+   "영업 허브",
+   "결과·수신거부 동기화"
+  ],
+  [
+   "회사전화",
+   "AI 전화상담",
+   "되걸기 문의"
+  ],
+  [
+   "AI 전화상담",
+   "회사전화",
+   "안내 / 직원 연결 판단"
+  ],
+  [
+   "마케팅 스튜디오 (마케팅OS)",
+   "영업 허브",
+   "키 없으면 폴백 사용"
+  ]
+ ],
+ "extra": {
+  "📊 구글시트 (현장입력)": {
+   "i": "📊",
+   "d": "4개 현장 앱의 중앙 저장소"
+  },
+  "📊 실행요청 시트": {
+   "i": "📋",
+   "d": "마케팅OS ↔ 노트북 연결 큐"
+  },
+  "💻 노트북 실행기": {
+   "i": "💻",
+   "d": "인스타·네이버 직접 작업"
+  }
+ }
+};
 
 const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
+let cats=load("hub_cats",null)||[...CATS0], catmap=load("hub_catmap",{}), customSites=load("hub_sites",[]);
+const catOf=p=>{const c=catmap[p.n]??p.c;return cats.includes(c)?c:cats[cats.length-1]};
 let theme=location.hash==="#t2"?"2":load("hub_theme","1");
 const info={};
 let srv=null;
@@ -419,7 +1060,7 @@ let recent=load("hub_recent",[]);
 function pushRecent(n){recent=[n,...recent.filter(x=>x!==n)].slice(0,6);save("hub_recent",recent)}
 const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
 const isMob=()=>matchMedia("(max-width:600px)").matches;
-let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), edit=false, status={}, tag="전체";
+let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), sgrp="전체", mapFocus=null, edit=false, status={}, tag="전체";
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function all(){
@@ -427,12 +1068,13 @@ function all(){
   const idx=n=>{const i=order.indexOf(n);return i<0?1e6:i};
   return a.map((p,k)=>[p,k]).sort((x,y)=>idx(x[0].n)-idx(y[0].n)||x[1]-y[1]).map(x=>x[0]);
 }
+const catSel=p=>`<select class="mvcat" data-mc="${esc(p.n)}" title="분류 이동">${cats.map(c=>`<option ${c===catOf(p)?"selected":""}>${esc(c)}</option>`).join("")}</select>`;
 function tcard(p){
   const on=favs.includes(p.n), st=eff(p.n), img=(typeof SHOTS!=="undefined")&&SHOTS[p.n];
   const shot=`<div class="shot">${img?`<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
   const meta=`<div class="tmeta"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
-    return `<div class="tcard">${shot}${meta}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
+    return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
   }
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
   return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
@@ -443,7 +1085,7 @@ function card(p){
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
   const nm=`<div class="ic">${p.i||"🔗"}</div><div class="nm"><b><i class="dot ${st}" data-dot="${esc(p.n)}"></i>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
-    return `<div class="card">${nm}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
+    return `<div class="card">${nm}${catSel(p)}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
   }
   return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}">${nm}
     ${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
@@ -461,11 +1103,14 @@ function renderLinks(){
   const rec=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#recSec").hidden=!(rec.length&&!q&&!edit);
   $("#rec").innerHTML=rec.map(chip).join("");
-  $("#tabs").innerHTML=["전체",...CATS].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${t}">${t}</button>`).join("");
+  if(tab!=="전체"&&!cats.includes(tab))tab="전체";
+  $("#tabs").innerHTML=["전체",...cats].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+  $("#catEdit").hidden=!edit;
+  if(edit)$("#catEdit").innerHTML=`<b>분류 편집 — 이름 수정(✎) · 삭제(✕) · 추가. 각 카드 아래 분류 선택으로 프로그램을 다른 분류로 옮길 수 있어요</b>`+cats.map((c,i)=>`<span class="cchip">${esc(c)}<button data-ce="r|${i}" title="이름 수정">✎</button><button data-ce="d|${i}" title="삭제">✕</button></span>`).join("")+`<button class="sm" data-ce="a|0">＋ 분류 추가</button>`;
   const showFav=fav.length&&!q&&!edit;
-  const rows=a.filter(p=>!(showFav&&favs.includes(p.n))&&(tab==="전체"||p.c===tab)&&match(q,p.n+" "+p.d+" "+p.c,p.n+" "+p.d));
+  const rows=a.filter(p=>!(showFav&&favs.includes(p.n))&&(tab==="전체"||catOf(p)===tab)&&match(q,p.n+" "+p.d+" "+p.c,p.n+" "+p.d));
   if(tab==="전체"&&!q){
-    $("#list").innerHTML=CATS.map(c=>{const r=rows.filter(p=>p.c===c);return r.length?`<h3 class="grp">${c}</h3>`+r.map(card).join(""):""}).join("");
+    $("#list").innerHTML=cats.map(c=>{const r=rows.filter(p=>catOf(p)===c);return r.length?`<h3 class="grp">${esc(c)}</h3>`+r.map(card).join(""):""}).join("");
   }else{
     $("#list").innerHTML=rows.map(card).join("")||'<div class="empty">검색 결과가 없습니다</div>';
   }
@@ -487,20 +1132,65 @@ function renderFlow(){
     <div class="pipe">${col("c1","입력",h.a)}<span class="arrow">→</span>${col("c2","저장",h.b)}<span class="arrow">→</span>${col("c3","읽는 곳",h.c)}</div>
     <details class="more"><summary>자세히 보기</summary><div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details></div>`}).join("")||'<div class="empty">결과가 없습니다</div>';
 }
+function allSites(){return[...SITES,...customSites.map(x=>({...x,custom:1,g:x.g||"기타",used:[]}))]}
+function renderSites(){
+  const q=$("#q").value.trim().toLowerCase(), a=allSites();
+  const gs=["전체",...new Set(a.map(s=>s.g))];
+  if(!gs.includes(sgrp))sgrp="전체";
+  $("#sChips").innerHTML=gs.map(g=>`<button class="chip ${g===sgrp?"on":""}" data-sg="${esc(g)}">${esc(g)}</button>`).join("");
+  const rows=a.filter(s=>(sgrp==="전체"||s.g===sgrp)&&match(q,s.n+" "+s.d+" "+s.g+" "+s.used.join(" "),s.n));
+  $("#sList").innerHTML=rows.map(s=>`<a class="card site" href="${esc(s.u)}" target="_blank" rel="noopener"><div class="ic">${s.i||"🌐"}</div><div class="nm"><b>${esc(s.n)}</b><small>${esc(s.d||s.g)}</small><div class="used">${s.used.map(u=>`<span class="tag">${esc(u)}</span>`).join("")}</div></div>${s.custom?`<button class="del" data-ds="${esc(s.n)}" title="삭제">✕</button>`:'<span class="go">↗</span>'}</a>`).join("")||'<div class="empty">결과가 없습니다</div>';
+}
+const nodeIcon=n=>{const f=FLOW.find(x=>x.n===n);return (f&&f.i)||(MAP.extra[n]&&MAP.extra[n].i)||"🔗"};
+const shortName=n=>n.replace(/ \(.*\)$/,"");
+function renderMap(){
+  const q=$("#q").value.trim().toLowerCase();
+  const body=$("#mapBody"), hint=$("#mapHint");
+  if(!mapFocus){
+    hint.textContent="가운데에서 뻗어 나가는 지도입니다. 프로그램을 누르면 어디서 연결되고 어떻게 동작하는지 펼쳐집니다.";
+    const RH=46,G=MAP.groups,rows=G.reduce((s,g)=>s+g.m.length,0),H=rows*RH+30,W=900,cx=80,gx=300,mx=640,cy=H/2;
+    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="프로그램 연결 지도">`, nodes="", y0=20;
+    G.forEach(g=>{
+      const k=g.m.length, gy=y0+k*RH/2;
+      s+=`<path d="M${cx+50} ${cy} C${(cx+gx)/2} ${cy},${(cx+gx)/2} ${gy},${gx-62} ${gy}" fill="none" stroke="#4c86ff" stroke-width="3" opacity=".6"/>`;
+      g.m.forEach((m,j)=>{
+        const y=y0+j*RH+RH/2, hit=q&&match(q,m,m);
+        s+=`<path d="M${gx+62} ${gy} C${(gx+mx)/2} ${gy},${(gx+mx)/2} ${y},${mx-110} ${y}" fill="none" stroke="#94a3b8" stroke-width="1.6" opacity=".8"/>`;
+        nodes+=`<g class="mnode" data-mf="${esc(m)}"><rect x="${mx-110}" y="${y-17}" width="250" height="34" rx="17" fill="${hit?"#fde68a":"var(--icbg)"}" stroke="var(--line)"/><text x="${mx+15}" y="${y+5}" text-anchor="middle" font-size="14" font-weight="700">${esc(nodeIcon(m)+" "+shortName(m))}</text></g>`;
+      });
+      nodes+=`<g><rect x="${gx-62}" y="${gy-20}" width="124" height="40" rx="12" fill="#1d5be6"/><text x="${gx}" y="${gy+5}" text-anchor="middle" font-size="14" font-weight="800" style="fill:#fff">${esc(g.i+" "+g.t)}</text></g>`;
+      y0+=k*RH;
+    });
+    s+=nodes+`<g><circle cx="${cx}" cy="${cy}" r="50" fill="#0f172a"/><text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="18" font-weight="800" style="fill:#fff">유클</text><text x="${cx}" y="${cy+18}" text-anchor="middle" font-size="12" style="fill:#fff">업무 허브</text></g></svg>`;
+    body.innerHTML=`<div class="mapbox">${s}</div>`;
+    return;
+  }
+  const f=mapFocus, ins=MAP.edges.filter(e=>e[1]===f), outs=MAP.edges.filter(e=>e[0]===f);
+  hint.innerHTML=`<button class="sm" data-mf="">← 전체 지도</button> &nbsp;이웃을 누르면 그 프로그램 중심으로 이동합니다.`;
+  const fl=FLOW.find(x=>x.n===f), sh=typeof SHORT!=="undefined"&&SHORT[f];
+  const nb=(n,lab)=>`<button class="fnode" data-mf="${esc(n)}">${esc(nodeIcon(n)+" "+n)}<small>${esc(lab)}</small></button>`;
+  const used=SITES.filter(s=>s.used.includes(f));
+  const r=(k,v)=>v?`<div class="row"><i>${k}</i><div>${esc(v)}</div></div>`:"";
+  body.innerHTML=`<div class="focus">
+    <div class="fcol"><label>⬅ 데이터를 받아오는 곳</label>${ins.map(e=>nb(e[0],e[2])).join("")||'<div class="empty">없음 (직접 입력)</div>'}</div>
+    <div class="fcenter">${esc(nodeIcon(f)+" "+f)}${sh?`<small>${esc(sh.a.join(" · "))} → ${esc(sh.b.join(" · "))}</small>`:`<small>${esc(MAP.extra[f]?MAP.extra[f].d:"")}</small>`}</div>
+    <div class="fcol"><label>➡ 데이터를 보내는 곳</label>${outs.map(e=>nb(e[1],e[2])).join("")||'<div class="empty">없음 (독립 / 최종)</div>'}</div></div>
+    ${used.length?`<h2>🌐 쓰는 외부 사이트</h2><div class="chips">${used.map(s=>`<a class="chip" href="${esc(s.u)}" target="_blank" rel="noopener">${esc((s.i||"")+" "+s.n)}</a>`).join("")}</div>`:""}
+    ${fl?`<h2>어떻게 동작하나</h2><div class="fc"><div class="fb">${r("입력",fl.in)}${r("저장",fl.save)}${r("외부 연동",fl.ext)}${r("자동 실행",fl.auto)}${r("연결",fl.link)}</div></div>`:""}`;
+}
 function render(){
-  $("#linksView").hidden=view!=="links"; $("#flowView").hidden=view!=="flow";
-  $("#vLinks").classList.toggle("on",view==="links"); $("#vFlow").classList.toggle("on",view==="flow");
+  $("#linksView").hidden=view!=="links"; $("#flowView").hidden=view!=="flow"; $("#sitesView").hidden=view!=="sites"; $("#mapView").hidden=view!=="map";
+  for(const [k,id] of [["links","Links"],["sites","Sites"],["map","Map"],["flow","Flow"]]){$("#v"+id).classList.toggle("on",view===k);$("#tb"+id).classList.toggle("on",view===k)}
   $("#btnStatus").style.display=$("#btnEdit").style.display=view==="links"?"":"none";
   $("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
   $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
-  $("#addBtn").style.display=view==="links"?"":"none";
-  $("#tbLinks").classList.toggle("on",view==="links"); $("#tbFlow").classList.toggle("on",view==="flow");
+  $("#addBtn").style.display=view==="links"||view==="sites"?"":"none";
   $("#tbTheme").querySelector(".tl").textContent="테마"+(theme==="2"?"2":"1"); $("#tbTheme").disabled=view!=="links";
   $("#tbEdit").disabled=view!=="links"; $("#tbEdit").classList.toggle("on",edit); $("#tbEdit").querySelector(".tl").textContent=edit?"편집 완료":"순서 편집";
-  view==="links"?renderLinks():renderFlow();
+  ({links:renderLinks,sites:renderSites,map:renderMap,flow:renderFlow})[view]();
 }
 function move(n,dir){
-  const L=all(), p=L.find(x=>x.n===n), same=L.filter(x=>x.c===p.c);
+  const L=all(), p=L.find(x=>x.n===n), same=L.filter(x=>catOf(x)===catOf(p));
   const i=same.findIndex(x=>x.n===n), j=i+dir;
   if(j<0||j>=same.length)return;
   const a=L.indexOf(same[i]), b=L.indexOf(same[j]);
@@ -566,6 +1256,12 @@ document.addEventListener("click",e=>{
   const x=e.target.closest("[data-x]"), dt=e.target.closest(".dot[data-dot]");
   if(x){e.preventDefault();openSub(x.dataset.x);return}
   if(dt){e.preventDefault();toast(why(dt.dataset.dot));return}
+  const mc=e.target.closest("[data-mf]");
+  if(mc){e.preventDefault();mapFocus=mc.dataset.mf||null;render();window.scrollTo(0,0);return}
+  const sg=e.target.closest("[data-sg]"),ds=e.target.closest("[data-ds]"),ce=e.target.closest("[data-ce]");
+  if(sg){sgrp=sg.dataset.sg;render();return}
+  if(ds){e.preventDefault();customSites=customSites.filter(x=>x.n!==ds.dataset.ds);save("hub_sites",customSites);render();return}
+  if(ce){e.preventDefault();catAction(ce.dataset.ce);return}
   const s=e.target.closest("[data-s]"),d=e.target.closest("[data-d]"),t=e.target.closest("[data-t]"),m=e.target.closest("[data-m]"),g=e.target.closest("[data-g]");
   if(s){e.preventDefault();const n=s.dataset.s;favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];save("hub_favs",favs);render()}
   else if(d){e.preventDefault();custom=custom.filter(x=>x.n!==d.dataset.d);save("hub_custom",custom);render()}
@@ -576,6 +1272,32 @@ document.addEventListener("click",e=>{
 $("#q").addEventListener("input",render);
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card, #list a.tcard");if(a)location.href=a.href}});
 $("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
+document.addEventListener("change",e=>{const m=e.target.closest("[data-mc]");if(m){catmap[m.dataset.mc]=m.value;save("hub_catmap",catmap);render()}});
+let cdMode=null;
+function catAction(v){
+  const [k,i]=v.split("|"),idx=+i;cdMode={k,idx};
+  const T={a:"분류 추가",r:"분류 이름 수정",d:"분류 삭제"};
+  $("#cdTitle").textContent=T[k];$("#cdName").style.display=k==="d"?"none":"";
+  $("#cdName").value=k==="r"?cats[idx]:"";
+  const fb=cats.filter((_,j)=>j!==idx);
+  $("#cdMsg").textContent=k==="d"?(cats.length<2?"마지막 분류는 지울 수 없습니다.":`'${cats[idx]}' 분류를 지웁니다. 안의 프로그램은 '${fb[fb.length-1]}'(으)로 옮겨집니다.`):"";
+  $("#catDlg").showModal();
+}
+$("#cdCancel").onclick=()=>$("#catDlg").close();
+$("#cdOk").onclick=()=>{
+  const {k,idx}=cdMode,name=$("#cdName").value.trim();
+  if(k==="a"){if(!name||cats.includes(name))return toast(name?"이미 있는 이름입니다":"이름을 입력하세요");cats=[...cats,name]}
+  else if(k==="r"){if(!name||(name!==cats[idx]&&cats.includes(name)))return toast(name?"이미 있는 이름입니다":"이름을 입력하세요");
+    const old=cats[idx];all().forEach(p=>{if(catOf(p)===old)catmap[p.n]=name});cats=cats.map((c,j)=>j===idx?name:c);if(tab===old)tab=name}
+  else{if(cats.length<2)return $("#catDlg").close();
+    const old=cats[idx],rest=cats.filter((_,j)=>j!==idx),to=rest[rest.length-1];
+    all().forEach(p=>{if(catOf(p)===old)catmap[p.n]=to});cats=rest;if(tab===old)tab="전체"}
+  save("hub_cats",cats);save("hub_catmap",catmap);$("#catDlg").close();render();
+};
+$("#vSites").onclick=()=>{view="sites";edit=false;save("hub_view",view);render()};
+$("#vMap").onclick=()=>{view="map";edit=false;save("hub_view",view);render()};
+$("#tbSites").onclick=()=>$("#vSites").click();
+$("#tbMap").onclick=()=>$("#vMap").click();
 $("#vFlow").onclick=()=>{view="flow";edit=false;save("hub_view",view);render()};
 $("#th1").onclick=()=>{theme="1";save("hub_theme",theme);render()};
 $("#th2").onclick=()=>{theme="2";save("hub_theme",theme);render()};
@@ -591,8 +1313,12 @@ $("#subDlg").addEventListener("click",e=>{if(e.target===$("#subDlg"))$("#subDlg"
 document.addEventListener("contextmenu",e=>{const c=e.target.closest("a.card,a.tcard");if(!c)return;const b=c.querySelector("[data-x]");if(b){e.preventDefault();openSub(b.dataset.x)}});
 matchMedia("(max-width:600px)").addEventListener("change",()=>render());
 $("#btnOpenAll").onclick=()=>{const ds=[...document.querySelectorAll("details.more")],open=ds.some(x=>!x.open);ds.forEach(x=>x.open=open);$("#btnOpenAll").textContent=open?"모두 접기":"모두 펼치기"};
-$("#fCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
-$("#addBtn").onclick=()=>{$("#fName").value="";$("#fUrl").value="";$("#dlg").showModal()};
+$("#addBtn").onclick=()=>{
+  if(view==="sites"){$("#sName").value=$("#sUrl").value=$("#sDesc").value="";$("#sGrp").innerHTML=[...new Set(allSites().map(s=>s.g))].map(c=>`<option>${esc(c)}</option>`).join("");$("#sDlg").showModal();return}
+  $("#fCat").innerHTML=cats.map(c=>`<option>${esc(c)}</option>`).join("");$("#fName").value="";$("#fUrl").value="";$("#dlg").showModal()};
+$("#sCancel").onclick=()=>$("#sDlg").close();
+$("#sSave").onclick=()=>{const n=$("#sName").value.trim();let u=$("#sUrl").value.trim();if(!n||!u)return;if(!/^https?:\/\//.test(u))u="https://"+u;
+  customSites.push({n,u,d:$("#sDesc").value.trim(),g:$("#sGrp").value,i:"🌐"});save("hub_sites",customSites);$("#sDlg").close();render()};
 $("#fCancel").onclick=()=>$("#dlg").close();
 $("#fSave").onclick=()=>{
   const n=$("#fName").value.trim();let u=$("#fUrl").value.trim();
