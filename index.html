@@ -147,6 +147,19 @@ dialog.sub h3{margin:0 0 10px;font-size:16px}
 .fcenter{background:var(--blue);color:#fff;border-radius:16px;padding:16px 18px;text-align:center;font-size:17px;font-weight:800;max-width:240px}
 .fcenter small{display:block;font-weight:400;font-size:12px;opacity:.9;margin-top:4px}
 .mrow summary{cursor:pointer}.mrow{border-bottom:1px solid var(--line)}.mnode{transition:opacity .15s}
+.lane{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:0 0 14px}
+.lane h3{margin:0 0 2px;font-size:18px}.lane>p{margin:0 0 12px;color:var(--sub);font-size:14px}
+.lcols{display:flex;align-items:center;gap:10px}
+.lcol{flex:1;min-width:0;display:grid;gap:8px}.lcol>label{font-size:12px;font-weight:700;color:var(--sub)}
+.larr{font-size:28px;color:var(--blue);font-weight:800;flex:none}
+.lnode{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--icbg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;color:var(--text);cursor:pointer}
+.lnode:hover{border-color:var(--blue)}
+.lnode.mid{background:#e7f6ec;color:#14532d}
+@media(prefers-color-scheme:dark){.lnode.mid{background:#173826;color:#bbf7d0}}
+.lnode small{display:block;font-weight:400;font-size:12px;opacity:.8;margin-top:2px}
+.lwrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.sgrp{margin:8px 0}.sgrp>label{font-size:12px;font-weight:700;color:var(--sub)}
+@media(max-width:600px){.lcols{flex-direction:column;align-items:stretch}.larr{transform:rotate(90deg);align-self:center;font-size:24px;line-height:1}.lnode{font-size:15px}}
 .maphint{color:var(--sub);font-size:13px;margin:4px 0 10px}
 @media(max-width:600px){.focus{grid-template-columns:1fr}.fcenter{max-width:none}.mapbox svg{min-width:560px}}
 #tabbar{display:none}
@@ -446,7 +459,7 @@ const SHORT={
 };
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
-const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-03", "차량 위치 (CarLive)": "2026-10-02", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-09-26", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-03", "차량 위치 (CarLive)": "2026-10-02", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-10-05", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
@@ -1231,6 +1244,133 @@ const MAP={
  ],
  "desc": {
   "한글 폰트 변환기": "손글씨를 한글 폰트로 바꾸는 PC 로컬 도구. 외부 연결 없이 혼자 동작합니다(독립)."
+ },
+ "lanes": [
+  {
+   "t": "🏭 현장 데이터 흐름",
+   "d": "현장 앱이 구글시트에 기록 → 화면·정산 프로그램이 읽어 갑니다",
+   "cols": [
+    {
+     "h": "① 입력하는 곳",
+     "m": [
+      "배송 입력",
+      "포장 입력",
+      "건조기 관리",
+      "출퇴근 관리",
+      "가스 카메라"
+     ],
+     "a": "→"
+    },
+    {
+     "h": "② 저장소",
+     "m": [
+      "📊 구글시트 (현장입력)"
+     ],
+     "a": "→"
+    },
+    {
+     "h": "③ 읽는 곳",
+     "m": [
+      "공장 전광판",
+      "배송 현황",
+      "현황지 출력",
+      "재무관리",
+      "보조컴퓨터 (포장랭킹 카톡)"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "📡 전광판 직결",
+   "d": "시트를 거치지 않고 전광판 서버로 바로 전달됩니다",
+   "cols": [
+    {
+     "h": "보내는 곳",
+     "m": [
+      "차량 위치 (CarLive)",
+      "가스 카메라"
+     ],
+     "a": "→"
+    },
+    {
+     "h": "받는 곳",
+     "m": [
+      "공장 전광판"
+     ],
+     "a": "→"
+    },
+    {
+     "h": "표시",
+     "m": [
+      "🖥️ 공장 모니터"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "📞 영업 · 전화",
+   "d": "명단·결과를 서로 주고받습니다",
+   "cols": [
+    {
+     "h": "",
+     "m": [
+      "영업 허브"
+     ],
+     "a": "⇄"
+    },
+    {
+     "h": "",
+     "m": [
+      "AI 전화상담"
+     ],
+     "a": "⇄"
+    },
+    {
+     "h": "",
+     "m": [
+      "회사전화"
+     ]
+    }
+   ]
+  },
+  {
+   "t": "📣 마케팅",
+   "d": "인스타·네이버 직접 작업은 시트 큐를 거쳐 노트북이 처리합니다",
+   "cols": [
+    {
+     "h": "",
+     "m": [
+      "마케팅 스튜디오 (마케팅OS)"
+     ],
+     "a": "→"
+    },
+    {
+     "h": "",
+     "m": [
+      "📊 실행요청 시트"
+     ],
+     "a": "→"
+    },
+    {
+     "h": "",
+     "m": [
+      "💻 노트북 실행기"
+     ]
+    }
+   ]
+  }
+ ],
+ "indep": [
+  "청과 수입 판단",
+  "출판 (Bookforge)",
+  "내편지도",
+  "사주도령",
+  "쿠팡 주문내역 취합기",
+  "forwarder.kr 수집기",
+  "한글 폰트 변환기"
+ ],
+ "sub": {
+  "📊 구글시트 (현장입력)": "탭: 근태입력 · 포장기록 · 건조기기록 · 포대수량 · 도시가스 · 거래처명단"
  }
 };
 
@@ -1378,64 +1518,19 @@ const mchip=(n)=>`<button class="chip" data-mf="${esc(n)}">${esc(lab(n))}</butto
 function renderMap(){
   const body=$("#mapBody"),hint=$("#mapHint"),q=$("#q").value.trim().toLowerCase();
   if(mapFocus)return mapFocusView(body,hint);
-  hint.innerHTML=`프로그램끼리·서비스와 어떻게 이어졌는지 한눈에 보는 지도입니다. 누르면 연결된 곳이 강조됩니다. <span class="tag">🟢 정상</span><span class="tag">🟠 느림</span><span class="tag">🔴 응답 없음</span><span class="tag">⚪ 미확인</span><span class="tag">⚠ 설명 점검 필요</span>`;
-  isMob()?mapList(body,q):mapGraph(body,q);
+  hint.innerHTML=`프로그램을 누르면 연결된 곳과 멈췄을 때 영향받는 곳이 나옵니다. <span class="tag">🟢 정상</span><span class="tag">🔴 응답 없음</span><span class="tag">⚠ 설명 점검 필요</span>`;
+  mapLanes(body,q);
 }
-function mapPanel(n){
-  const g=graph(),isProg=g.progs.includes(n),isSvc=!!g.svcs.find(s=>s.n===n);
-  const L=(lab,arr)=>arr.length?`<div class="row"><i>${lab}</i><div>${arr.map(x=>mchip(x)).join(" ")}</div></div>`:"";
-  const ds=downstream(n);
-  return `<div class="fc" style="margin-top:10px"><div class="fh"><div class="ic">${nodeIcon(n)}</div><b>${esc(n.replace(/^\S+ /,"")&&MAP.extra[n]?n.replace(/^\S+ /,""):n)}</b>${isProg?chgTag(FLOW.find(x=>x.n===n)||{n}):""}</div><div class="fb">
-    ${isSvc?L("쓰는 곳",gUsers(n)):L("받는 곳",gIns(n).map(e=>e[0]))+L("보내는 곳",gOuts(n).map(e=>e[1]))+L("서비스",gSvcs(n))}
-    ${ds.length?`<div class="row"><i>영향</i><div>멈추면 ${ds.length}곳에 영향</div></div>`:""}</div>
-    <div style="margin-top:10px;display:flex;gap:8px"><button class="sm on" data-mf="${esc(n)}">자세히 · 영향 범위</button><button class="sm" data-mh="">선택 해제</button></div></div>`;
-}
-function mapGraph(body,q){
-  const g=graph(),P=34,GH=30,pos={},heads=[];let y=34;
-  MAP.groups.forEach(gr=>{heads.push({t:gr.i+" "+gr.t,y:y+8});y+=GH;gr.m.forEach(m=>{pos[m]={x:210,y:y+P/2,w:230};y+=P});y+=8});
-  const H=y+6,W=1000;
-  g.mids.forEach((m,i)=>pos[m]={x:520,y:34+(H-70)*(i+0.5)/g.mids.length,w:150});
-  const bary=s=>{const ys=gUsers(s.n).map(u=>pos[u].y);return ys.length?ys.reduce((a,b)=>a+b)/ys.length:H/2};
-  const sv=[...g.svcs].sort((a,b)=>bary(a)-bary(b));
-  sv.forEach((s,i)=>pos[s.n]={x:850,y:34+(H-60)*(i+0.5)/sv.length,w:170});
-  let hs=null,dsl=null;
-  if(mapHL&&pos[mapHL]){hs=new Set([mapHL]);
-    g.dir.forEach(e=>{if(e[0]===mapHL)hs.add(e[1]);if(e[1]===mapHL)hs.add(e[0])});
-    g.use.forEach(u=>{if(u[0]===mapHL)hs.add(u[1]);if(u[1]===mapHL)hs.add(u[0])});
-    dsl=downstream(mapHL);dsl.forEach(x=>hs.add(x.n));
-  }
-  const path=(a,b)=>{const A=pos[a],B=pos[b];
-    if(A.x===B.x){const out=A.x<300?-1:1,x=A.x+out*A.w/2;return `M${x} ${A.y} C${x+out*70} ${A.y},${x+out*70} ${B.y},${x} ${B.y}`}
-    const ltr=A.x<B.x,s=A.x+(ltr?1:-1)*A.w/2,e=B.x+(ltr?-1:1)*B.w/2,mx=(s+e)/2;
-    return `M${s} ${A.y} C${mx} ${A.y},${mx} ${B.y},${e} ${B.y}`};
-  const edges=[...g.dir.map(e=>({a:e[0],b:e[1],d:1})),...g.use.map(u=>({a:u[0],b:u[1],d:0}))].filter(e=>pos[e.a]&&pos[e.b]);
-  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="프로그램 연결 지도"><defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#1d5be6"/></marker></defs>`;
-  s+=`<text x="520" y="22" text-anchor="middle" font-size="12" font-weight="800" style="fill:#64748b">공용 저장·중계</text><text x="850" y="22" text-anchor="middle" font-size="12" font-weight="800" style="fill:#64748b">외부 서비스</text>`;
-  heads.forEach(h=>s+=`<text x="95" y="${h.y}" font-size="13" font-weight="800" style="fill:#64748b">${esc(h.t)}</text>`);
-  const hot=e=>hs&&(e.a===mapHL||e.b===mapHL||dsl.edges.has(e.a+">"+e.b));
-  edges.filter(e=>!hot(e)).forEach(e=>s+=`<path d="${path(e.a,e.b)}" fill="none" stroke="#94a3b8" stroke-width="1.2" ${e.d?"":'stroke-dasharray="4 3"'} opacity="${hs?.06:.32}"/>`);
-  edges.filter(hot).forEach(e=>s+=`<path d="${path(e.a,e.b)}" fill="none" stroke="#1d5be6" stroke-width="2.4" ${e.d?'marker-end="url(#ar)"':'stroke-dasharray="5 3"'} opacity=".95"/>`);
-  const node=(n,fill)=>{
-    const P_=pos[n],hit=q&&match(q,n,n),sel=mapHL===n,st=g.progs.includes(n)?mapStatus(n):null,stale=g.progs.includes(n)&&isStale(n);
-    return `<g class="mnode" data-mh="${esc(n)}" opacity="${hs&&!hs.has(n)?.25:1}"><rect x="${P_.x-P_.w/2}" y="${P_.y-13}" width="${P_.w}" height="26" rx="13" fill="${hit?"#fde68a":fill}" stroke="${sel?"#1d5be6":"var(--line)"}" stroke-width="${sel?3:1}"/><text x="${P_.x}" y="${P_.y+5}" text-anchor="middle" font-size="12.5" font-weight="700">${esc(MAP.extra[n]?n:nodeIcon(n)+" "+shortName(n))}</text>${st!==null?`<circle cx="${P_.x+P_.w/2-14}" cy="${P_.y}" r="5" fill="${dotColor(st)}" stroke="#fff" stroke-width="1.5"/>`:""}${stale?`<text x="${P_.x-P_.w/2+12}" y="${P_.y+5}" font-size="12" style="fill:#d97706">⚠</text>`:""}</g>`};
-  g.progs.forEach(n=>s+=node(n,"var(--icbg)"));
-  g.mids.forEach(n=>s+=node(n,"#e7f6ec"));
-  sv.forEach(n=>s+=node(n.n,"var(--chip)"));
-  s+=`</svg>`;
-  body.innerHTML=`<div class="mapbox">${s}</div>`+(mapHL&&pos[mapHL]?mapPanel(mapHL):`<div class="maphint" style="margin-top:8px">왼쪽 프로그램 → 가운데 공용 시트 → 오른쪽 외부 서비스. 실선 화살표는 데이터 흐름, 점선은 서비스 사용입니다.</div>`);
-}
-function mapList(body,q){
-  const g=graph(),okq=n=>!q||match(q,n,n);
-  const prog=n=>{const st=mapStatus(n),stale=isStale(n);
-    return `<details class="more mrow"><summary style="font-size:15px;padding:8px 0"><i class="dot ${st}"></i>${stale?"⚠ ":""}${esc(lab(n))}</summary><div class="fb">
-    ${gIns(n).length?`<div class="row"><i>받는 곳</i><div>${gIns(n).map(e=>mchip(e[0])).join(" ")}</div></div>`:""}
-    ${gOuts(n).length?`<div class="row"><i>보내는 곳</i><div>${gOuts(n).map(e=>mchip(e[1])).join(" ")}</div></div>`:""}
-    ${gSvcs(n).length?`<div class="row"><i>서비스</i><div>${gSvcs(n).map(x=>mchip(x)).join(" ")}</div></div>`:""}
-    <button class="sm on" data-mf="${esc(n)}">자세히 · 영향 범위</button></div></details>`};
-  let h=MAP.groups.map(gr=>{const m=gr.m.filter(okq);return m.length?`<h3 class="grp">${esc(gr.i+" "+gr.t)}</h3>`+m.map(prog).join(""):""}).join("");
-  h+=`<h3 class="grp">공용 저장·중계</h3>`+g.mids.filter(okq).map(prog).join("");
-  h+=`<h3 class="grp">외부 서비스 (쓰는 프로그램)</h3>`+g.svcs.filter(s=>okq(s.n)).map(s=>`<details class="more mrow"><summary style="font-size:15px;padding:8px 0">${esc((s.i||"")+" "+s.n)}</summary><div class="fb"><div class="row"><i>쓰는 곳</i><div>${gUsers(s.n).map(x=>mchip(x)).join(" ")}</div></div><button class="sm on" data-mf="${esc(s.n)}">자세히 · 영향 범위</button></div></details>`).join("");
-  body.innerHTML=`<div class="grid" style="display:block">${h}</div>`;
+function mapLanes(body,q){
+  const dim=n=>q&&!match(q,n,n);
+  const node=n=>{const st=mapStatus(n),stale=isStale(n),sub=MAP.sub&&MAP.sub[n];
+    return `<button class="lnode ${MAP.extra[n]?"mid":""}" style="${dim(n)?"opacity:.3":""}" data-mf="${esc(n)}">${st!==""||(BASE.some(x=>x.n===n||n.startsWith(x.n)))?`<i class="dot ${st}"></i>`:""}<span>${stale?"⚠ ":""}${esc(lab(n))}${sub?`<small>${esc(sub)}</small>`:""}</span></button>`};
+  const lane=l=>`<section class="lane"><h3>${esc(l.t)}</h3><p>${esc(l.d)}</p><div class="lcols">`+l.cols.map(c=>`<div class="lcol">${c.h?`<label>${esc(c.h)}</label>`:""}${c.m.map(node).join("")}</div>${c.a?`<div class="larr">${c.a}</div>`:""}`).join("")+`</div></section>`;
+  const groups={};graph().svcs.forEach(s=>(groups[s.g]=groups[s.g]||[]).push(s));
+  const svcHtml=Object.entries(groups).map(([g,a])=>`<div class="sgrp"><label>${esc(g)}</label><div class="chips">${a.filter(s=>!dim(s.n)).map(s=>mchip(s.n)).join("")}</div></div>`).join("");
+  body.innerHTML=MAP.lanes.map(lane).join("")+
+    `<section class="lane"><h3>🧩 혼자 도는 프로그램</h3><p>다른 프로그램과 데이터를 주고받지 않습니다</p><div class="lcol"><div class="lwrap">${MAP.indep.map(node).join("")}</div></div></section>`+
+    `<section class="lane"><h3>🌐 외부 서비스</h3><p>누르면 그 서비스를 쓰는 프로그램과, 멈췄을 때 영향받는 곳이 나옵니다</p>${svcHtml}</section>`;
 }
 function mapFocusView(body,hint){
   const f=mapFocus,g=graph(),site=siteOf(f),isSvc=!!(site&&!g.progs.includes(f)&&!MAP.extra[f]);
