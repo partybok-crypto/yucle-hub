@@ -283,13 +283,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 
   <div id="flowView" hidden>
     <div class="bar" style="margin-top:6px"><span style="color:var(--sub);font-size:14px">프로그램마다 데이터가 어디서 들어와 어디에 저장되는지</span><span class="sp"></span><button class="sm" id="btnOpenAll">모두 펼치기</button></div>
-    <div class="ov">
-      <h3>전체 지도 — 데이터가 흐르는 길</h3>
-      <div class="orow"><span class="olab">현장</span><div class="oin"><div class="obox">현장 앱 4개<small>배송·포장·건조기·출퇴근</small></div><span class="arrow">→</span><div class="obox hot">📊 구글시트<small>세탁공장 현장입력</small></div><span class="arrow">→</span><div class="obox">전광판 · 재무관리<small>배송현황 · 보조컴퓨터</small></div></div></div>
-      <div class="orow"><span class="olab">가스</span><div class="oin"><div class="obox">가스 카메라<small>또는 카톡 사진</small></div><span class="arrow">→</span><div class="obox hot">📊 시트 '도시가스'</div><span class="arrow">→</span><div class="obox">재무관리<small>일일 가스비</small></div></div></div>
-      <div class="orow"><span class="olab">영업</span><div class="oin"><div class="obox">영업 허브</div><span class="arrow">⇄</span><div class="obox">AI 전화상담</div><span class="arrow">⇄</span><div class="obox">회사전화<small>070 되걸기</small></div></div></div>
-      <div class="orow"><span class="olab">마케팅</span><div class="oin"><div class="obox">마케팅 OS</div><span class="arrow">⇄</span><div class="obox hot">📊 실행요청 시트</div><span class="arrow">⇄</span><div class="obox">노트북 실행기<small>인스타·네이버</small></div></div></div>
-    </div>
+    <div id="flowSum"></div>
     <div class="chips" id="chips"></div>
     <div class="flow" id="flow"></div>
   </div>
@@ -424,6 +418,7 @@ function chgTag(f){
 function renderFlow(){
   const q=$("#q").value.trim().toLowerCase();
   const list=FLOW.filter(f=>SHORT[f.n]);
+  $("#flowSum").innerHTML=mapSummary();
   const tags=["전체",...new Set(list.flatMap(f=>f.store))];
   $("#chips").innerHTML=tags.map(t=>`<button class="chip ${t===tag?"on":""}" data-g="${esc(t)}">${esc(t)}</button>`).join("");
   const rows=list.filter(f=>(tag==="전체"||f.store.includes(tag))&&match(q,f.n+" "+JSON.stringify(f),f.n));
@@ -489,6 +484,10 @@ function renderMap(){
   hint.innerHTML=`프로그램을 누르면 연결된 곳과 멈췄을 때 영향받는 곳이 나옵니다. <span class="tag">🟢 정상</span><span class="tag">🔴 응답 없음</span><span class="tag">⚠ 설명 점검 필요</span>`;
   mapLanes(body,q);
 }
+function mapSummary(){
+  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
+  return `<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
+}
 function mapLanes(body,q){
   const dim=n=>q&&!match(q,n,n);
   const node=n=>{const st=mapStatus(n),stale=isStale(n),sub=MAP.sub&&MAP.sub[n];
@@ -496,8 +495,7 @@ function mapLanes(body,q){
   const lane=l=>`<section class="lane"><h3>${esc(l.t)}</h3><p>${esc(l.d)}</p><div class="lcols">`+l.cols.map(c=>`<div class="lcol">${c.h?`<label>${esc(c.h)}</label>`:""}${c.m.map(node).join("")}</div>${c.a?`<div class="larr">${c.a}</div>`:""}`).join("")+`</div></section>`;
   const groups={};graph().svcs.forEach(s=>(groups[s.g]=groups[s.g]||[]).push(s));
   const svcHtml=Object.entries(groups).map(([g,a])=>`<div class="sgrp"><label>${esc(g)}</label><div class="chips">${a.filter(s=>!dim(s.n)).map(s=>mchip(s.n)).join("")}</div></div>`).join("");
-  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
-  const sum=`<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
+  const sum=mapSummary();
   body.innerHTML=sum+MAP.lanes.map(lane).join("")+
     `<section class="lane"><h3>🧩 혼자 도는 프로그램</h3><p>다른 프로그램과 데이터를 주고받지 않습니다</p><div class="lcol"><div class="lwrap">${MAP.indep.map(node).join("")}</div></div></section>`+
     `<section class="lane"><h3>🌐 외부 서비스</h3><p>누르면 그 서비스를 쓰는 프로그램과, 멈췄을 때 영향받는 곳이 나옵니다</p>${svcHtml}</section>`;

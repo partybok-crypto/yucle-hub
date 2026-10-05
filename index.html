@@ -283,13 +283,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 
   <div id="flowView" hidden>
     <div class="bar" style="margin-top:6px"><span style="color:var(--sub);font-size:14px">프로그램마다 데이터가 어디서 들어와 어디에 저장되는지</span><span class="sp"></span><button class="sm" id="btnOpenAll">모두 펼치기</button></div>
-    <div class="ov">
-      <h3>전체 지도 — 데이터가 흐르는 길</h3>
-      <div class="orow"><span class="olab">현장</span><div class="oin"><div class="obox">현장 앱 4개<small>배송·포장·건조기·출퇴근</small></div><span class="arrow">→</span><div class="obox hot">📊 구글시트<small>세탁공장 현장입력</small></div><span class="arrow">→</span><div class="obox">전광판 · 재무관리<small>배송현황 · 보조컴퓨터</small></div></div></div>
-      <div class="orow"><span class="olab">가스</span><div class="oin"><div class="obox">가스 카메라<small>또는 카톡 사진</small></div><span class="arrow">→</span><div class="obox hot">📊 시트 '도시가스'</div><span class="arrow">→</span><div class="obox">재무관리<small>일일 가스비</small></div></div></div>
-      <div class="orow"><span class="olab">영업</span><div class="oin"><div class="obox">영업 허브</div><span class="arrow">⇄</span><div class="obox">AI 전화상담</div><span class="arrow">⇄</span><div class="obox">회사전화<small>070 되걸기</small></div></div></div>
-      <div class="orow"><span class="olab">마케팅</span><div class="oin"><div class="obox">마케팅 OS</div><span class="arrow">⇄</span><div class="obox hot">📊 실행요청 시트</div><span class="arrow">⇄</span><div class="obox">노트북 실행기<small>인스타·네이버</small></div></div></div>
-    </div>
+    <div id="flowSum"></div>
     <div class="chips" id="chips"></div>
     <div class="flow" id="flow"></div>
   </div>
@@ -336,10 +330,10 @@ const FLOW=[
   ext:"서비스 계정으로 시트 접근. 4개 앱 자체에는 카톡·알림톡·메일 발송이 없음(알림톡은 전광판).",
   auto:"앱마다 크론은 없고 서버 내부 스레드가 30초~180초 주기로 재전송·캐시 갱신.",
   link:"탭별 흐름: 근태입력 → 포장기록·건조기·전광판·재무관리가 읽음 / 포장기록·건조기기록·포대수량 → 전광판·재무관리·보조컴퓨터가 읽음 / 거래처명단 및 배송기사 → 배송입력·포장기록이 읽음. 운영 볼륨 확인(2026-10-04): 모든 서버가 /data 볼륨에 붙어 있음."},
- {n:"배송 입력",i:"🚚",store:["구글시트","SQLite(보관함)"],
+ {n:"배송 입력",v:"2026-10-05",i:"🚚",store:["구글시트","SQLite(보관함)"],
   in:"현장 관리자가 터치모니터 웹화면에서 차량·기사·코스·배송지 수·업체번호별 포대 수를 입력. 브라우저에 임시저장한 뒤 '제출' 버튼으로 일괄 전송.",
   save:"구글시트 탭: 배송지수량, 포대수량, 현장기사등록, 현장코스등록. 제출 실패 대비 SQLite 보관함(submit_outbox.db).",
-  ext:"구글시트만 사용. 읽기는 '거래처명단 및 배송기사' 탭.",
+  ext:"구글시트만 사용. 읽기: '거래처명단 및 배송기사'·현장기사등록·현장코스등록, 배송지수량·포대수량(수정·삭제용). 쓰기: 배송지수량·포대수량·현장기사등록·현장코스등록(없는 탭은 자동 생성).",
   auto:"30초마다 미전송 제출을 자동 재전송.",
   link:"배송 현황이 배송지수량·포대수량을 읽고, 전광판이 포대수량으로 수거 대상을 계산. 포장기록은 거래처명단 탭을 읽음."},
  {n:"포장 입력",i:"📦",store:["구글시트","SQLite(보관함)","라벨 프린터"],
@@ -360,9 +354,9 @@ const FLOW=[
   ext:"구글시트 '근무자명단' 탭 읽기(수식 전용), 근태입력·현장신규등록에 쓰기.",
   auto:"서버 시작 시 1회 동기화, 출퇴근 직후 자동 동기화, 화면 버튼으로 수동 재전송.",
   link:"포장기록(오늘 출근 담당자)·건조기(출근 작업자)·전광판·재무관리(인건비)가 근태입력 탭을 읽음."},
- {n:"공장 전광판",i:"🖥️",store:["구글시트","SQLite(/data)","Drive 사진"],
-  in:"직원이 시트에 입력한 포대수량·포장기록·근태를 읽어옴. 관리자·CS가 /admin에서 찾기요청·공지·설정 입력. 차량폰·가스촬영폰이 API로 전송. 거래처가 방문일정 변경 신청.",
-  save:"구글시트 '세탁공장 현장입력'의 전광판_ 전용 6개 탭(찾기요청·발견기록·설정·공지사항·작업로그·포장상세). 가스 시트 '도시가스' 탭 일부 열. SQLite 3개(camera.db·alimtalk.db·vehicles.db, 운영 /data/camera). 사진은 Drive 폴더.",
+ {n:"공장 전광판",v:"2026-10-05",i:"🖥️",store:["구글시트","SQLite(/data)","Drive 사진"],
+  in:"직원이 시트에 입력한 포대수량·포장기록·근태·건조기기록·배송세션을 읽어옴(현황지 시트 '세탁물 현황', 근무표 시트의 주차별 쉬프트·근무자정보도 읽음). 관리자·CS가 /admin에서 찾기요청·공지·설정 입력. 차량폰·가스촬영폰이 API로 전송. 거래처가 방문일정 변경 신청.",
+  save:"구글시트 '세탁공장 현장입력'의 전광판_ 전용 7개 탭(찾기요청·발견기록·설정·공지사항·작업로그·포장상세·업체명별칭). 가스 시트 '도시가스' 탭 일부 열. SQLite 3개(camera.db·alimtalk.db·vehicles.db, 운영 /data/camera). 사진은 Drive 폴더.",
   ext:"구글시트·Drive, 건조기 API(20초), 솔라피 알림톡, Claude 비전 OCR(대체용), YouTube(차량 방송 생성), 카카오맵, Google Geolocation(WiFi 위치), 알림 메일",
   auto:"시트 45초마다 읽어 캐시, 일정표 300초. 알림톡 스케줄러 매일 13:00 발송(켜짐 여부는 화면에서 확인). 공장 PC 로그온 시 Chrome 키오스크 모니터 자동 실행.",
   link:"허브 역할. 차량·가스촬영·건조기·시트 데이터를 모아 보여줌. 재무관리가 가스 시트를 읽어감."},
@@ -378,21 +372,21 @@ const FLOW=[
   ext:"폰↔서버 WebSocket·HTTP 업로드, 기기 OCR(기본)·Claude 비전(대체), Drive·Sheets, 알림 메일",
   auto:"폰은 포그라운드 서비스로 15초 heartbeat. 고정 촬영 스케줄은 확인되지 않음(수동 명령 위주).",
   link:"전광판 서버에 내장. 보조컴퓨터(카톡 사진 판독)도 같은 '도시가스' 탭에 기록. 재무관리가 일일 가스비를 읽어감."},
- {n:"배송 현황",i:"🗺️",store:["SQLite(/data)","구글시트"],
+ {n:"배송 현황",v:"2026-10-05",i:"🗺️",store:["SQLite(/data)","구글시트"],
   in:"관리자가 시트 새로고침·최적화·기사 링크 배정. 기사가 기사링크(/d/토큰)에서 수거량 입력 후 '공장 도착·배송 종료'.",
-  save:"SQLite app-data.sqlite3(좌표 캐시·최적화 결과·변경이력·기사·배정·기사 입력). 현장입력 시트의 기사링크 전용 탭에 기록. 거래처 원장은 저장 안 하고 항상 시트에서 읽음.",
-  ext:"구글시트('세탁물 현황' 탭 읽기), TMAP, 카카오모빌리티 길찾기, 기사링크용 도메인(CNAME)",
+  save:"SQLite app-data.sqlite3(좌표 캐시·최적화 결과·변경이력·기사·배정·기사 입력). 현장입력 시트의 기사링크 전용 탭(기사링크_배송지수량·수거량·배송세션)에 기록하고, 배송 현황 서버는 배송지수량·포대수량·현장기사등록 탭에 기록. 거래처 원장은 저장 안 하고 항상 시트에서 읽음.",
+  ext:"구글시트: 경로 최적화 앱은 현황지 시트의 '세탁물 현황'·'거래처'와 근무표 시트의 근무자정보를 읽음. 배송 현황 서버는 현장입력 시트의 거래처명단·기사·배송지수량·포대수량을 읽고 씀. TMAP, 카카오모빌리티 길찾기, 기사링크용 도메인(CNAME)",
   auto:"운행일은 한국시간 오후 1시 기준으로 넘어가고 월요일은 휴무. 그날 담당 코스가 자동으로 열림. 별도 스케줄 없음.",
-  link:"'세탁물 현황'을 읽고, 쓴 포대수량 등은 전광판·보조컴퓨터가 읽음. 알림톡은 전광판 모듈이 담당."},
+  link:"현황지 시트의 '세탁물 현황'을 읽고(경로 앱), 배송 현황 서버가 쓴 포대수량·배송지수량은 전광판·재무관리·보조컴퓨터가 읽음. 알림톡은 전광판 모듈이 담당."},
  {n:"현황지 출력",i:"🖨️",store:["브라우저 저장","구글시트(읽기)"],
   in:"화면에서 요일·날짜·코스를 고르고 배송순서·기사·업체 추가/제외·코멘트를 편집.",
   save:"원본 시트에는 쓰지 않음. 편집값은 이 브라우저 localStorage에만 저장(날짜별 초안·마지막 코스·출력 이력).",
   ext:"Google Apps Script 웹앱이 시트의 '세탁물 현황'·'거래처' 탭을 읽어 전달(읽기 전용)",
   auto:"없음(수동 출력)",
   link:"전광판 알림톡 모듈·배송 현황과 같은 시트 탭을 원본으로 공유"},
- {n:"보조컴퓨터 (포장랭킹 카톡)",i:"💬",store:["구글시트","PC 로컬"],
+ {n:"보조컴퓨터 (포장랭킹 카톡)",v:"2026-10-05",i:"💬",store:["구글시트","PC 로컬"],
   in:"직원이 시트 '근태입력'에 퇴근시간을 넣으면 트리거. 직원이 카톡방에 올린 가스계량기 사진도 입력.",
-  save:"PC 로컬 파일(state.json·logs·가스 차트 이미지). 가스 시트 '도시가스' 탭에 판독값을 새 행으로 추가.",
+  save:"PC 로컬 파일(state.json·logs·가스 차트 이미지). 가스 시트 '도시가스' 탭에 판독값을 새 행으로 추가(최근 값 읽기도 함).",
   ext:"구글시트(포장기록·근태입력·거래처명단 읽기), 카카오톡 PC 자동화, Claude 비전(계량기 사진 판독)",
   auto:"PC에서 상시 실행, 시트를 90초마다 확인. 출근자 전원 퇴근시간이 채워지면 하루 1회 포장랭킹·가스비 그래프 발송.",
   link:"가스 시트 '도시가스' 탭을 가스 카메라와 공유(사진 판독 경로 2개). 현장 앱들이 쓴 포장기록을 읽음."},
@@ -429,9 +423,9 @@ const FLOW=[
  {n:"한글 폰트 변환기",i:"✍️",store:["PC 로컬"],
   in:"기존 .gfont 샘플과 나눔 글꼴을 읽어 필기 로봇용 .gfont로 변환.",
   save:"로컬 파일(결과 korean_custom.gfont).", ext:"없음(오프라인)", auto:"없음", link:"독립. 변환한 폰트는 로봇 PC 소프트웨어에 수동 복사."},
- {n:"재무관리",i:"💰",store:["SQLite(/data)","구글시트"],
-  in:"그랜터 CSV(서버가 자동 로그인해 받음, 화면 업로드도 가능). 구글시트 읽기(거래처·매출수거량·급여대장·근태입력·손익참고). 화면 입력(청구 확정·미수금 매칭·수기 입금·비용 분류). 은행 직접조회(Apps Script 중계). 네이버 광고비 API. 토스 미니앱이 결제를 호출.",
-  save:"Railway 볼륨 /data/dev.db(SQLite): 거래처·청구·입금·미수금 매칭, 그랜터 거래, 일일결산 스냅샷·마케팅비·고정비, 직원·근태·급여, 은행 거래, 토스페이 링크·결제, 감사 로그. 그랜터 원본은 구글시트 '그랜터_계좌·세금계산서·현금영수증' 탭에도 누적(백업).",
+ {n:"재무관리",v:"2026-10-05",i:"💰",store:["SQLite(/data)","구글시트"],
+  in:"그랜터 CSV(서버가 자동 로그인해 받음, 화면 업로드도 가능). 구글시트 읽기(거래처·매출수거량·급여대장·근태입력·포대수량·배송지수량·배송세션·근무자정보·손익참고). 화면 입력(청구 확정·미수금 매칭·수기 입금·비용 분류). 은행 직접조회(Apps Script 중계). 네이버 광고비 API. 토스 미니앱이 결제를 호출.",
+  save:"Railway 볼륨 /data/dev.db(SQLite): 거래처·청구·입금·미수금 매칭, 그랜터 거래, 일일결산 스냅샷·마케팅비·고정비, 직원·근태·급여, 은행 거래, 토스페이 링크·결제, 감사 로그. 그랜터 원본은 구글시트 '그랜터_계좌·세금계산서·현금영수증' 탭에도 누적(백업). 급여계산 탭(2026-10-05 추가)은 근태·급여 시트를 읽어 '급여-기초'·'급여-상세' 월 블록을 급여 시트에 써넣음.",
   ext:"그랜터(2026-10-10 종료 예정, 은행 직접 연동으로 대체 중), 구글시트, CODEF·BankAPI, 토스페이 미니앱, 솔라피(청구 알림톡·결제완료 문자), 네이버 검색광고, 쿠팡, Brevo(결과 메일)",
   auto:"매일 08:30 그랜터 자동 반영 → 09:00 실데이터 전체 동기화(청구 계산·일일결산). 3시간마다 네이버 광고 사용액 갱신. 5분마다 토스페이 결제 상태 재조회. 은행 자동조회는 설정을 켠 경우만.",
   link:"전광판 가스 시트를 읽어 가스비 반영. 마케팅OS와 같은 네이버 광고 계정을 읽음(DB 연동은 아님). 토스 미니앱 결제가 들어오면 입금·미수금이 자동 생성."},
@@ -1307,6 +1301,14 @@ const MAP={
    [
     "현황지"
    ]
+  ],
+  [
+   "📋 현황지 시트",
+   "배송 현황",
+   "세탁물 현황·거래처 읽기(경로 앱)",
+   [
+    "현황지"
+   ]
   ]
  ],
  "extra": {
@@ -1584,6 +1586,7 @@ function chgTag(f){
 function renderFlow(){
   const q=$("#q").value.trim().toLowerCase();
   const list=FLOW.filter(f=>SHORT[f.n]);
+  $("#flowSum").innerHTML=mapSummary();
   const tags=["전체",...new Set(list.flatMap(f=>f.store))];
   $("#chips").innerHTML=tags.map(t=>`<button class="chip ${t===tag?"on":""}" data-g="${esc(t)}">${esc(t)}</button>`).join("");
   const rows=list.filter(f=>(tag==="전체"||f.store.includes(tag))&&match(q,f.n+" "+JSON.stringify(f),f.n));
@@ -1649,6 +1652,10 @@ function renderMap(){
   hint.innerHTML=`프로그램을 누르면 연결된 곳과 멈췄을 때 영향받는 곳이 나옵니다. <span class="tag">🟢 정상</span><span class="tag">🔴 응답 없음</span><span class="tag">⚠ 설명 점검 필요</span>`;
   mapLanes(body,q);
 }
+function mapSummary(){
+  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
+  return `<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
+}
 function mapLanes(body,q){
   const dim=n=>q&&!match(q,n,n);
   const node=n=>{const st=mapStatus(n),stale=isStale(n),sub=MAP.sub&&MAP.sub[n];
@@ -1656,8 +1663,7 @@ function mapLanes(body,q){
   const lane=l=>`<section class="lane"><h3>${esc(l.t)}</h3><p>${esc(l.d)}</p><div class="lcols">`+l.cols.map(c=>`<div class="lcol">${c.h?`<label>${esc(c.h)}</label>`:""}${c.m.map(node).join("")}</div>${c.a?`<div class="larr">${c.a}</div>`:""}`).join("")+`</div></section>`;
   const groups={};graph().svcs.forEach(s=>(groups[s.g]=groups[s.g]||[]).push(s));
   const svcHtml=Object.entries(groups).map(([g,a])=>`<div class="sgrp"><label>${esc(g)}</label><div class="chips">${a.filter(s=>!dim(s.n)).map(s=>mchip(s.n)).join("")}</div></div>`).join("");
-  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
-  const sum=`<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
+  const sum=mapSummary();
   body.innerHTML=sum+MAP.lanes.map(lane).join("")+
     `<section class="lane"><h3>🧩 혼자 도는 프로그램</h3><p>다른 프로그램과 데이터를 주고받지 않습니다</p><div class="lcol"><div class="lwrap">${MAP.indep.map(node).join("")}</div></div></section>`+
     `<section class="lane"><h3>🌐 외부 서비스</h3><p>누르면 그 서비스를 쓰는 프로그램과, 멈췄을 때 영향받는 곳이 나옵니다</p>${svcHtml}</section>`;

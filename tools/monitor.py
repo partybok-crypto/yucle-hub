@@ -1,5 +1,5 @@
 """서버 감시: 링크 전체를 점검 -> 상태 파일(status.json) 갱신 -> 연속 2회 이상이면 메일 -> 변화가 있거나 2시간마다 허브에 반영
-작업 스케줄러가 매일 12:00에 1번 실행한다(pythonw)."""
+작업 스케줄러가 3시간마다 실행한다(pythonw)."""
 import json, os, sys, time, subprocess, datetime
 from concurrent.futures import ThreadPoolExecutor
 
@@ -11,7 +11,7 @@ from notify import send_mail
 STATE = os.path.join(HERE, "monitor_state.json")
 LOG = os.path.join(HERE, "monitor.log")
 LOCK = os.path.join(HERE, "monitor.lock")
-FAIL_LIMIT = 1          # 하루 1번 점검하므로 한 번만 이상해도 알림
+FAIL_LIMIT = 2          # 3시간마다 점검하므로 연속 2회(약 3~6시간) 이상일 때 알림
 PUSH_EVERY_MIN = 120    # 변화가 없어도 이 간격으로 허브 상태 갱신
 SLOW_SEC = 5.0
 
@@ -42,7 +42,7 @@ def check(p):
     ms = int(sec * 1000)
     if code == 0:
         return {"s": "down", "ms": ms, "code": 0}
-    s = "error" if code >= 500 else ("slow" if sec > SLOW_SEC else "ok")
+    s = "error" if (code >= 500 or code in (404, 410)) else ("slow" if sec > SLOW_SEC else "ok")   # 404 = 주소 연결이 끊긴 서버(예: Railway 도메인 미연결)
     return {"s": s, "ms": ms, "code": code}
 
 def refresh_busy():
