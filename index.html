@@ -124,6 +124,7 @@ dialog.sub h3{margin:0 0 10px;font-size:16px}
 .chg{margin-left:auto;font-size:11.5px;color:var(--sub);white-space:nowrap}
 .chg.stale{color:#92400e;background:#fef3c7;padding:3px 8px;border-radius:7px;font-weight:700}
 @media(prefers-color-scheme:dark){.chg.stale{color:#fde68a;background:#4a3410}}
+.catbar[hidden]{display:none}
 .catbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px dashed var(--blue);border-radius:12px;padding:10px;margin:10px 0}
 .catbar b{font-size:13px;color:var(--sub);width:100%}
 .cchip{display:inline-flex;align-items:center;gap:2px;background:var(--chip);border-radius:999px;padding:4px 6px 4px 12px;font-size:13px}
@@ -459,7 +460,7 @@ const SHORT={
 };
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
-const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-03", "차량 위치 (CarLive)": "2026-10-02", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-10-05", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-05", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-10-05", "청과 수입 판단": "2026-10-04", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
