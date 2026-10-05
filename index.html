@@ -483,7 +483,7 @@ const SHORT={
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
 const SHOTSM={"배송 입력": "shots/m0.jpg", "포장 입력": "shots/m1.jpg", "출퇴근 관리": "shots/m3.jpg", "건조기 관리": "shots/m2.jpg", "공장 전광판": "shots/m4.jpg", "차량 위치 관리": "shots/m6.jpg", "가스 카메라": "shots/m7.jpg", "현황지 출력": "shots/m8.jpg", "재무관리": "shots/m9.jpg", "영업 허브": "shots/m11.jpg", "AI 전화상담": "shots/m12.jpg", "마케팅 스튜디오": "shots/m10.jpg", "회사전화": "shots/m13.jpg", "내편지도": "shots/m16.jpg", "청과 수입 판단": "shots/m14.jpg", "사주도령": "shots/m17.jpg", "배송 현황": "shots/m5.jpg"};
-const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-05", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-03", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-10-05", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-02", "포장 입력": "2026-10-02", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-03", "공장 전광판": "2026-10-05", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-03", "배송 현황": "2026-10-04", "현황지 출력": "2026-10-05", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-05", "마케팅 스튜디오 (마케팅OS)": "2026-10-05", "영업 허브": "2026-10-03", "AI 전화상담": "2026-10-03", "회사전화": "2026-10-05", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-04", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
@@ -1653,7 +1653,7 @@ function renderMap(){
   mapLanes(body,q);
 }
 function mapSummary(){
-  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
+  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
   return `<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
 }
 function mapLanes(body,q){

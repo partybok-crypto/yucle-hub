@@ -485,7 +485,7 @@ function renderMap(){
   mapLanes(body,q);
 }
 function mapSummary(){
-  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,"").replace(/하는 곳|는 곳/,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
+  const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
   return `<div class="sumbox">${MAP.lanes.map(l=>`<div>${esc(lsum(l))}</div>`).join("")}<div style="color:var(--sub);font-weight:600">🧩 혼자 도는 ${MAP.indep.length}개 · 🌐 외부 서비스 ${graph().svcs.length}개</div></div>`;
 }
 function mapLanes(body,q){
