@@ -265,7 +265,14 @@
   "d": "소설·시집 자가출판",
   "u": "https://bookforge-production-27f6.up.railway.app",
   "c": "기타",
-  "i": "📚"
+  "i": "📚",
+  "watch": false,
+  "subs": [
+   {
+    "t": "PC 로컬판 (이 PC에서만)",
+    "u": "http://127.0.0.1:8765"
+   }
+  ]
  },
  {
   "n": "내편지도",
