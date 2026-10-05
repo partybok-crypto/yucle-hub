@@ -1755,7 +1755,7 @@ function applySrv(){
   }
 }
 function loadSrv(){
-  fetch("status.json?"+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j){srv=j;applySrv();render()}}).catch(()=>{});
+  fetch("status.json?"+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j){const ch=JSON.stringify(j)!==JSON.stringify(srv);srv=j;applySrv();if(ch)render()}}).catch(()=>{});
 }
 let toastT;
 function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),3800)}
@@ -1885,7 +1885,7 @@ $("#fSave").onclick=()=>{
   if(!n||!u)return;if(!/^https?:\/\//.test(u))u="https://"+u;
   custom.push({n,u,c:$("#fCat").value,d:$("#fCat").value});save("hub_custom",custom);$("#dlg").close();render();
 };
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){loadSrv();if(view==="links")checkAll().then(applySrv)}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){loadSrv();checkAll().then(applySrv)}});
 render();applySrv();checkAll().then(applySrv);loadSrv();setInterval(loadSrv,300000);
 if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)){
   const had=!!navigator.serviceWorker.controller;
