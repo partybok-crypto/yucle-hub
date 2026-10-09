@@ -88,7 +88,7 @@ a.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px
 .obox small{display:block;font-weight:400;color:var(--sub);font-size:11.5px}
 .obox.hot{background:#e7f6ec;color:#14532d}
 @media(prefers-color-scheme:dark){.obox.hot{background:#173826;color:#bbf7d0}}
-/* 테마 2 : 화면 캡처 카드 */
+/* 테마 1 : 화면 캡처 카드 */
 .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .tcard{display:block;position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:.15s}
 a.tcard:hover{box-shadow:0 8px 22px rgba(30,60,120,.16);transform:translateY(-2px)}
@@ -241,6 +241,14 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
  .olab{width:100%}
  .row{grid-template-columns:58px 1fr}
 }
+/* 테마 2 : 다크 강제 */
+:root[data-theme="dark"]{--bg1:#0b1220;--bg2:#0b1220;--card:#162033;--text:#e8eef9;--sub:#93a1b8;--line:#243049;--blue:#4c86ff;--icbg:#1f2e4a;--chip:#1f2b42}
+:root[data-theme="dark"] .pc.c1 span.ch{background:#173826;color:#bbf7d0}:root[data-theme="dark"] .pc.c2 span.ch{background:#1c2c52;color:#c7d8ff}:root[data-theme="dark"] .pc.c3 span.ch{background:#3b2a14;color:#fcd9a8}
+:root[data-theme="dark"] .obox.hot{background:#173826;color:#bbf7d0}
+:root[data-theme="dark"] #srvLine.ok{background:#14351f;color:#bbf7d0}:root[data-theme="dark"] #srvLine.bad{background:#4a1a1a;color:#fecaca}
+:root[data-theme="dark"] .chg.stale{color:#fde68a;background:#4a3410}
+:root[data-theme="dark"] .lnode.mid{background:#173826;color:#bbf7d0}
+:root[data-theme="dark"]{color-scheme:dark}:root[data-theme="dark"] .tcard .star{background:rgba(245,166,35,.22);color:#f5c35a}:root[data-theme="dark"] .tcard .star.on{background:rgba(245,166,35,.4);color:#ffd36b}:root[data-theme="dark"] .tcard .nt{background:rgba(59,130,246,.28);color:#8fb8ff}
 </style>
 </head>
 <body>
@@ -257,7 +265,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   <div class="bar" id="topbar">
     <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vSites">사이트</button><button id="vMap">연결 지도</button></div>
     <span class="sp"></span>
-    <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2</button></div>
+    <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2 🌙</button></div>
     <div class="seg" id="shotSeg"><button id="shPc">💻 PC화면</button><button id="shM">📱 모바일화면</button></div>
     <button class="sm" id="btnSync">설정 옮기기</button>
     <button class="sm" id="btnStatus">상태 확인</button>
@@ -1508,7 +1516,7 @@ const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
 let cats=load("hub_cats",null)||[...CATS0], catmap=load("hub_catmap",{}), customSites=load("hub_sites",[]);
 const catOf=p=>{const c=catmap[p.n]??p.c;return cats.includes(c)?c:cats[cats.length-1]};
-let theme=location.hash==="#t2"?"2":load("hub_theme","1");
+let theme=location.hash==="#t2"?"2":load("hub_theme2","1");
 const info={};
 let srv=null;
 const srvItem=n=>srv&&srv.items&&srv.items[n];
@@ -1545,27 +1553,15 @@ function tcard(p){
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
   return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
 }
-function card(p){
-  if(theme==="2")return tcard(p);
-  const on=favs.includes(p.n), st=eff(p.n);
-  const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
-  const nm=`<div class="ic">${p.i||"🔗"}</div><div class="nm"><b><i class="dot ${st}" data-dot="${esc(p.n)}"></i>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
-  if(edit){
-    return `<div class="card">${nm}${catSel(p)}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
-  }
-  return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}">${nm}
-    ${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
-    ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
-    <span class="go">→</span></a>`;
-}
+function card(p){return tcard(p)}
 function renderLinks(){
   const q=$("#q").value.trim().toLowerCase(), a=all();
   const fav=a.filter(p=>favs.includes(p.n));
   const recL=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#favSec").style.display=(fav.length||(isMob()&&recL.length))&&!q&&!edit?"":"none";
   const bar=isMob();
-  $("#fav").className=bar?"favbar":(theme==="2"?"tgrid":"grid")+" fav";
-  $("#list").className=theme==="2"?"tgrid":"grid";
+  $("#fav").className=bar?"favbar":"tgrid fav";
+  $("#list").className="tgrid";
   $("#fav").innerHTML=bar?fav.map(chip).join("")+recL.map(p=>chip(p).replace('class="fchip"','class="fchip rc"')).join(""):fav.map(card).join("");
   const rec=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#recSec").hidden=bar||!(rec.length&&!q&&!edit);
@@ -1705,11 +1701,11 @@ function render(){
   for(const [k,id] of [["links","Links"],["sites","Sites"],["map","Map"]]){$("#v"+id).classList.toggle("on",view===k);$("#tb"+id).classList.toggle("on",view===k)}
   $("#tbMore").classList.toggle("on",edit);
   $("#btnStatus").style.display=$("#btnEdit").style.display=view==="links"?"":"none";
-  $("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
+  document.documentElement.dataset.theme=theme==="2"?"dark":"";$("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
   $("#btnEdit").classList.toggle("on",edit); $("#btnEdit").textContent=edit?"편집 완료":"순서 편집";
   $("#addBtn").style.display=view==="links"||view==="sites"?"":"none";
-  $("#shotSeg").style.display=view==="links"&&theme==="2"?"":"none";$("#shPc").classList.toggle("on",shotMode!=="m");$("#shM").classList.toggle("on",shotMode==="m");
-  $("#mdShot").style.display=view==="links"&&theme==="2"?"":"none";$("#mdShot").textContent=shotMode==="m"?"💻 캡처: PC화면으로":"📱 캡처: 모바일화면으로";
+  $("#shotSeg").style.display=view==="links"?"":"none";$("#shPc").classList.toggle("on",shotMode!=="m");$("#shM").classList.toggle("on",shotMode==="m");
+  $("#mdShot").style.display=view==="links"?"":"none";$("#mdShot").textContent=shotMode==="m"?"💻 캡처: PC화면으로":"📱 캡처: 모바일화면으로";
   $("#mdTheme").textContent="🖼️ 테마 "+(theme==="2"?"2 → 1로":"1 → 2로");
   $("#mdEdit").textContent=edit?"✅ 편집 완료":"↕️ 순서·분류 편집";
   (view==="links"?renderLinks:view==="sites"?renderSites:cards?renderFlow:renderMap)();
@@ -1846,18 +1842,18 @@ $("#tbMap").onclick=()=>$("#vMap").click();
 $("#shPc").onclick=()=>{shotMode="pc";save("hub_shot",shotMode);render()};
 $("#shM").onclick=()=>{shotMode="m";save("hub_shot",shotMode);render()};
 $("#mdShot").onclick=()=>{$("#moreDlg").close();shotMode=shotMode==="m"?"pc":"m";save("hub_shot",shotMode);render()};
-const CFG_KEYS={hub_cats:"cats",hub_catmap:"catmap",hub_favs:"favs",hub_order:"order",hub_custom:"custom",hub_sites:"customSites",hub_sfavs:"sfavs",hub_theme:"theme",hub_shot:"shot"};
+const CFG_KEYS={hub_cats:"cats",hub_catmap:"catmap",hub_favs:"favs",hub_order:"order",hub_custom:"custom",hub_sites:"customSites",hub_sfavs:"sfavs",hub_theme2:"theme2",hub_shot:"shot"};
 const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/"))));
-function cfgLink(){const o={cats,catmap,favs,order,custom,customSites,sfavs,theme,shot:shotMode};return location.origin+location.pathname+"#cfg="+b64e(JSON.stringify(o))}
+function cfgLink(){const o={cats,catmap,favs,order,custom,customSites,sfavs,theme2:theme,shot:shotMode};return location.origin+location.pathname+"#cfg="+b64e(JSON.stringify(o))}
 function applyCfg(code){
   let o;try{o=JSON.parse(b64d(code))}catch(e){return false}
   const A=v=>Array.isArray(v)&&v.every(x=>typeof x==="string"), O=v=>v&&typeof v==="object"&&!Array.isArray(v);
   const OA=v=>Array.isArray(v)&&v.every(x=>x&&typeof x.n==="string"&&typeof x.u==="string");
   if(!A(o.cats)||!o.cats.length||!O(o.catmap)||!A(o.favs)||!A(o.order)||!OA(o.custom)||!OA(o.customSites)||!A(o.sfavs))return false;
   cats=o.cats;catmap=o.catmap;favs=o.favs;order=o.order;custom=o.custom;customSites=o.customSites;sfavs=o.sfavs;
-  if(o.theme==="1"||o.theme==="2")theme=o.theme;if(o.shot==="m"||o.shot==="pc")shotMode=o.shot;
-  save("hub_cats",cats);save("hub_catmap",catmap);save("hub_favs",favs);save("hub_order",order);save("hub_custom",custom);save("hub_sites",customSites);save("hub_sfavs",sfavs);save("hub_theme",theme);save("hub_shot",shotMode);
+  if(o.theme2==="1"||o.theme2==="2")theme=o.theme2;if(o.shot==="m"||o.shot==="pc")shotMode=o.shot;
+  save("hub_cats",cats);save("hub_catmap",catmap);save("hub_favs",favs);save("hub_order",order);save("hub_custom",custom);save("hub_sites",customSites);save("hub_sfavs",sfavs);save("hub_theme2",theme);save("hub_shot",shotMode);
   return true;
 }
 function openSync(code){$("#syBox").value=cfgLink();$("#syIn").value=code?location.origin+location.pathname+"#cfg="+code:"";if(code)$("#syMsg").textContent="다른 기기의 설정 링크로 열었습니다. '적용'을 누르면 이 기기의 설정이 바뀝니다.";$("#syncDlg").showModal()}
@@ -1875,8 +1871,8 @@ $("#mdTheme").onclick=()=>{$("#moreDlg").close();(theme==="2"?$("#th1"):$("#th2"
 $("#mdEdit").onclick=()=>{$("#moreDlg").close();view="links";edit=!edit;render()};
 $("#mdCards").onclick=()=>{$("#moreDlg").close();view="map";mapSub="cards";mapFocus=null;edit=false;render();window.scrollTo(0,0)};
 $("#moreDlg").addEventListener("click",e=>{if(e.target===$("#moreDlg"))$("#moreDlg").close()});
-$("#th1").onclick=()=>{theme="1";save("hub_theme",theme);render()};
-$("#th2").onclick=()=>{theme="2";save("hub_theme",theme);render()};
+$("#th1").onclick=()=>{theme="1";save("hub_theme2",theme);render()};
+$("#th2").onclick=()=>{theme="2";save("hub_theme2",theme);render()};
 $("#btnEdit").onclick=()=>{edit=!edit;render()};
 $("#btnStatus").onclick=manualCheck;
 $("#tbLinks").onclick=()=>$("#vLinks").click();
