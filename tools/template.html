@@ -255,7 +255,6 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 <div class="wrap">
   <div class="top">
     <div class="logo">유클</div>
-    <input id="q" class="search" placeholder="검색" autocomplete="off">
     <button class="add" id="addBtn">＋<span> 바로가기 추가</span></button>
   </div>
   <h1><b>유클</b> 업무 허브</h1>
@@ -387,7 +386,7 @@ function tcard(p){
 }
 function card(p){return tcard(p)}
 function renderLinks(){
-  const q=$("#q").value.trim().toLowerCase(), a=all();
+  const q="", a=all();
   const fav=a.filter(p=>favs.includes(p.n));
   const recL=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#favSec").style.display=(fav.length||(isMob()&&recL.length))&&!q&&!edit?"":"none";
@@ -416,7 +415,7 @@ function chgTag(f){
   return `<span class="chg ${stale?"stale":""}">${stale?"설명 점검 필요 · ":""}코드 변경 ${c.slice(5)}</span>`;
 }
 function renderFlow(){
-  const q=$("#q").value.trim().toLowerCase();
+  const q="";
   const list=FLOW.filter(f=>SHORT[f.n]);
   $("#flowSum").innerHTML=mapSummary();
   const tags=["전체",...new Set(list.flatMap(f=>f.store))];
@@ -430,7 +429,7 @@ function renderFlow(){
 }
 function allSites(){return[...SITES,...customSites.map(x=>({...x,custom:1,g:x.g||"기타",used:[]}))]}
 function renderSites(){
-  const q=$("#q").value.trim().toLowerCase(), a=allSites();
+  const q="", a=allSites();
   const gs=["전체",...new Set(a.map(s=>s.g))];
   if(!gs.includes(sgrp))sgrp="전체";
   $("#sChips").innerHTML=gs.map(g=>`<button class="chip ${g===sgrp?"on":""}" data-sg="${esc(g)}">${esc(g)}</button>`).join("");
@@ -479,7 +478,7 @@ const dotColor=s=>({ok:"#22c55e",down:"#ef4444",slow:"#f59e0b"}[s]||"#9aa6ba");
 function isStale(n){const c=typeof CHG!=="undefined"&&CHG[n];if(!c)return false;const f=FLOW.find(x=>x.n===n);return c>((f&&f.v)||FLOW_DATE)}
 const mchip=(n)=>`<button class="chip" data-mf="${esc(n)}">${esc(lab(n))}</button>`;
 function renderMap(){
-  const body=$("#mapBody"),hint=$("#mapHint"),q=$("#q").value.trim().toLowerCase();
+  const body=$("#mapBody"),hint=$("#mapHint"),q="";
   if(mapFocus)return mapFocusView(body,hint);
   hint.innerHTML=`프로그램을 누르면 연결된 곳과 멈췄을 때 영향받는 곳이 나옵니다. <span class="tag">🟢 정상</span><span class="tag">🔴 응답 없음</span><span class="tag">⚠ 설명 점검 필요</span>`;
   mapLanes(body,q);
@@ -642,8 +641,6 @@ document.addEventListener("click",e=>{
   else if(t){tab=t.dataset.t;render()}
   else if(g){tag=g.dataset.g;render()}
 });
-$("#q").addEventListener("input",render);
-$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card, #list a.tcard");if(a)location.href=a.href}});
 $("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
 document.addEventListener("change",e=>{const m=e.target.closest("[data-mc]");if(m){catmap[m.dataset.mc]=m.value;save("hub_catmap",catmap);render()}});
 let cdMode=null;

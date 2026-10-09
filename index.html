@@ -255,7 +255,6 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 <div class="wrap">
   <div class="top">
     <div class="logo">유클</div>
-    <input id="q" class="search" placeholder="검색" autocomplete="off">
     <button class="add" id="addBtn">＋<span> 바로가기 추가</span></button>
   </div>
   <h1><b>유클</b> 업무 허브</h1>
@@ -495,7 +494,7 @@ const SHORT={
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
 const SHOTSM={"배송 입력": "shots/m0.jpg", "포장 입력": "shots/m1.jpg", "출퇴근 관리": "shots/m3.jpg", "건조기 관리": "shots/m2.jpg", "공장 전광판": "shots/m4.jpg", "차량 위치 관리": "shots/m6.jpg", "가스 카메라": "shots/m7.jpg", "현황지 출력": "shots/m8.jpg", "재무관리": "shots/m9.jpg", "영업 허브": "shots/m11.jpg", "AI 전화상담": "shots/m12.jpg", "마케팅 스튜디오": "shots/m10.jpg", "회사전화": "shots/m13.jpg", "내편지도": "shots/m16.jpg", "청과 수입 판단": "shots/m14.jpg", "사주도령": "shots/m17.jpg", "배송 현황": "shots/m5.jpg"};
-const CHG={"배송 입력": "2026-10-08", "포장 입력": "2026-10-08", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-08", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-08", "배송 현황": "2026-10-08", "현황지 출력": "2026-10-06", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-07", "마케팅 스튜디오 (마케팅OS)": "2026-10-09", "영업 허브": "2026-10-09", "AI 전화상담": "2026-10-09", "회사전화": "2026-10-09", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-08", "포장 입력": "2026-10-08", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-08", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-08", "배송 현황": "2026-10-08", "현황지 출력": "2026-10-06", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-09", "마케팅 스튜디오 (마케팅OS)": "2026-10-09", "영업 허브": "2026-10-09", "AI 전화상담": "2026-10-09", "회사전화": "2026-10-09", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
@@ -1555,7 +1554,7 @@ function tcard(p){
 }
 function card(p){return tcard(p)}
 function renderLinks(){
-  const q=$("#q").value.trim().toLowerCase(), a=all();
+  const q="", a=all();
   const fav=a.filter(p=>favs.includes(p.n));
   const recL=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#favSec").style.display=(fav.length||(isMob()&&recL.length))&&!q&&!edit?"":"none";
@@ -1584,7 +1583,7 @@ function chgTag(f){
   return `<span class="chg ${stale?"stale":""}">${stale?"설명 점검 필요 · ":""}코드 변경 ${c.slice(5)}</span>`;
 }
 function renderFlow(){
-  const q=$("#q").value.trim().toLowerCase();
+  const q="";
   const list=FLOW.filter(f=>SHORT[f.n]);
   $("#flowSum").innerHTML=mapSummary();
   const tags=["전체",...new Set(list.flatMap(f=>f.store))];
@@ -1598,7 +1597,7 @@ function renderFlow(){
 }
 function allSites(){return[...SITES,...customSites.map(x=>({...x,custom:1,g:x.g||"기타",used:[]}))]}
 function renderSites(){
-  const q=$("#q").value.trim().toLowerCase(), a=allSites();
+  const q="", a=allSites();
   const gs=["전체",...new Set(a.map(s=>s.g))];
   if(!gs.includes(sgrp))sgrp="전체";
   $("#sChips").innerHTML=gs.map(g=>`<button class="chip ${g===sgrp?"on":""}" data-sg="${esc(g)}">${esc(g)}</button>`).join("");
@@ -1647,7 +1646,7 @@ const dotColor=s=>({ok:"#22c55e",down:"#ef4444",slow:"#f59e0b"}[s]||"#9aa6ba");
 function isStale(n){const c=typeof CHG!=="undefined"&&CHG[n];if(!c)return false;const f=FLOW.find(x=>x.n===n);return c>((f&&f.v)||FLOW_DATE)}
 const mchip=(n)=>`<button class="chip" data-mf="${esc(n)}">${esc(lab(n))}</button>`;
 function renderMap(){
-  const body=$("#mapBody"),hint=$("#mapHint"),q=$("#q").value.trim().toLowerCase();
+  const body=$("#mapBody"),hint=$("#mapHint"),q="";
   if(mapFocus)return mapFocusView(body,hint);
   hint.innerHTML=`프로그램을 누르면 연결된 곳과 멈췄을 때 영향받는 곳이 나옵니다. <span class="tag">🟢 정상</span><span class="tag">🔴 응답 없음</span><span class="tag">⚠ 설명 점검 필요</span>`;
   mapLanes(body,q);
@@ -1810,8 +1809,6 @@ document.addEventListener("click",e=>{
   else if(t){tab=t.dataset.t;render()}
   else if(g){tag=g.dataset.g;render()}
 });
-$("#q").addEventListener("input",render);
-$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&view==="links"){const a=document.querySelector("#list a.card, #list a.tcard");if(a)location.href=a.href}});
 $("#vLinks").onclick=()=>{view="links";save("hub_view",view);render()};
 document.addEventListener("change",e=>{const m=e.target.closest("[data-mc]");if(m){catmap[m.dataset.mc]=m.value;save("hub_catmap",catmap);render()}});
 let cdMode=null;
