@@ -348,7 +348,7 @@ const initials=t=>[...t].map(c=>{const k=c.charCodeAt(0)-0xAC00;return k>=0&&k<1
 function match(q,text,short){if(!q)return true;if(/^[ㄱ-ㅎ]+$/.test(q))return initials(short||text).includes(q);return text.toLowerCase().includes(q)}
 let recent=load("hub_recent",[]);
 function pushRecent(n){recent=[n,...recent.filter(x=>x!==n)].slice(0,6);save("hub_recent",recent)}
-const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
+const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}" target="_blank" rel="noopener"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
 const isMob=()=>matchMedia("(max-width:600px)").matches;
 let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), sgrp="전체", mapFocus=null, edit=false, status={}, tag="전체";
 let shotMode=load("hub_shot",null)||(matchMedia("(max-width:600px)").matches?"m":"pc");
@@ -371,7 +371,7 @@ function tcard(p){
     return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
   }
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
-  return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
+  return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}" target="_blank" rel="noopener">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
 }
 function card(p){
   if(theme==="2")return tcard(p);
@@ -381,7 +381,7 @@ function card(p){
   if(edit){
     return `<div class="card">${nm}${catSel(p)}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
   }
-  return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}">${nm}
+  return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}" target="_blank" rel="noopener">${nm}
     ${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
     ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
     <span class="go">→</span></a>`;
@@ -614,7 +614,7 @@ function why0(n){
 function openSub(n){
   const p=all().find(x=>x.n===n);if(!p||!p.subs)return;
   $("#subTitle").textContent=p.n;
-  $("#subList").innerHTML=`<a class="main" href="${esc(p.u)}">${esc(p.n)} 열기</a>`+p.subs.map(x=>`<a href="${esc(x.u)}">${esc(x.t)}</a>`).join("");
+  $("#subList").innerHTML=`<a class="main" href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.n)} 열기</a>`+p.subs.map(x=>`<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a>`).join("");
   $("#subDlg").showModal();
 }
 document.addEventListener("click",e=>{
