@@ -45,6 +45,8 @@ a.card:hover{box-shadow:0 6px 18px rgba(30,60,120,.12);transform:translateY(-1px
 .dot.ok{background:#22c55e}.dot.down{background:#ef4444}
 .star,.del,.mv{background:none;border:0;font-size:20px;cursor:pointer;color:#b8c2d3;padding:4px}
 .star.on{color:#f5a623}
+.nt{background:none;border:0;font-size:18px;cursor:pointer;color:#8a96ab;padding:4px 6px;border-radius:8px}.nt:hover{background:var(--chip);color:var(--text)}
+.tcard .nt{position:absolute;right:6px;top:46px;background:rgba(255,255,255,.88);border-radius:999px;width:34px;height:34px;padding:0;line-height:34px;text-align:center;font-size:17px}
 .mv{color:var(--blue);font-size:22px;font-weight:700}
 .go{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--sub);flex:none}
 .fav .card{padding:18px}.fav .ic{width:56px;height:56px;font-size:28px}.fav .nm b{font-size:18px}
@@ -195,6 +197,8 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
  .nm b,.fav .nm b{font-size:13px;line-height:1.25;word-break:keep-all}
  .nm small,.go{display:none}
  .star{position:absolute;top:0;right:0;font-size:16px;padding:4px 6px}
+ .card .nt{position:absolute;bottom:0;right:0;font-size:15px;padding:4px 6px}
+ .tcard .nt{width:30px;height:30px;line-height:30px;font-size:15px;top:42px}
  .del{position:absolute;top:0;left:0;font-size:13px;padding:4px 6px}
  .mv{padding:2px 10px}
  .grp{margin:8px 0 0;font-size:13px}
@@ -483,7 +487,7 @@ const SHORT={
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
 const SHOTSM={"배송 입력": "shots/m0.jpg", "포장 입력": "shots/m1.jpg", "출퇴근 관리": "shots/m3.jpg", "건조기 관리": "shots/m2.jpg", "공장 전광판": "shots/m4.jpg", "차량 위치 관리": "shots/m6.jpg", "가스 카메라": "shots/m7.jpg", "현황지 출력": "shots/m8.jpg", "재무관리": "shots/m9.jpg", "영업 허브": "shots/m11.jpg", "AI 전화상담": "shots/m12.jpg", "마케팅 스튜디오": "shots/m10.jpg", "회사전화": "shots/m13.jpg", "내편지도": "shots/m16.jpg", "청과 수입 판단": "shots/m14.jpg", "사주도령": "shots/m17.jpg", "배송 현황": "shots/m5.jpg"};
-const CHG={"배송 입력": "2026-10-08", "포장 입력": "2026-10-08", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-08", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-08", "배송 현황": "2026-10-08", "현황지 출력": "2026-10-06", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-07", "마케팅 스튜디오 (마케팅OS)": "2026-10-07", "영업 허브": "2026-10-09", "AI 전화상담": "2026-10-07", "회사전화": "2026-10-09", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-08", "포장 입력": "2026-10-08", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-08", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-08", "배송 현황": "2026-10-08", "현황지 출력": "2026-10-06", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-07", "마케팅 스튜디오 (마케팅OS)": "2026-10-09", "영업 허브": "2026-10-09", "AI 전화상담": "2026-10-09", "회사전화": "2026-10-09", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
@@ -1516,7 +1520,7 @@ const initials=t=>[...t].map(c=>{const k=c.charCodeAt(0)-0xAC00;return k>=0&&k<1
 function match(q,text,short){if(!q)return true;if(/^[ㄱ-ㅎ]+$/.test(q))return initials(short||text).includes(q);return text.toLowerCase().includes(q)}
 let recent=load("hub_recent",[]);
 function pushRecent(n){recent=[n,...recent.filter(x=>x!==n)].slice(0,6);save("hub_recent",recent)}
-const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}" target="_blank" rel="noopener"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
+const chip=p=>`<a class="fchip" data-n="${esc(p.n)}" href="${esc(p.u)}"><div class="ic">${p.i||"🔗"}</div><span>${esc(p.n)}</span></a>`;
 const isMob=()=>matchMedia("(max-width:600px)").matches;
 let tab="전체", view=location.hash==="#data"?"flow":load("hub_view","links"), sgrp="전체", mapFocus=null, edit=false, status={}, tag="전체";
 let shotMode=load("hub_shot",null)||(matchMedia("(max-width:600px)").matches?"m":"pc");
@@ -1539,7 +1543,7 @@ function tcard(p){
     return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
   }
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
-  return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}" target="_blank" rel="noopener">${shot}${meta}${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
+  return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
 }
 function card(p){
   if(theme==="2")return tcard(p);
@@ -1549,8 +1553,8 @@ function card(p){
   if(edit){
     return `<div class="card">${nm}${catSel(p)}<span><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></span>${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}</div>`;
   }
-  return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}" target="_blank" rel="noopener">${nm}
-    ${sb}<button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
+  return `<a class="card" data-n="${esc(p.n)}" href="${esc(p.u)}">${nm}
+    ${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}" title="자주 쓰기">${on?"★":"☆"}</button>
     ${p.custom?`<button class="del" data-d="${esc(p.n)}" title="삭제">✕</button>`:""}
     <span class="go">→</span></a>`;
 }
@@ -1782,10 +1786,12 @@ function why0(n){
 function openSub(n){
   const p=all().find(x=>x.n===n);if(!p||!p.subs)return;
   $("#subTitle").textContent=p.n;
-  $("#subList").innerHTML=`<a class="main" href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.n)} 열기</a>`+p.subs.map(x=>`<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a>`).join("");
+  $("#subList").innerHTML=`<a class="main" href="${esc(p.u)}">${esc(p.n)} 열기</a>`+p.subs.map(x=>`<a href="${esc(x.u)}">${esc(x.t)}</a>`).join("");
   $("#subDlg").showModal();
 }
 document.addEventListener("click",e=>{
+  const nb=e.target.closest("[data-nt]");
+  if(nb){e.preventDefault();e.stopPropagation();const a=nb.closest("a[data-n]");if(a)pushRecent(a.dataset.n);window.open(nb.dataset.nt,"_blank","noopener");return}
   const an=e.target.closest("a[data-n]");if(an&&!e.target.closest("button"))pushRecent(an.dataset.n);
   const x=e.target.closest("[data-x]"), dt=e.target.closest(".dot[data-dot]");
   if(x){e.preventDefault();openSub(x.dataset.x);return}
