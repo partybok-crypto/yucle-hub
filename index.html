@@ -105,7 +105,7 @@ a.tcard:hover{box-shadow:0 8px 22px rgba(30,60,120,.16);transform:translateY(-2p
 /* 하위 메뉴 · 상태 · 토스트 · 모바일 즐겨찾기 띠 */
 .dot.slow{background:#f59e0b}
 .subbtn{background:none;border:0;color:var(--sub);font-size:20px;font-weight:800;cursor:pointer;padding:4px 6px;line-height:1}
-.tcard .subbtn{position:absolute;right:6px;bottom:6px;background:var(--chip);border-radius:8px;font-size:16px;padding:2px 9px}
+.tcard .subbtn{position:static;display:block;width:calc(100% - 16px);margin:0 8px 10px;background:var(--chip);color:var(--text);border-radius:10px;font-size:14px;font-weight:700;padding:9px 6px;text-align:center}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0f172a;color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;z-index:50;max-width:92vw;box-shadow:0 6px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s}
 #toast.on{opacity:1}
 dialog.sub{padding:16px 16px 12px}
@@ -1516,7 +1516,7 @@ const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
 let cats=load("hub_cats",null)||[...CATS0], catmap=load("hub_catmap",{}), customSites=load("hub_sites",[]);
 const catOf=p=>{const c=catmap[p.n]??p.c;return cats.includes(c)?c:cats[cats.length-1]};
-let theme=location.hash==="#t2"?"2":load("hub_theme2","1");
+let theme=location.hash==="#t2"?"2":load("hub_theme2","2");
 const info={};
 let srv=null;
 const srvItem=n=>srv&&srv.items&&srv.items[n];
@@ -1550,7 +1550,7 @@ function tcard(p){
   if(edit){
     return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
   }
-  const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯</button>`:"";
+  const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯ 메뉴별 바로가기</button>`:"";
   return `<a class="tcard" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
 }
 function card(p){return tcard(p)}
