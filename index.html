@@ -272,8 +272,8 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   </div>
 
   <div id="linksView">
-    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div id="recSec" hidden><h2>최근 연 프로그램</h2><div class="favbar" id="rec"></div></div>
+    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div class="tabs" id="tabs"></div>
     <div class="catbar" id="catEdit" hidden></div>
     <div class="grid" id="list"></div>
@@ -494,7 +494,7 @@ const SHORT={
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg"};
 const SHOTSM={"배송 입력": "shots/m0.jpg", "포장 입력": "shots/m1.jpg", "출퇴근 관리": "shots/m3.jpg", "건조기 관리": "shots/m2.jpg", "공장 전광판": "shots/m4.jpg", "차량 위치 관리": "shots/m6.jpg", "가스 카메라": "shots/m7.jpg", "현황지 출력": "shots/m8.jpg", "재무관리": "shots/m9.jpg", "영업 허브": "shots/m11.jpg", "AI 전화상담": "shots/m12.jpg", "마케팅 스튜디오": "shots/m10.jpg", "회사전화": "shots/m13.jpg", "내편지도": "shots/m16.jpg", "청과 수입 판단": "shots/m14.jpg", "사주도령": "shots/m17.jpg", "배송 현황": "shots/m5.jpg"};
-const CHG={"배송 입력": "2026-10-08", "포장 입력": "2026-10-11", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-10", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-08", "배송 현황": "2026-10-08", "현황지 출력": "2026-10-06", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-09", "마케팅 스튜디오 (마케팅OS)": "2026-10-09", "영업 허브": "2026-10-10", "AI 전화상담": "2026-10-09", "회사전화": "2026-10-09", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-13", "포장 입력": "2026-10-14", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-14", "차량 위치 (CarLive)": "2026-10-05", "가스 카메라": "2026-10-08", "배송 현황": "2026-10-14", "현황지 출력": "2026-10-14", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-14", "마케팅 스튜디오 (마케팅OS)": "2026-10-14", "영업 허브": "2026-10-12", "AI 전화상담": "2026-10-14", "회사전화": "2026-10-12", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
@@ -1561,7 +1561,7 @@ function renderLinks(){
   const bar=isMob();
   $("#fav").className=bar?"favbar":"tgrid fav";
   $("#list").className="tgrid";
-  $("#fav").innerHTML=bar?fav.map(chip).join("")+recL.map(p=>chip(p).replace('class="fchip"','class="fchip rc"')).join(""):fav.map(card).join("");
+  $("#fav").innerHTML=bar?recL.map(p=>chip(p).replace('class="fchip"','class="fchip rc"')).join("")+fav.map(chip).join(""):fav.map(card).join("");
   const rec=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#recSec").hidden=bar||!(rec.length&&!q&&!edit);
   $("#rec").innerHTML=rec.map(chip).join("");

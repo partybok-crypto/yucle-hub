@@ -272,8 +272,8 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   </div>
 
   <div id="linksView">
-    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div id="recSec" hidden><h2>최근 연 프로그램</h2><div class="favbar" id="rec"></div></div>
+    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div class="tabs" id="tabs"></div>
     <div class="catbar" id="catEdit" hidden></div>
     <div class="grid" id="list"></div>
@@ -393,7 +393,7 @@ function renderLinks(){
   const bar=isMob();
   $("#fav").className=bar?"favbar":"tgrid fav";
   $("#list").className="tgrid";
-  $("#fav").innerHTML=bar?fav.map(chip).join("")+recL.map(p=>chip(p).replace('class="fchip"','class="fchip rc"')).join(""):fav.map(card).join("");
+  $("#fav").innerHTML=bar?recL.map(p=>chip(p).replace('class="fchip"','class="fchip rc"')).join("")+fav.map(chip).join(""):fav.map(card).join("");
   const rec=recent.map(n=>a.find(p=>p.n===n)).filter(Boolean).filter(p=>!favs.includes(p.n));
   $("#recSec").hidden=bar||!(rec.length&&!q&&!edit);
   $("#rec").innerHTML=rec.map(chip).join("");
