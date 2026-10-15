@@ -14,7 +14,7 @@
 :root{--bg1:#dcebf9;--bg2:#f4f8fd;--card:#fff;--text:#0f172a;--sub:#64748b;--line:#e5eaf2;--blue:#1d5be6;--icbg:#e8f0fe;--chip:#eef2f9}
 @media(prefers-color-scheme:dark){:root{--bg1:#0b1220;--bg2:#0b1220;--card:#162033;--text:#e8eef9;--sub:#93a1b8;--line:#243049;--blue:#4c86ff;--icbg:#1f2e4a;--chip:#1f2b42}}
 *{box-sizing:border-box}
-html,body{overflow-x:hidden}
+html,body{overflow-x:hidden}@supports(overflow:clip){html,body{overflow-x:clip}}
 body{margin:0;background:var(--bg2) linear-gradient(180deg,var(--bg1),var(--bg2) 320px) no-repeat;color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
 .wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
 .top{display:flex;gap:12px;align-items:center}
