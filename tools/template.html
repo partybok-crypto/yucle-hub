@@ -118,6 +118,7 @@ dialog.sub h3{margin:0 0 10px;font-size:16px}
 .fchip{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;width:68px;text-decoration:none;color:var(--text)}
 .fchip .ic{width:44px;height:44px;font-size:23px}
 .fchip span{font-size:11px;line-height:1.2;text-align:center;word-break:keep-all}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 /* 서버 감시 줄 · 최근 · 하단 탭바 · 변경일 */
 #srvLine{margin:10px 0 12px;min-height:0}
 #srvLine.ban{display:block;border-radius:14px;padding:12px 14px;font-size:17px;font-weight:800;cursor:pointer;line-height:1.35}
@@ -379,10 +380,10 @@ function tcard(p){
   const shot=`<div class="shot ${mob?"m":""}">${img?`<img class="${mob&&!im?"fb":""}" src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span style="position:relative;${img?"display:none":""}">${p.i||"🔗"}</span><i class="dot ${st}" data-dot="${esc(p.n)}"></i></div>`;
   const meta=`<div class="tmeta"><b>${esc(p.n)}</b><small>${esc(p.d||p.c)}</small></div>`;
   if(edit){
-    return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}">‹</button><button class="mv" data-m="1|${esc(p.n)}">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</div>`;
+    return `<div class="tcard">${shot}${meta}${catSel(p)}<div class="tedit"><button class="mv" data-m="-1|${esc(p.n)}" aria-label="${esc(p.n)} 앞으로 이동">‹</button><button class="mv" data-m="1|${esc(p.n)}" aria-label="${esc(p.n)} 뒤로 이동">›</button></div>${p.custom?`<button class="del" data-d="${esc(p.n)}" aria-label="${esc(p.n)} 삭제">✕</button>`:""}</div>`;
   }
   const sb=p.subs?`<button class="subbtn" data-x="${esc(p.n)}" title="하위 메뉴">⋯ 메뉴별 바로가기</button>`:"";
-  return `<a class="tcard${p.subs?" hs":""}" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}">✕</button>`:""}</a>`;
+  return `<a class="tcard${p.subs?" hs":""}" data-n="${esc(p.n)}" href="${esc(p.u)}">${shot}${meta}${sb}<button class="nt" data-nt="${esc(p.u)}" title="새 탭으로 열기" aria-label="${esc(p.n)} 새 탭으로 열기">↗</button><button class="star ${on?"on":""}" data-s="${esc(p.n)}" aria-label="${esc(p.n)} 즐겨찾기 ${on?"해제":"추가"}" aria-pressed="${on}">${on?"★":"☆"}</button>${p.custom?`<button class="del" data-d="${esc(p.n)}" aria-label="${esc(p.n)} 삭제">✕</button>`:""}</a>`;
 }
 function card(p){return tcard(p)}
 function renderLinks(){
@@ -671,16 +672,17 @@ $("#tbMap").onclick=()=>$("#vMap").click();
 $("#shPc").onclick=()=>{shotMode="pc";save("hub_shot",shotMode);render()};
 $("#shM").onclick=()=>{shotMode="m";save("hub_shot",shotMode);render()};
 $("#mdShot").onclick=()=>{$("#moreDlg").close();shotMode=shotMode==="m"?"pc":"m";save("hub_shot",shotMode);render()};
-const CFG_KEYS={hub_cats:"cats",hub_catmap:"catmap",hub_favs:"favs",hub_order:"order",hub_custom:"custom",hub_sites:"customSites",hub_sfavs:"sfavs",hub_theme2:"theme2",hub_shot:"shot"};
+const CFG_KEYS={hub_cats:"cats",hub_catmap:"catmap",hub_favs:"favs",hub_order:"order",hub_custom:"custom",hub_sites:"customSites",hub_sfavs:"sfavs",hub_theme2:"theme2",hub_shot:"shot",hub_recent:"recent"};
 const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/"))));
-function cfgLink(){const o={cats,catmap,favs,order,custom,customSites,sfavs,theme2:theme,shot:shotMode};return location.origin+location.pathname+"#cfg="+b64e(JSON.stringify(o))}
+function cfgLink(){const o={cats,catmap,favs,order,custom,customSites,sfavs,theme2:theme,shot:shotMode,recent};return location.origin+location.pathname+"#cfg="+b64e(JSON.stringify(o))}
 function applyCfg(code){
   let o;try{o=JSON.parse(b64d(code))}catch(e){return false}
   const A=v=>Array.isArray(v)&&v.every(x=>typeof x==="string"), O=v=>v&&typeof v==="object"&&!Array.isArray(v);
   const OA=v=>Array.isArray(v)&&v.every(x=>x&&typeof x.n==="string"&&typeof x.u==="string");
   if(!A(o.cats)||!o.cats.length||!O(o.catmap)||!A(o.favs)||!A(o.order)||!OA(o.custom)||!OA(o.customSites)||!A(o.sfavs))return false;
   cats=o.cats;catmap=o.catmap;favs=o.favs;order=o.order;custom=o.custom;customSites=o.customSites;sfavs=o.sfavs;
+  if(A(o.recent)){recent=o.recent.slice(0,6);save("hub_recent",recent)}
   if(o.theme2==="1"||o.theme2==="2")theme=o.theme2;if(o.shot==="m"||o.shot==="pc")shotMode=o.shot;
   save("hub_cats",cats);save("hub_catmap",catmap);save("hub_favs",favs);save("hub_order",order);save("hub_custom",custom);save("hub_sites",customSites);save("hub_sfavs",sfavs);save("hub_theme2",theme);save("hub_shot",shotMode);
   return true;
