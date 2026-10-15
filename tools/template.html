@@ -403,7 +403,7 @@ function renderLinks(){
   $("#tabs").innerHTML=["전체",...cats].map(t=>`<button class="tab ${t===tab?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
   $("#catEdit").hidden=!edit;
   if(edit)$("#catEdit").innerHTML=`<b>분류 편집 — 이름 수정(✎) · 삭제(✕) · 추가. 각 카드 아래 분류 선택으로 프로그램을 다른 분류로 옮길 수 있어요</b>`+cats.map((c,i)=>`<span class="cchip">${esc(c)}<button data-ce="r|${i}" title="이름 수정">✎</button><button data-ce="d|${i}" title="삭제">✕</button></span>`).join("")+`<button class="sm" data-ce="a|0">＋ 분류 추가</button>`;
-  const showFav=fav.length&&!q&&!edit;
+  const showFav=fav.length&&!q&&!edit&&!bar;
   const rows=a.filter(p=>!(showFav&&favs.includes(p.n))&&(tab==="전체"||catOf(p)===tab)&&match(q,p.n+" "+p.d+" "+p.c,p.n+" "+p.d));
   if(tab==="전체"&&!q){
     $("#list").innerHTML=cats.map(c=>{const r=rows.filter(p=>catOf(p)===c);return r.length?`<h3 class="grp">${esc(c)}</h3>`+r.map(card).join(""):""}).join("");
