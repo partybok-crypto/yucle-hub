@@ -21,4 +21,5 @@ const SHORT={
  "쿠팡 주문내역 취합기":{a:["🛒 쿠팡 주문"],b:["📄 엑셀 파일(PC)"],c:[]},
  "forwarder.kr 수집기":{a:["🌐 forwarder.kr"],b:["💾 SQLite·엑셀(PC)"],c:[]},
  "한글 폰트 변환기":{a:["🔤 나눔 글꼴"],b:["📄 .gfont(PC)"],c:[]}
+ "Claude 전화 (call-me)":{a:["🤖 클로드 호출"],b:["📞 Bland 통화(보관 없음)"],c:[]},
 };

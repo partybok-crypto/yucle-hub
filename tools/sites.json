@@ -504,5 +504,15 @@
   "used": [
    "AI 전화상담"
   ]
+ },
+ {
+  "n": "Bland.ai",
+  "g": "서버·개발",
+  "u": "https://app.bland.ai",
+  "d": "클로드 전화(call-me) 음성 통화 API · 크레딧 충전·통화 기록",
+  "i": "📞",
+  "used": [
+   "Claude 전화 (call-me)"
+  ]
  }
 ]

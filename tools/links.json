@@ -288,5 +288,13 @@
   "c": "기타",
   "i": "🔮",
   "watch": false
+ },
+ {
+  "n": "Claude 전화 (call-me)",
+  "d": "막히면 클로드가 내 폰으로 전화 (Bland.ai)",
+  "u": "https://app.bland.ai",
+  "c": "기타",
+  "i": "📞",
+  "watch": false
  }
 ]
