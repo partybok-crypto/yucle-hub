@@ -366,7 +366,13 @@
   "공공데이터포털",
   "쿠팡 Wing",
   "Ollama",
-  "네이버 클로바 / HyperCLOVA X"
+  "네이버 클로바 / HyperCLOVA X",
+  "BankAPI",
+  "앱인토스 콘솔",
+  "홈택스",
+  "Google Gemini",
+  "Groq",
+  "OpenRouter"
  ],
  "desc": {
   "한글 폰트 변환기": "손글씨를 한글 폰트로 바꾸는 PC 로컬 도구. 외부 연결 없이 혼자 동작합니다(독립).",
