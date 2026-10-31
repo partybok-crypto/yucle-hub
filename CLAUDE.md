@@ -29,3 +29,4 @@
 - 작업 스케줄러: YucleHub_Monitor(3시간마다 monitor.py), YucleHub_Refresh(일요일 07:00 refresh.py). 둘 다 pythonw(창 없음).
 - 데이터 흐름 항목을 고쳐서 설명을 다시 확인했다면 flow_part의 해당 항목에 `v:"YYYY-MM-DD"`를 넣어 점검일을 갱신한다.
 - 메일 받는 곳은 마케팅OS의 EMAIL_TO(sinijini1@naver.com). 알림 테스트: `python tools/notify.py`
+- `archify/` : Archify 스킬(tt-a1i)로 만든 구조도 HTML(delivery-flow, packing-flow). links.json에 분류 `구조도`(watch:false)로 등록. 새로 만들 땐 `node ~/.claude/skills/archify/bin/archify.mjs finalize dataflow <json> 링크허브/archify/<이름>.html --quality showcase`(AUTO 폴더에서 실행), 만든 뒤 `archify/*.json` 영수증은 지운다. 코드가 바뀌어도 자동 갱신 안 됨.

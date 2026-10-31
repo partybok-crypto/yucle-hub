@@ -296,5 +296,21 @@
   "c": "기타",
   "i": "📞",
   "watch": false
+ },
+ {
+  "n": "배송입력 구조도",
+  "d": "입력→시트→읽는 곳 (Archify)",
+  "u": "archify/delivery-flow.html",
+  "c": "구조도",
+  "i": "🗺️",
+  "watch": false
+ },
+ {
+  "n": "포장기록 구조도",
+  "d": "입력→시트·라벨→읽는 곳 (Archify)",
+  "u": "archify/packing-flow.html",
+  "c": "구조도",
+  "i": "🗺️",
+  "watch": false
  }
 ]
