@@ -48,6 +48,7 @@ chgjs = "const CHG=" + json.dumps(chg, ensure_ascii=False) + ";" + chr(10) + "co
 
 out = (rd("template.html").replace("/*BASE*/", base).replace("/*FLOW*/", flow)
        .replace("/*SHORT*/", rd("short.js")).replace("/*SHOTS*/", shots + "\n" + shotsm).replace("/*CHG*/", chgjs)
+       .replace("/*ARCH*/", "const ARCH=" + rd("archify.json") + ";")
        .replace("/*SITES*/", "const SITES=" + rd("sites.json") + ";").replace("/*MAP*/", "const MAP=" + rd("map.json") + ";"))
 # ---- 연결 검증: 지도·사이트 데이터가 프로그램 목록과 어긋나면 경고 ----
 try:

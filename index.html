@@ -264,7 +264,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   <div id="srvLine"></div>
 
   <div class="bar" id="topbar">
-    <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vSites">사이트</button><button id="vMap">연결 지도</button></div>
+    <div class="seg"><button id="vLinks" class="on">바로가기</button><button id="vSites">사이트</button><button id="vMap">연결 지도</button><button id="vArch">구조도</button></div>
     <span class="sp"></span>
     <div class="seg" id="themeSeg"><button id="th1">테마1</button><button id="th2">테마2 🌙</button></div>
     <div class="seg" id="shotSeg"><button id="shPc">💻 PC화면</button><button id="shM">📱 모바일화면</button></div>
@@ -274,10 +274,10 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   </div>
 
   <div id="linksView">
-    <div id="recSec" hidden><h2>최근 연 프로그램</h2><div class="favbar" id="rec"></div></div>
-    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div class="tabs" id="tabs"></div>
     <div class="catbar" id="catEdit" hidden></div>
+    <div id="recSec" hidden><h2>최근 연 프로그램</h2><div class="favbar" id="rec"></div></div>
+    <div id="favSec"><h2>자주 쓰는 프로그램 <small style="color:var(--sub);font-weight:400">(★ 눌러서 지정)</small></h2><div class="grid fav" id="fav"></div></div>
     <div class="grid" id="list"></div>
   </div>
 
@@ -285,6 +285,11 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
     <div class="bar"><span style="color:var(--sub);font-size:14px">프로그램들이 쓰는 외부 사이트 바로가기 (＋ 버튼으로 직접 추가)</span></div>
     <div class="chips" id="sChips"></div>
     <div class="grid" id="sList"></div>
+  </div>
+
+  <div id="archView" hidden>
+    <div class="bar"><span style="color:var(--sub);font-size:14px">프로그램별 데이터 흐름 구조도 (누르면 새 창)</span></div>
+    <div class="grid" id="aList"></div>
   </div>
 
   <div id="mapTop" hidden><div class="seg" id="mapSeg"><button id="msLanes">연결 한눈에</button><button id="msCards">프로그램별 카드</button></div></div>
@@ -306,6 +311,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
   <button id="tbLinks"><b>🔗</b><span>바로가기</span></button>
   <button id="tbSites"><b>🌐</b><span>사이트</span></button>
   <button id="tbMap"><b>🕸️</b><span>연결</span></button>
+  <button id="tbArch"><b>🗺️</b><span>구조도</span></button>
   <button id="tbMore"><b>⋯</b><span>더보기</span></button>
 </nav>
 <div id="toast"></div>
@@ -334,8 +340,82 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 </dialog>
 
 <script>
-const CATS0=["구조도","공장·배송","정산·관리","영업·마케팅","기타"];
-const BASE=[{"n": "배송 입력", "d": "배송·수거 입력", "u": "https://yuseong-delivery-production.up.railway.app/", "c": "공장·배송", "i": "🚚"}, {"n": "포장 입력", "d": "포장기록·라벨", "u": "https://yuseong-packing-production.up.railway.app", "c": "공장·배송", "i": "📦"}, {"n": "건조기 관리", "d": "건조기 현황", "u": "https://yuseong-dryer-production.up.railway.app", "c": "공장·배송", "i": "🧺"}, {"n": "출퇴근 관리", "d": "출퇴근기·명단", "u": "https://yuseong-attendance-production.up.railway.app/", "c": "공장·배송", "i": "👥"}, {"n": "공장 전광판", "d": "현장 진행 확인", "u": "https://yuseong-display-board-production.up.railway.app", "c": "공장·배송", "i": "🖥️", "subs": [{"t": "실시간 관리", "u": "https://yuseong-display-board-production.up.railway.app/admin"}, {"t": "진행률", "u": "https://yuseong-display-board-production.up.railway.app/admin/progress"}, {"t": "세탁물 찾기", "u": "https://yuseong-display-board-production.up.railway.app/admin/search"}, {"t": "완료 현황", "u": "https://yuseong-display-board-production.up.railway.app/admin/completed"}, {"t": "모니터 설정", "u": "https://yuseong-display-board-production.up.railway.app/admin/displays"}, {"t": "알림톡", "u": "https://yuseong-display-board-production.up.railway.app/admin/alimtalk"}, {"t": "차량 위치", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles"}, {"t": "가스 카메라", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera"}]}, {"n": "배송 현황", "d": "배송경로·현황", "u": "https://yuseong-shipping-status-production.up.railway.app", "c": "공장·배송", "i": "🗺️"}, {"n": "차량 위치 관리", "d": "CarLive 차량·송출", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles", "c": "공장·배송", "i": "🚐"}, {"n": "가스 카메라", "d": "가스계량기 촬영", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera", "c": "공장·배송", "i": "📷"}, {"n": "현황지 출력", "d": "현황지 인쇄", "u": "https://partybok-crypto.github.io/print_status_sheet/", "c": "공장·배송", "i": "🖨️"}, {"n": "재무관리", "d": "일일결산·청구·미수금", "u": "https://yucle-finance-live-production.up.railway.app/", "c": "정산·관리", "i": "💰", "subs": [{"t": "일일결산", "u": "https://yucle-finance-live-production.up.railway.app/daily-close"}, {"t": "미수금", "u": "https://yucle-finance-live-production.up.railway.app/receivables"}, {"t": "청구", "u": "https://yucle-finance-live-production.up.railway.app/billing"}, {"t": "비용", "u": "https://yucle-finance-live-production.up.railway.app/expenses"}, {"t": "은행", "u": "https://yucle-finance-live-production.up.railway.app/bank"}, {"t": "연동", "u": "https://yucle-finance-live-production.up.railway.app/connections"}]}, {"n": "마케팅 스튜디오", "d": "마케팅OS", "u": "https://yuseong-marketing-os-review-production.up.railway.app", "c": "영업·마케팅", "i": "📣", "subs": [{"t": "모듈 관리", "u": "https://yuseong-marketing-os-review-production.up.railway.app/modules"}, {"t": "콘텐츠 스튜디오", "u": "https://yuseong-marketing-os-review-production.up.railway.app/content-studio"}, {"t": "파워링크", "u": "https://yuseong-marketing-os-review-production.up.railway.app/powerlink"}, {"t": "메타 광고", "u": "https://yuseong-marketing-os-review-production.up.railway.app/meta-ads"}, {"t": "광고 성과", "u": "https://yuseong-marketing-os-review-production.up.railway.app/performance"}, {"t": "조달", "u": "https://yuseong-marketing-os-review-production.up.railway.app/procurement"}, {"t": "오류 로그", "u": "https://yuseong-marketing-os-review-production.up.railway.app/logs"}]}, {"n": "영업 허브", "d": "영업관리 명단", "u": "https://yuseong-sales-hub-production.up.railway.app", "c": "영업·마케팅", "i": "🤝", "subs": [{"t": "업체 DB", "u": "https://yuseong-sales-hub-production.up.railway.app/business"}, {"t": "관심 고객", "u": "https://yuseong-sales-hub-production.up.railway.app/interested"}, {"t": "DB 찾기", "u": "https://yuseong-sales-hub-production.up.railway.app/db-search"}, {"t": "AI 발신 통계", "u": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats"}, {"t": "수신거부", "u": "https://yuseong-sales-hub-production.up.railway.app/dnc"}, {"t": "설정", "u": "https://yuseong-sales-hub-production.up.railway.app/settings"}]}, {"n": "AI 전화상담", "d": "AI 발신·통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor", "c": "영업·마케팅", "i": "🤖", "subs": [{"t": "대량발신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/bulk"}, {"t": "통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/calls"}, {"t": "관심고객", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/interested"}, {"t": "안내멘트", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/script"}, {"t": "요금", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/billing"}, {"t": "수신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/inbound"}]}, {"n": "회사전화", "d": "070 전화 CRM", "u": "https://yuseong-phone-production.up.railway.app", "c": "영업·마케팅", "i": "📞", "subs": [{"t": "통화기록", "u": "https://yuseong-phone-production.up.railway.app/calls"}, {"t": "거래처", "u": "https://yuseong-phone-production.up.railway.app/customers"}, {"t": "관리", "u": "https://yuseong-phone-production.up.railway.app/admin"}]}, {"n": "청과 수입 판단", "d": "세척당근 수입·판매 판단", "u": "https://web-production-f53da.up.railway.app", "c": "기타", "i": "🥕"}, {"n": "출판 (Bookforge)", "d": "소설·시집 자가출판", "u": "https://bookforge-production-27f6.up.railway.app", "c": "기타", "i": "📚", "watch": false, "subs": [{"t": "PC 로컬판 (이 PC에서만)", "u": "http://127.0.0.1:8765"}]}, {"n": "내편지도", "d": "관계 지도 바이럴 서비스", "u": "https://web-production-304b2.up.railway.app", "c": "기타", "i": "🗺️"}, {"n": "사주도령", "d": "사주 서비스", "u": "https://doryeong.app/n", "c": "기타", "i": "🔮", "watch": false}, {"n": "Claude 전화 (call-me)", "d": "막히면 클로드가 내 폰으로 전화 (Bland.ai)", "u": "https://app.bland.ai", "c": "기타", "i": "📞", "watch": false}, {"n": "공통 구조 구조도", "d": "현장 시트 중심 구조 (Archify)", "u": "archify/common-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "배송입력 구조도", "d": "입력→시트→읽는 곳 (Archify)", "u": "archify/delivery-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "포장기록 구조도", "d": "입력→시트·라벨→읽는 곳 (Archify)", "u": "archify/packing-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "건조기 구조도", "d": "투입·완료→기록 (Archify)", "u": "archify/dryer-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "출퇴근 구조도", "d": "출퇴근→시트→읽는 곳 (Archify)", "u": "archify/attendance-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "전광판 구조도", "d": "허브 역할·알림톡 (Archify)", "u": "archify/board-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "배송 현황 구조도", "d": "경로 최적화·기사 링크 (Archify)", "u": "archify/shipping-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "재무관리 구조도", "d": "입금·청구·결산 (Archify)", "u": "archify/finance-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "마케팅 구조도", "d": "수집·발행·노트북 실행기 (Archify)", "u": "archify/marketing-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "영업 허브 구조도", "d": "업체 DB·발신 명단 (Archify)", "u": "archify/sales-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "AI 전화상담 구조도", "d": "통화·대량발신 (Archify)", "u": "archify/counselor-flow.html", "c": "구조도", "i": "🗺️", "watch": false}, {"n": "회사전화 구조도", "d": "수신·녹음·되걸기 (Archify)", "u": "archify/phone-flow.html", "c": "구조도", "i": "🗺️", "watch": false}];
+const CATS0=["공장·배송","정산·관리","영업·마케팅","기타"];
+const BASE=[{"n": "배송 입력", "d": "배송·수거 입력", "u": "https://yuseong-delivery-production.up.railway.app/", "c": "공장·배송", "i": "🚚"}, {"n": "포장 입력", "d": "포장기록·라벨", "u": "https://yuseong-packing-production.up.railway.app", "c": "공장·배송", "i": "📦"}, {"n": "건조기 관리", "d": "건조기 현황", "u": "https://yuseong-dryer-production.up.railway.app", "c": "공장·배송", "i": "🧺"}, {"n": "출퇴근 관리", "d": "출퇴근기·명단", "u": "https://yuseong-attendance-production.up.railway.app/", "c": "공장·배송", "i": "👥"}, {"n": "공장 전광판", "d": "현장 진행 확인", "u": "https://yuseong-display-board-production.up.railway.app", "c": "공장·배송", "i": "🖥️", "subs": [{"t": "실시간 관리", "u": "https://yuseong-display-board-production.up.railway.app/admin"}, {"t": "진행률", "u": "https://yuseong-display-board-production.up.railway.app/admin/progress"}, {"t": "세탁물 찾기", "u": "https://yuseong-display-board-production.up.railway.app/admin/search"}, {"t": "완료 현황", "u": "https://yuseong-display-board-production.up.railway.app/admin/completed"}, {"t": "모니터 설정", "u": "https://yuseong-display-board-production.up.railway.app/admin/displays"}, {"t": "알림톡", "u": "https://yuseong-display-board-production.up.railway.app/admin/alimtalk"}, {"t": "차량 위치", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles"}, {"t": "가스 카메라", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera"}]}, {"n": "배송 현황", "d": "배송경로·현황", "u": "https://yuseong-shipping-status-production.up.railway.app", "c": "공장·배송", "i": "🗺️"}, {"n": "차량 위치 관리", "d": "CarLive 차량·송출", "u": "https://yuseong-display-board-production.up.railway.app/admin/vehicles", "c": "공장·배송", "i": "🚐"}, {"n": "가스 카메라", "d": "가스계량기 촬영", "u": "https://yuseong-display-board-production.up.railway.app/factory-camera", "c": "공장·배송", "i": "📷"}, {"n": "현황지 출력", "d": "현황지 인쇄", "u": "https://partybok-crypto.github.io/print_status_sheet/", "c": "공장·배송", "i": "🖨️"}, {"n": "재무관리", "d": "일일결산·청구·미수금", "u": "https://yucle-finance-live-production.up.railway.app/", "c": "정산·관리", "i": "💰", "subs": [{"t": "일일결산", "u": "https://yucle-finance-live-production.up.railway.app/daily-close"}, {"t": "미수금", "u": "https://yucle-finance-live-production.up.railway.app/receivables"}, {"t": "청구", "u": "https://yucle-finance-live-production.up.railway.app/billing"}, {"t": "비용", "u": "https://yucle-finance-live-production.up.railway.app/expenses"}, {"t": "은행", "u": "https://yucle-finance-live-production.up.railway.app/bank"}, {"t": "연동", "u": "https://yucle-finance-live-production.up.railway.app/connections"}]}, {"n": "마케팅 스튜디오", "d": "마케팅OS", "u": "https://yuseong-marketing-os-review-production.up.railway.app", "c": "영업·마케팅", "i": "📣", "subs": [{"t": "모듈 관리", "u": "https://yuseong-marketing-os-review-production.up.railway.app/modules"}, {"t": "콘텐츠 스튜디오", "u": "https://yuseong-marketing-os-review-production.up.railway.app/content-studio"}, {"t": "파워링크", "u": "https://yuseong-marketing-os-review-production.up.railway.app/powerlink"}, {"t": "메타 광고", "u": "https://yuseong-marketing-os-review-production.up.railway.app/meta-ads"}, {"t": "광고 성과", "u": "https://yuseong-marketing-os-review-production.up.railway.app/performance"}, {"t": "조달", "u": "https://yuseong-marketing-os-review-production.up.railway.app/procurement"}, {"t": "오류 로그", "u": "https://yuseong-marketing-os-review-production.up.railway.app/logs"}]}, {"n": "영업 허브", "d": "영업관리 명단", "u": "https://yuseong-sales-hub-production.up.railway.app", "c": "영업·마케팅", "i": "🤝", "subs": [{"t": "업체 DB", "u": "https://yuseong-sales-hub-production.up.railway.app/business"}, {"t": "관심 고객", "u": "https://yuseong-sales-hub-production.up.railway.app/interested"}, {"t": "DB 찾기", "u": "https://yuseong-sales-hub-production.up.railway.app/db-search"}, {"t": "AI 발신 통계", "u": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats"}, {"t": "수신거부", "u": "https://yuseong-sales-hub-production.up.railway.app/dnc"}, {"t": "설정", "u": "https://yuseong-sales-hub-production.up.railway.app/settings"}]}, {"n": "AI 전화상담", "d": "AI 발신·통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor", "c": "영업·마케팅", "i": "🤖", "subs": [{"t": "대량발신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/bulk"}, {"t": "통화기록", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/calls"}, {"t": "관심고객", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/interested"}, {"t": "안내멘트", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/script"}, {"t": "요금", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/billing"}, {"t": "수신", "u": "https://server-production-8d8f.up.railway.app/ai-counselor/inbound"}]}, {"n": "회사전화", "d": "070 전화 CRM", "u": "https://yuseong-phone-production.up.railway.app", "c": "영업·마케팅", "i": "📞", "subs": [{"t": "통화기록", "u": "https://yuseong-phone-production.up.railway.app/calls"}, {"t": "거래처", "u": "https://yuseong-phone-production.up.railway.app/customers"}, {"t": "관리", "u": "https://yuseong-phone-production.up.railway.app/admin"}]}, {"n": "청과 수입 판단", "d": "세척당근 수입·판매 판단", "u": "https://web-production-f53da.up.railway.app", "c": "기타", "i": "🥕"}, {"n": "출판 (Bookforge)", "d": "소설·시집 자가출판", "u": "https://bookforge-production-27f6.up.railway.app", "c": "기타", "i": "📚", "watch": false, "subs": [{"t": "PC 로컬판 (이 PC에서만)", "u": "http://127.0.0.1:8765"}]}, {"n": "내편지도", "d": "관계 지도 바이럴 서비스", "u": "https://web-production-304b2.up.railway.app", "c": "기타", "i": "🗺️"}, {"n": "사주도령", "d": "사주 서비스", "u": "https://doryeong.app/n", "c": "기타", "i": "🔮", "watch": false}, {"n": "Claude 전화 (call-me)", "d": "막히면 클로드가 내 폰으로 전화 (Bland.ai)", "u": "https://app.bland.ai", "c": "기타", "i": "📞", "watch": false}];
+const ARCH=[
+ {
+  "n": "공통 구조 구조도",
+  "d": "현장 시트 중심 구조 (Archify)",
+  "u": "archify/common-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "배송입력 구조도",
+  "d": "입력→시트→읽는 곳 (Archify)",
+  "u": "archify/delivery-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "포장기록 구조도",
+  "d": "입력→시트·라벨→읽는 곳 (Archify)",
+  "u": "archify/packing-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "건조기 구조도",
+  "d": "투입·완료→기록 (Archify)",
+  "u": "archify/dryer-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "출퇴근 구조도",
+  "d": "출퇴근→시트→읽는 곳 (Archify)",
+  "u": "archify/attendance-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "전광판 구조도",
+  "d": "허브 역할·알림톡 (Archify)",
+  "u": "archify/board-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "배송 현황 구조도",
+  "d": "경로 최적화·기사 링크 (Archify)",
+  "u": "archify/shipping-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "재무관리 구조도",
+  "d": "입금·청구·결산 (Archify)",
+  "u": "archify/finance-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "마케팅 구조도",
+  "d": "수집·발행·노트북 실행기 (Archify)",
+  "u": "archify/marketing-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "영업 허브 구조도",
+  "d": "업체 DB·발신 명단 (Archify)",
+  "u": "archify/sales-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "AI 전화상담 구조도",
+  "d": "통화·대량발신 (Archify)",
+  "u": "archify/counselor-flow.html",
+  "i": "🗺️"
+ },
+ {
+  "n": "회사전화 구조도",
+  "d": "수신·녹음·되걸기 (Archify)",
+  "u": "archify/phone-flow.html",
+  "i": "🗺️"
+ }
+];
 const FLOW=[
  {n:"공통 구조 (현장 시트)",i:"🧭",store:["구글시트"],
   in:"배송입력·포장기록·건조기·출퇴근기 4개 앱이 모두 같은 구글 스프레드시트 '세탁공장 현장입력'에 기록.",
@@ -503,7 +583,7 @@ const SHORT={
 
 const SHOTS={"배송 입력": "shots/0.jpg", "포장 입력": "shots/1.jpg", "건조기 관리": "shots/2.jpg", "출퇴근 관리": "shots/3.jpg", "공장 전광판": "shots/4.jpg", "배송 현황": "shots/5.jpg", "차량 위치 관리": "shots/6.jpg", "가스 카메라": "shots/7.jpg", "현황지 출력": "shots/8.jpg", "재무관리": "shots/9.jpg", "마케팅 스튜디오": "shots/10.jpg", "영업 허브": "shots/11.jpg", "AI 전화상담": "shots/12.jpg", "회사전화": "shots/13.jpg", "청과 수입 판단": "shots/14.jpg", "출판 (Bookforge)": "shots/15.jpg", "내편지도": "shots/16.jpg", "사주도령": "shots/17.jpg", "Claude 전화 (call-me)": "shots/18.jpg"};
 const SHOTSM={"배송 입력": "shots/m0.jpg", "포장 입력": "shots/m1.jpg", "출퇴근 관리": "shots/m3.jpg", "건조기 관리": "shots/m2.jpg", "공장 전광판": "shots/m4.jpg", "차량 위치 관리": "shots/m6.jpg", "가스 카메라": "shots/m7.jpg", "현황지 출력": "shots/m8.jpg", "재무관리": "shots/m9.jpg", "영업 허브": "shots/m11.jpg", "AI 전화상담": "shots/m12.jpg", "마케팅 스튜디오": "shots/m10.jpg", "회사전화": "shots/m13.jpg", "내편지도": "shots/m16.jpg", "청과 수입 판단": "shots/m14.jpg", "사주도령": "shots/m17.jpg", "배송 현황": "shots/m5.jpg", "Claude 전화 (call-me)": "shots/m18.jpg"};
-const CHG={"배송 입력": "2026-10-13", "포장 입력": "2026-10-30", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-29", "차량 위치 (CarLive)": "2026-10-17", "가스 카메라": "2026-10-29", "배송 현황": "2026-10-30", "현황지 출력": "2026-10-29", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-30", "마케팅 스튜디오 (마케팅OS)": "2026-10-29", "영업 허브": "2026-10-12", "AI 전화상담": "2026-10-14", "회사전화": "2026-10-12", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
+const CHG={"배송 입력": "2026-10-13", "포장 입력": "2026-10-31", "건조기 관리": "2026-09-23", "출퇴근 관리": "2026-10-08", "공장 전광판": "2026-10-29", "차량 위치 (CarLive)": "2026-10-17", "가스 카메라": "2026-10-29", "배송 현황": "2026-10-30", "현황지 출력": "2026-10-29", "보조컴퓨터 (포장랭킹 카톡)": "2026-08-11", "재무관리": "2026-10-30", "마케팅 스튜디오 (마케팅OS)": "2026-10-29", "영업 허브": "2026-10-12", "AI 전화상담": "2026-10-14", "회사전화": "2026-10-12", "청과 수입 판단": "2026-10-05", "출판 (Bookforge)": "2026-10-06", "내편지도": "2026-08-19", "쿠팡 주문내역 취합기": "2026-09-01", "forwarder.kr 수집기": "2026-08-30", "한글 폰트 변환기": "2026-08-07"};
 const FLOW_DATE="2026-10-03";
 const SITES=[
  {
@@ -1595,7 +1675,7 @@ const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
-let cats=load("hub_cats",null)||[...CATS0]; if(!cats.includes("구조도"))cats.unshift("구조도")
+let cats=load("hub_cats",null)||[...CATS0]; cats=cats.filter(c=>c!=="구조도"); if(!cats.length)cats=[...CATS0]
 let catmap=load("hub_catmap",{}), customSites=load("hub_sites",[]);
 const catOf=p=>{const c=catmap[p.n]??p.c;return cats.includes(c)?c:cats[cats.length-1]};
 let theme=location.hash==="#t2"?"2":load("hub_theme2","2");
@@ -1679,6 +1759,9 @@ function renderFlow(){
     <details class="more"><summary>자세히 보기</summary><div class="fb">${r("입력",f.in)}${r("저장",f.save)}${r("외부 연동",f.ext)}${r("자동 실행",f.auto)}${r("연결",f.link)}</div></details></div>`}).join("")||'<div class="empty">결과가 없습니다</div>';
 }
 function allSites(){return[...SITES,...customSites.map(x=>({...x,custom:1,g:x.g||"기타",used:[]}))]}
+function renderArch(){
+  $("#aList").innerHTML=ARCH.map(s=>`<a class="card site" href="${esc(s.u)}" target="_blank" rel="noopener"><div class="ic">${s.i||"🗺️"}</div><div class="nm"><b>${esc(s.n)}</b><small>${esc(s.d)}</small></div><span class="go">↗</span></a>`).join("");
+}
 function renderSites(){
   const q="", a=allSites();
   const gs=["전체",...new Set(a.map(s=>s.g))];
@@ -1777,10 +1860,10 @@ function mapFocusView(body,hint){
 }
 function render(){
   const lanes=view==="map"&&mapSub==="lanes", cards=view==="map"&&mapSub==="cards";
-  $("#linksView").hidden=view!=="links"; $("#sitesView").hidden=view!=="sites"; $("#mapView").hidden=!lanes; $("#flowView").hidden=!cards;
+  $("#linksView").hidden=view!=="links"; $("#sitesView").hidden=view!=="sites"; $("#archView").hidden=view!=="arch"; $("#mapView").hidden=!lanes; $("#flowView").hidden=!cards;
   $("#mapTop").hidden=!(cards||(lanes&&!mapFocus));
   $("#msLanes").classList.toggle("on",lanes); $("#msCards").classList.toggle("on",cards);
-  for(const [k,id] of [["links","Links"],["sites","Sites"],["map","Map"]]){$("#v"+id).classList.toggle("on",view===k);$("#tb"+id).classList.toggle("on",view===k)}
+  for(const [k,id] of [["links","Links"],["sites","Sites"],["map","Map"],["arch","Arch"]]){$("#v"+id).classList.toggle("on",view===k);$("#tb"+id).classList.toggle("on",view===k)}
   $("#tbMore").classList.toggle("on",edit);
   $("#btnStatus").style.display=$("#btnEdit").style.display=view==="links"?"":"none";
   document.documentElement.dataset.theme=theme==="2"?"dark":"";$("#th1").classList.toggle("on",theme!=="2"); $("#th2").classList.toggle("on",theme==="2"); $("#themeSeg").style.display=view==="links"?"":"none";
@@ -1790,7 +1873,7 @@ function render(){
   $("#mdShot").style.display=view==="links"?"":"none";$("#mdShot").textContent=shotMode==="m"?"💻 캡처: PC화면으로":"📱 캡처: 모바일화면으로";
   $("#mdTheme").textContent="🖼️ 테마 "+(theme==="2"?"2 → 1로":"1 → 2로");
   $("#mdEdit").textContent=edit?"✅ 편집 완료":"↕️ 순서·분류 편집";
-  (view==="links"?renderLinks:view==="sites"?renderSites:cards?renderFlow:renderMap)();
+  (view==="links"?renderLinks:view==="sites"?renderSites:view==="arch"?renderArch:cards?renderFlow:renderMap)();
 }
 function move(n,dir){
   const L=all(), p=L.find(x=>x.n===n), same=L.filter(x=>catOf(x)===catOf(p));
@@ -1917,6 +2000,8 @@ $("#cdOk").onclick=()=>{
 };
 $("#vSites").onclick=()=>{view="sites";edit=false;save("hub_view",view);render()};
 $("#vMap").onclick=()=>{view="map";edit=false;save("hub_view",view);render()};
+$("#vArch").onclick=()=>{view="arch";edit=false;save("hub_view",view);render()};
+$("#tbArch").onclick=()=>$("#vArch").click();
 $("#tbSites").onclick=()=>$("#vSites").click();
 $("#tbMap").onclick=()=>$("#vMap").click();
 $("#shPc").onclick=()=>{shotMode="pc";save("hub_shot",shotMode);render()};
