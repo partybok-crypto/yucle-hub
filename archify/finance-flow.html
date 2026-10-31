@@ -5203,7 +5203,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / 도판 04">
-      <svg viewBox="0 0 853 740" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
+      <svg viewBox="0 0 853 626" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
         <title id="archify-diagram-title">재무관리 데이터 흐름</title>
         <desc id="archify-diagram-description">Archify로 생성한 데이터플로우 다이어그램입니다.</desc>
         <!-- Definitions -->
@@ -5229,53 +5229,53 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Data Stages -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
         <text x="100" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">01 / 입력·외부</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
         <text x="315" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">02 / 재무관리 서버</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
         <text x="530" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">03 / 저장</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
-        <text x="745" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">04 / 결과</text>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
+        <text x="745" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">04 / 결과·외부 호출</text>
 
         <!-- Flow paths -->
-        <path data-edge-from="bank" data-edge-to="srv" data-edge-label="입출금" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,355;259,355" d="M 156 157 L 207.5 157 L 207.5 355 L 259 355" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="sh" data-edge-to="srv" data-edge-label="시트 읽기" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;207.5,271;207.5,370;259,370" d="M 156 271 L 207.5 271 L 207.5 370 L 259 370" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="scr" data-edge-to="srv" data-edge-label="입력" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;259,385" d="M 156 385 L 259 385" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="toss" data-edge-to="srv" data-edge-label="결제 상태" data-edge-key="3" data-edge-id="f3" data-composition-points="156,499;207.5,499;207.5,400;259,400" d="M 156 499 L 207.5 499 L 207.5 400 L 259 400" class="a-default" data-animate="edge" style="--step:3" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="nv" data-edge-to="srv" data-edge-label="광고비" data-edge-key="4" data-edge-id="f4" data-composition-points="156,613;207.5,613;207.5,415;259,415" d="M 156 613 L 207.5 613 L 207.5 415 L 259 415" class="a-default" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="srv" data-edge-to="db" data-edge-label="청구·입금·결산" data-edge-key="5" data-edge-id="f5" data-composition-points="371,358;422.5,358;422.5,271;474,271" d="M 371 358 L 422.5 358 L 422.5 271 L 474 271" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="pay" data-edge-label="급여 계산" data-edge-key="6" data-edge-id="f6" data-composition-points="371,394;422.5,394;422.5,499;474,499" d="M 371 394 L 422.5 394 L 422.5 499 L 474 499" class="a-default" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="srv" data-edge-to="sol" data-edge-label="알림톡" data-edge-key="7" data-edge-id="f7" data-composition-points="371,376;637.5,376;637.5,271;689,271" d="M 371 376 L 637.5 376 L 637.5 271 L 689 271" class="a-dashed" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
-        <path data-edge-from="srv" data-edge-to="mail" data-edge-label="메일" data-edge-key="8" data-edge-id="f8" data-composition-points="371,412;637.5,412;637.5,499;689,499" d="M 371 412 L 637.5 412 L 637.5 499 L 689 499" class="a-dashed" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="bank" data-edge-to="srv" data-edge-label="입출금" data-edge-key="0" data-edge-id="f0" data-composition-points="156.5,157;207.75,157;207.75,362.5;259,362.5" d="M 156.5 157 L 207.75 157 L 207.75 362.5 L 259 362.5" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="sh" data-edge-to="srv" data-edge-label="시트 읽기" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;207.5,271;207.5,377.5;259,377.5" d="M 156 271 L 207.5 271 L 207.5 377.5 L 259 377.5" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="scr" data-edge-to="srv" data-edge-label="입력" data-edge-key="2" data-edge-id="f2" data-composition-points="156,392.5;259,392.5" d="M 156 392.5 L 259 392.5" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="nv" data-edge-to="srv" data-edge-label="광고비" data-edge-key="3" data-edge-id="f3" data-composition-points="156,499;207.5,499;207.5,407.5;259,407.5" d="M 156 499 L 207.5 499 L 207.5 407.5 L 259 407.5" class="a-default" data-animate="edge" style="--step:3" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="srv" data-edge-to="db" data-edge-label="청구·입금·결산" data-edge-key="4" data-edge-id="f4" data-composition-points="371,362.5;422.5,362.5;422.5,271;474,271" d="M 371 362.5 L 422.5 362.5 L 422.5 271 L 474 271" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="pay" data-edge-label="급여 블록(수동)" data-edge-key="5" data-edge-id="f5" data-composition-points="371,396.25;422.5,396.25;422.5,499;474,499" d="M 371 396.25 L 422.5 396.25 L 422.5 499 L 474 499" class="a-default" data-animate="edge" style="--step:5" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="srv" data-edge-to="sol" data-edge-label="알림톡" data-edge-key="6" data-edge-id="f6" data-composition-points="371,373.75;637.5,373.75;637.5,271;684,271" d="M 371 373.75 L 637.5 373.75 L 637.5 271 L 684 271" class="a-dashed" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="srv" data-edge-to="toss" data-edge-label="결제 조회" data-edge-key="7" data-edge-id="f7" data-composition-points="371,385;689,385" d="M 371 385 L 689 385" class="a-default" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="srv" data-edge-to="mail" data-edge-label="메일" data-edge-key="8" data-edge-id="f8" data-composition-points="371,407.5;637.5,407.5;637.5,499;689,499" d="M 371 407.5 L 637.5 407.5 L 637.5 499 L 689 499" class="a-dashed" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
 
         <!-- Nodes -->
-        <g id="node-bank" data-node-id="bank" data-node-label="은행 입출금" tabindex="0" role="button" aria-label="은행 입출금 포커스, BankAPI·CODEF, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="BankAPI·CODEF" data-node-tag="30분" data-node-context="01 / 입력·외부">
-          <title>은행 입출금 · BankAPI·CODEF · 01 / 입력·외부 · 30분</title>
-          <rect x="44" y="128" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="44" y="128" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:0" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 134) scale(0.6875)">
+        <g id="node-bank" data-node-id="bank" data-node-label="은행 입출금" tabindex="0" role="button" aria-label="은행 입출금 포커스, BankAPI 중계 + CODEF 전환, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="BankAPI 중계 + CODEF 전환" data-node-tag="조회 10~360분" data-node-context="01 / 입력·외부">
+          <title>은행 입출금 · BankAPI 중계 + CODEF 전환 · 01 / 입력·외부 · 조회 10~360분</title>
+          <rect x="43.5" y="128" width="113" height="58" rx="6" class="c-mask"/>
+          <rect x="43.5" y="128" width="113" height="58" rx="6" class="c-external" data-animate="node" style="--step:0" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(49.5 134) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="100" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">은행 입출금</text>
-          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">BankAPI·CODEF</text>
-        <text data-detail="fine" x="100" y="175" class="t-external" font-size="7" text-anchor="middle">30분</text>
+          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">BankAPI 중계 + CODEF 전환</text>
+        <text data-detail="fine" x="100" y="175" class="t-external" font-size="7" text-anchor="middle">조회 10~360분</text>
         </g>
 
-        <g id="node-sh" data-node-id="sh" data-node-label="현장 시트" tabindex="0" role="button" aria-label="현장 시트 포커스, 거래처·근태·수량, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="거래처·근태·수량" data-node-context="01 / 입력·외부">
-          <title>현장 시트 · 거래처·근태·수량 · 01 / 입력·외부</title>
+        <g id="node-sh" data-node-id="sh" data-node-label="시트" tabindex="0" role="button" aria-label="시트 포커스, 거래처·근태·수량·가스, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="거래처·근태·수량·가스" data-node-context="01 / 입력·외부">
+          <title>시트 · 거래처·근태·수량·가스 · 01 / 입력·외부</title>
           <rect x="44" y="242" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="242" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:1" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 248) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="100" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">현장 시트</text>
-          <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">거래처·근태·수량</text>
+          <text data-node-label="" data-detail-anchor="" x="100" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">시트</text>
+          <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">거래처·근태·수량·가스</text>
         </g>
 
         <g id="node-scr" data-node-id="scr" data-node-label="화면 입력" tabindex="0" role="button" aria-label="화면 입력 포커스, 청구 확정·입금 매칭, 01 / 입력·외부" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="청구 확정·입금 매칭" data-node-context="01 / 입력·외부">
@@ -5292,36 +5292,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-detail="context" x="100" y="393" class="t-muted" font-size="7" text-anchor="middle">청구 확정·입금 매칭</text>
         </g>
 
-        <g id="node-toss" data-node-id="toss" data-node-label="토스 미니앱" tabindex="0" role="button" aria-label="토스 미니앱 포커스, 결제, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="결제" data-node-context="01 / 입력·외부">
-          <title>토스 미니앱 · 결제 · 01 / 입력·외부</title>
+        <g id="node-nv" data-node-id="nv" data-node-label="네이버 광고" tabindex="0" role="button" aria-label="네이버 광고 포커스, 사용액 API, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="사용액 API" data-node-tag="3시간" data-node-context="01 / 입력·외부">
+          <title>네이버 광고 · 사용액 API · 01 / 입력·외부 · 3시간</title>
           <rect x="44" y="470" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="470" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:3" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 476) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="100" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">토스 미니앱</text>
-          <text data-detail="context" x="100" y="507" class="t-muted" font-size="7" text-anchor="middle">결제</text>
-        </g>
-
-        <g id="node-nv" data-node-id="nv" data-node-label="네이버 광고" tabindex="0" role="button" aria-label="네이버 광고 포커스, 사용액 API, 01 / 입력·외부" aria-pressed="false" data-node-kind="external" data-node-sublabel="사용액 API" data-node-tag="3시간" data-node-context="01 / 입력·외부">
-          <title>네이버 광고 · 사용액 API · 01 / 입력·외부 · 3시간</title>
-          <rect x="44" y="584" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="44" y="584" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:4" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 590) scale(0.6875)">
-            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
-            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
-          </g>
-          <text data-node-label="" data-detail-anchor="" x="100" y="605" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">네이버 광고</text>
-          <text data-detail="context" x="100" y="621" class="t-muted" font-size="7" text-anchor="middle">사용액 API</text>
-        <text data-detail="fine" x="100" y="631" class="t-external" font-size="7" text-anchor="middle">3시간</text>
+          <text data-node-label="" data-detail-anchor="" x="100" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">네이버 광고</text>
+          <text data-detail="context" x="100" y="507" class="t-muted" font-size="7" text-anchor="middle">사용액 API</text>
+        <text data-detail="fine" x="100" y="517" class="t-external" font-size="7" text-anchor="middle">3시간</text>
         </g>
 
         <g id="node-srv" data-node-id="srv" data-node-label="재무관리 서버" tabindex="0" role="button" aria-label="재무관리 서버 포커스, 09:00 전체 동기화, 02 / 재무관리 서버" aria-pressed="false" data-node-kind="backend" data-node-sublabel="09:00 전체 동기화" data-node-context="02 / 재무관리 서버">
           <title>재무관리 서버 · 09:00 전체 동기화 · 02 / 재무관리 서버</title>
-          <rect x="259" y="339" width="112" height="92" rx="6" class="c-mask"/>
-          <rect x="259" y="339" width="112" height="92" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(265 345) scale(0.6875)">
+          <rect x="259" y="346.5" width="112" height="77" rx="6" class="c-mask"/>
+          <rect x="259" y="346.5" width="112" height="77" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(265 352.5) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="317" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">재무관리 서버</text>
@@ -5331,7 +5319,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <g id="node-db" data-node-id="db" data-node-label="재무 DB" tabindex="0" role="button" aria-label="재무 DB 포커스, SQLite /data, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="SQLite /data" data-node-context="03 / 저장">
           <title>재무 DB · SQLite /data · 03 / 저장</title>
           <rect x="474" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:6" stroke-width="1.5"/>
+          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 248) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
@@ -5340,32 +5328,44 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">SQLite /data</text>
         </g>
 
-        <g id="node-pay" data-node-id="pay" data-node-label="급여 시트" tabindex="0" role="button" aria-label="급여 시트 포커스, 급여 블록 기록, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="급여 블록 기록" data-node-context="03 / 저장">
-          <title>급여 시트 · 급여 블록 기록 · 03 / 저장</title>
+        <g id="node-pay" data-node-id="pay" data-node-label="급여 시트" tabindex="0" role="button" aria-label="급여 시트 포커스, 수동 버튼 때만 기록, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="수동 버튼 때만 기록" data-node-context="03 / 저장">
+          <title>급여 시트 · 수동 버튼 때만 기록 · 03 / 저장</title>
           <rect x="474" y="470" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="470" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:7" stroke-width="1.5"/>
+          <rect x="474" y="470" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:6" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 476) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="530" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">급여 시트</text>
-          <text data-detail="context" x="530" y="507" class="t-muted" font-size="7" text-anchor="middle">급여 블록 기록</text>
+          <text data-detail="context" x="530" y="507" class="t-muted" font-size="7" text-anchor="middle">수동 버튼 때만 기록</text>
         </g>
 
-        <g id="node-sol" data-node-id="sol" data-node-label="솔라피" tabindex="0" role="button" aria-label="솔라피 포커스, 청구·결제 문자, 04 / 결과" aria-pressed="false" data-node-kind="external" data-node-sublabel="청구·결제 문자" data-node-context="04 / 결과">
-          <title>솔라피 · 청구·결제 문자 · 04 / 결과</title>
-          <rect x="689" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="689" y="242" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:8" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(695 248) scale(0.6875)">
+        <g id="node-sol" data-node-id="sol" data-node-label="솔라피" tabindex="0" role="button" aria-label="솔라피 포커스, 알림톡·문자(실발송 설정 시), 04 / 결과·외부 호출" aria-pressed="false" data-node-kind="external" data-node-sublabel="알림톡·문자(실발송 설정 시)" data-node-context="04 / 결과·외부 호출">
+          <title>솔라피 · 알림톡·문자(실발송 설정 시) · 04 / 결과·외부 호출</title>
+          <rect x="684" y="242" width="122" height="58" rx="6" class="c-mask"/>
+          <rect x="684" y="242" width="122" height="58" rx="6" class="c-external" data-animate="node" style="--step:7" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(690 248) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="745" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">솔라피</text>
-          <text data-detail="context" x="745" y="279" class="t-muted" font-size="7" text-anchor="middle">청구·결제 문자</text>
+          <text data-detail="context" x="745" y="279" class="t-muted" font-size="7" text-anchor="middle">알림톡·문자(실발송 설정 시)</text>
         </g>
 
-        <g id="node-mail" data-node-id="mail" data-node-label="Brevo 메일" tabindex="0" role="button" aria-label="Brevo 메일 포커스, 결과·알림, 04 / 결과" aria-pressed="false" data-node-kind="external" data-node-sublabel="결과·알림" data-node-context="04 / 결과">
-          <title>Brevo 메일 · 결과·알림 · 04 / 결과</title>
+        <g id="node-toss" data-node-id="toss" data-node-label="토스페이" tabindex="0" role="button" aria-label="토스페이 포커스, 결제 승인·조회, 04 / 결과·외부 호출" aria-pressed="false" data-node-kind="external" data-node-sublabel="결제 승인·조회" data-node-context="04 / 결과·외부 호출">
+          <title>토스페이 · 결제 승인·조회 · 04 / 결과·외부 호출</title>
+          <rect x="689" y="356" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="689" y="356" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:8" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(695 362) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="745" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">토스페이</text>
+          <text data-detail="context" x="745" y="393" class="t-muted" font-size="7" text-anchor="middle">결제 승인·조회</text>
+        </g>
+
+        <g id="node-mail" data-node-id="mail" data-node-label="Brevo 메일" tabindex="0" role="button" aria-label="Brevo 메일 포커스, 결과·알림, 04 / 결과·외부 호출" aria-pressed="false" data-node-kind="external" data-node-sublabel="결과·알림" data-node-context="04 / 결과·외부 호출">
+          <title>Brevo 메일 · 결과·알림 · 04 / 결과·외부 호출</title>
           <rect x="689" y="470" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="689" y="470" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:9" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(695 476) scale(0.6875)">
@@ -5378,60 +5378,60 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
         <!-- Flow labels -->
         <g data-detail="context" data-edge-from="bank" data-edge-to="srv" data-edge-label="입출금" data-edge-key="0" data-edge-id="f0">
-          <rect x="186.8" y="235" width="41.4" height="16" rx="4" class="c-mask"/>
-          <text x="207.5" y="246" class="t-edge-emphasis" font-size="8" text-anchor="middle">입출금</text>
+          <rect x="187.05" y="238.75" width="41.4" height="16" rx="4" class="c-mask"/>
+          <text x="207.75" y="249.75" class="t-edge-emphasis" font-size="8" text-anchor="middle">입출금</text>
         </g>
         <g data-detail="context" data-edge-from="sh" data-edge-to="srv" data-edge-label="시트 읽기" data-edge-key="1" data-edge-id="f1">
-          <rect x="145.39999999999998" y="313.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="173.45" y="324.5" class="t-edge-default" font-size="8" text-anchor="middle">시트 읽기</text>
+          <rect x="145.39999999999998" y="317.25" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="173.45" y="328.25" class="t-edge-default" font-size="8" text-anchor="middle">시트 읽기</text>
         </g>
         <g data-detail="context" data-edge-from="scr" data-edge-to="srv" data-edge-label="입력" data-edge-key="2" data-edge-id="f2">
-          <rect x="164.75" y="365" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="181.75" y="376" class="t-edge-emphasis" font-size="8" text-anchor="middle">입력</text>
+          <rect x="164.75" y="372.5" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="181.75" y="383.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">입력</text>
         </g>
-        <g data-detail="context" data-edge-from="toss" data-edge-to="srv" data-edge-label="결제 상태" data-edge-key="3" data-edge-id="f3">
-          <rect x="145.39999999999998" y="442.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="173.45" y="453.5" class="t-edge-default" font-size="8" text-anchor="middle">결제 상태</text>
+        <g data-detail="context" data-edge-from="nv" data-edge-to="srv" data-edge-label="광고비" data-edge-key="3" data-edge-id="f3">
+          <rect x="186.8" y="432.25" width="41.4" height="16" rx="4" class="c-mask"/>
+          <text x="207.5" y="443.25" class="t-edge-default" font-size="8" text-anchor="middle">광고비</text>
         </g>
-        <g data-detail="context" data-edge-from="nv" data-edge-to="srv" data-edge-label="광고비" data-edge-key="4" data-edge-id="f4">
-          <rect x="161.05" y="593" width="41.4" height="16" rx="4" class="c-mask"/>
-          <text x="181.75" y="604" class="t-edge-default" font-size="8" text-anchor="middle">광고비</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="db" data-edge-label="청구·입금·결산" data-edge-key="4" data-edge-id="f4">
+          <rect x="382.2" y="295.75" width="80.6" height="16" rx="4" class="c-mask"/>
+          <text x="422.5" y="306.75" class="t-edge-emphasis" font-size="8" text-anchor="middle">청구·입금·결산</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="db" data-edge-label="청구·입금·결산" data-edge-key="5" data-edge-id="f5">
-          <rect x="382.2" y="293.5" width="80.6" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="304.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">청구·입금·결산</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="pay" data-edge-label="급여 블록(수동)" data-edge-key="5" data-edge-id="f5">
+          <rect x="379.75" y="426.625" width="85.5" height="16" rx="4" class="c-mask"/>
+          <text x="422.5" y="437.625" class="t-edge-default" font-size="8" text-anchor="middle">급여 블록(수동)</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="pay" data-edge-label="급여 계산" data-edge-key="6" data-edge-id="f6">
-          <rect x="394.45" y="425.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="436.5" class="t-edge-default" font-size="8" text-anchor="middle">급여 계산</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="sol" data-edge-label="알림톡" data-edge-key="6" data-edge-id="f6">
+          <rect x="616.8" y="301.375" width="41.4" height="16" rx="4" class="c-mask"/>
+          <text x="637.5" y="312.375" class="t-edge-dashed" font-size="8" text-anchor="middle">알림톡</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="sol" data-edge-label="알림톡" data-edge-key="7" data-edge-id="f7">
-          <rect x="616.8" y="302.5" width="41.4" height="16" rx="4" class="c-mask"/>
-          <text x="637.5" y="313.5" class="t-edge-dashed" font-size="8" text-anchor="middle">알림톡</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="toss" data-edge-label="결제 조회" data-edge-key="7" data-edge-id="f7">
+          <rect x="501.95" y="336" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="530" y="347" class="t-edge-default" font-size="8" text-anchor="middle">결제 조회</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="mail" data-edge-label="메일" data-edge-key="8" data-edge-id="f8">
-          <rect x="620.5" y="434.5" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="637.5" y="445.5" class="t-edge-dashed" font-size="8" text-anchor="middle">메일</text>
+          <rect x="620.5" y="432.25" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="637.5" y="443.25" class="t-edge-dashed" font-size="8" text-anchor="middle">메일</text>
         </g>
 
         <!-- Legend -->
         <g data-legend="" data-legend-bridge="">
-          <text x="40" y="684" class="t-primary" font-size="12" font-weight="650">범례</text>
-          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="704" data-legend-width="112">
-            <path d="M 40 701 L 74 701" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-            <text x="83" y="704" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
+          <text x="40" y="570" class="t-primary" font-size="12" font-weight="650">범례</text>
+          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="590" data-legend-width="112">
+            <path d="M 40 587 L 74 587" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+            <text x="83" y="590" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
           </g>
-          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="704" data-legend-width="112">
-            <path d="M 174 701 L 208 701" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
-            <text x="217" y="704" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
+          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="590" data-legend-width="112">
+            <path d="M 174 587 L 208 587" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+            <text x="217" y="590" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
           </g>
-          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="704" data-legend-width="124">
-            <rect x="308" y="696" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
-            <text x="330" y="704" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
+          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="590" data-legend-width="124">
+            <rect x="308" y="582" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
+            <text x="330" y="590" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
           </g>
-          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="704" data-legend-width="112">
-            <path d="M 454 701 L 488 701" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-            <text x="497" y="704" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
+          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="590" data-legend-width="112">
+            <path d="M 454 587 L 488 587" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+            <text x="497" y="590" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
           </g>
         </g>
       </svg>
@@ -5618,6 +5618,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>입금·시트·결제·광고비를 모아 청구, 미수금, 일일결산을 계산</li>
+          <li>은행 조회는 중계 푸시 수신 경로도 있고, 미수금 반영은 아직 꺼져 있음</li>
         </ul>
       </div>
 
@@ -5629,6 +5630,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <ul>
           <li>매일 09:00 전체 동기화</li>
           <li>5분마다 토스 결제 상태 재조회</li>
+          <li>은행 자동조회는 환경설정과 화면 설정이 둘 다 켜져야 동작(운영 상태 미확인)</li>
           <li>은행 조회 실패가 3시간 넘으면 메일</li>
         </ul>
       </div>

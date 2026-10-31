@@ -5203,7 +5203,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / 도판 04">
-      <svg viewBox="0 0 853 512" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
+      <svg viewBox="0 0 853 740" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
         <title id="archify-diagram-title">AI 전화상담 데이터 흐름</title>
         <desc id="archify-diagram-description">Archify로 생성한 데이터플로우 다이어그램입니다.</desc>
         <!-- Definitions -->
@@ -5229,31 +5229,33 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Data Stages -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="100" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">01 / 입력·원본</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="315" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">02 / AI 상담 서버</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="530" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">03 / 저장</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="745" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">04 / 연동</text>
 
         <!-- Flow paths -->
         <path data-edge-from="bulk" data-edge-to="srv" data-edge-label="명단" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,256;259,256" d="M 156 157 L 207.5 157 L 207.5 256 L 259 256" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
         <path data-edge-from="claw" data-edge-to="srv" data-edge-label="통화" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;259,271" d="M 156 271 L 259 271" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
         <path data-edge-from="ph" data-edge-to="srv" data-edge-label="되걸기" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;207.5,385;207.5,286;259,286" d="M 156 385 L 207.5 385 L 207.5 286 L 259 286" class="a-default" data-animate="edge" style="--step:2" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="srv" data-edge-to="sh" data-edge-label="이력 기록" data-edge-key="3" data-edge-id="f3" data-composition-points="371,256;422.5,256;422.5,157;474,157" d="M 371 256 L 422.5 256 L 422.5 157 L 474 157" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="vol" data-edge-label="진행 저장" data-edge-key="4" data-edge-id="f4" data-composition-points="371,271;474,271" d="M 371 271 L 474 271" class="a-default" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="srv" data-edge-to="ai" data-edge-label="음성·대화" data-edge-key="5" data-edge-id="f5" data-composition-points="371,263.5;459,263.5;459,227;665,227;665,157;689,157" d="M 371 263.5 L 459 263.5 L 459 227 L 665 227 L 665 157 L 689 157" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="mail" data-edge-label="관심고객" data-edge-key="6" data-edge-id="f6" data-composition-points="371,278.5;459,278.5;459,227;665,227;665,271;689,271" d="M 371 278.5 L 459 278.5 L 459 227 L 665 227 L 665 271 L 689 271" class="a-dashed" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
-        <path data-edge-from="srv" data-edge-to="sms" data-edge-label="알림" data-edge-key="7" data-edge-id="f7" data-composition-points="371,286;422.5,286;422.5,385;689,385" d="M 371 286 L 422.5 286 L 422.5 385 L 689 385" class="a-dashed" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="srv" data-edge-to="sh" data-edge-label="이력 기록" data-edge-key="3" data-edge-id="f3" data-composition-points="371,256;418,256;418,157;465,157" d="M 371 256 L 418 256 L 418 157 L 465 157" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="vol" data-edge-label="진행 저장" data-edge-key="4" data-edge-id="f4" data-composition-points="371,266;467,266" d="M 371 266 L 467 266" class="a-default" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="srv" data-edge-to="ai" data-edge-label="음성·대화" data-edge-key="5" data-edge-id="f5" data-composition-points="371,261;450,261;450,227;665,227;665,157;689,157" d="M 371 261 L 450 261 L 450 227 L 665 227 L 665 157 L 689 157" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="mail" data-edge-label="관심고객" data-edge-key="6" data-edge-id="f6" data-composition-points="371,271;450,271;450,227;665,227;665,271;689,271" d="M 371 271 L 450 271 L 450 227 L 665 227 L 665 271 L 689 271" class="a-dashed" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="srv" data-edge-to="sms" data-edge-label="알림" data-edge-key="7" data-edge-id="f7" data-composition-points="371,276;422.5,276;422.5,385;689,385" d="M 371 276 L 422.5 276 L 422.5 385 L 689 385" class="a-dashed" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="srv" data-edge-to="auto" data-edge-label="자동 문자" data-edge-key="8" data-edge-id="f8" data-composition-points="371,281;422.5,281;422.5,499;686,499" d="M 371 281 L 422.5 281 L 422.5 499 L 686 499" class="a-dashed" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="srv" data-edge-to="sales" data-edge-label="결과 제공" data-edge-key="9" data-edge-id="f9" data-composition-points="371,286;422.5,286;422.5,613;689,613" d="M 371 286 L 422.5 286 L 422.5 613 L 689 613" class="a-default" data-animate="edge" style="--step:9" stroke-width="1.4" marker-end="url(#arrowhead)"/>
 
         <!-- Nodes -->
-        <g id="node-bulk" data-node-id="bulk" data-node-label="대량발신 명단" tabindex="0" role="button" aria-label="대량발신 명단 포커스, 영업 허브·붙여넣기, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="영업 허브·붙여넣기" data-node-context="01 / 입력·원본">
-          <title>대량발신 명단 · 영업 허브·붙여넣기 · 01 / 입력·원본</title>
+        <g id="node-bulk" data-node-id="bulk" data-node-label="대량발신 명단" tabindex="0" role="button" aria-label="대량발신 명단 포커스, 영업 허브 폼·붙여넣기, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="영업 허브 폼·붙여넣기" data-node-context="01 / 입력·원본">
+          <title>대량발신 명단 · 영업 허브 폼·붙여넣기 · 01 / 입력·원본</title>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-frontend" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(50 134) scale(0.6875)">
@@ -5263,7 +5265,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <circle cx="6.3" cy="4.8" r=".7" class="sigil-fill"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="102" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">대량발신 명단</text>
-          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">영업 허브·붙여넣기</text>
+          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">영업 허브 폼·붙여넣기</text>
         </g>
 
         <g id="node-claw" data-node-id="claw" data-node-label="ClawOps 070" tabindex="0" role="button" aria-label="ClawOps 070 포커스, 통화 웹훅·스트림, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="통화 웹훅·스트림" data-node-context="01 / 입력·원본">
@@ -5300,28 +5302,28 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-node-label="" x="315" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">AI 상담 서버</text>
         </g>
 
-        <g id="node-sh" data-node-id="sh" data-node-label="상담이력 시트" tabindex="0" role="button" aria-label="상담이력 시트 포커스, 고객마스터·수신거부, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="고객마스터·수신거부" data-node-context="03 / 저장">
-          <title>상담이력 시트 · 고객마스터·수신거부 · 03 / 저장</title>
-          <rect x="474" y="128" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="128" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:4" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 134) scale(0.6875)">
+        <g id="node-sh" data-node-id="sh" data-node-label="상담이력 시트" tabindex="0" role="button" aria-label="상담이력 시트 포커스, 고객마스터·모델2설정·수신거부, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="고객마스터·모델2설정·수신거부" data-node-context="03 / 저장">
+          <title>상담이력 시트 · 고객마스터·모델2설정·수신거부 · 03 / 저장</title>
+          <rect x="465" y="128" width="130" height="58" rx="6" class="c-mask"/>
+          <rect x="465" y="128" width="130" height="58" rx="6" class="c-database" data-animate="node" style="--step:4" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(471 134) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="532" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">상담이력 시트</text>
-          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">고객마스터·수신거부</text>
+          <text data-node-label="" data-detail-anchor="" x="530" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">상담이력 시트</text>
+          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">고객마스터·모델2설정·수신거부</text>
         </g>
 
-        <g id="node-vol" data-node-id="vol" data-node-label="볼륨 /data" tabindex="0" role="button" aria-label="볼륨 /data 포커스, 진행상황·음성 캐시, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="진행상황·음성 캐시" data-node-context="03 / 저장">
-          <title>볼륨 /data · 진행상황·음성 캐시 · 03 / 저장</title>
-          <rect x="474" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 248) scale(0.6875)">
+        <g id="node-vol" data-node-id="vol" data-node-label="볼륨 /data" tabindex="0" role="button" aria-label="볼륨 /data 포커스, bulk-job·outbox·음성 캐시 등, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="bulk-job·outbox·음성 캐시 등" data-node-context="03 / 저장">
+          <title>볼륨 /data · bulk-job·outbox·음성 캐시 등 · 03 / 저장</title>
+          <rect x="467" y="242" width="126" height="58" rx="6" class="c-mask"/>
+          <rect x="467" y="242" width="126" height="58" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(473 248) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="530" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">볼륨 /data</text>
-          <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">진행상황·음성 캐시</text>
+          <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">bulk-job·outbox·음성 캐시 등</text>
         </g>
 
         <g id="node-ai" data-node-id="ai" data-node-label="음성·대화 AI" tabindex="0" role="button" aria-label="음성·대화 AI 포커스, Clova·OpenAI·Fish, 04 / 연동" aria-pressed="false" data-node-kind="external" data-node-sublabel="Clova·OpenAI·Fish" data-node-context="04 / 연동">
@@ -5348,16 +5350,39 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-detail="context" x="745" y="279" class="t-muted" font-size="7" text-anchor="middle">관심고객 알림</text>
         </g>
 
-        <g id="node-sms" data-node-id="sms" data-node-label="솔라피·SENS" tabindex="0" role="button" aria-label="솔라피·SENS 포커스, 문자 알림, 04 / 연동" aria-pressed="false" data-node-kind="external" data-node-sublabel="문자 알림" data-node-context="04 / 연동">
-          <title>솔라피·SENS · 문자 알림 · 04 / 연동</title>
+        <g id="node-sms" data-node-id="sms" data-node-label="솔라피·NCP" tabindex="0" role="button" aria-label="솔라피·NCP 포커스, 담당자 알림, 04 / 연동" aria-pressed="false" data-node-kind="external" data-node-sublabel="담당자 알림" data-node-context="04 / 연동">
+          <title>솔라피·NCP · 담당자 알림 · 04 / 연동</title>
           <rect x="689" y="356" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="689" y="356" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:8" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(695 362) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="745" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">솔라피·SENS</text>
-          <text data-detail="context" x="745" y="393" class="t-muted" font-size="7" text-anchor="middle">문자 알림</text>
+          <text data-node-label="" data-detail-anchor="" x="745" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">솔라피·NCP</text>
+          <text data-detail="context" x="745" y="393" class="t-muted" font-size="7" text-anchor="middle">담당자 알림</text>
+        </g>
+
+        <g id="node-auto" data-node-id="auto" data-node-label="ClawOps 문자" tabindex="0" role="button" aria-label="ClawOps 문자 포커스, 수신자 자동 SMS(기본 꺼짐), 04 / 연동" aria-pressed="false" data-node-kind="external" data-node-sublabel="수신자 자동 SMS(기본 꺼짐)" data-node-context="04 / 연동">
+          <title>ClawOps 문자 · 수신자 자동 SMS(기본 꺼짐) · 04 / 연동</title>
+          <rect x="686" y="470" width="118" height="58" rx="6" class="c-mask"/>
+          <rect x="686" y="470" width="118" height="58" rx="6" class="c-external" data-animate="node" style="--step:9" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(692 476) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="745" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">ClawOps 문자</text>
+          <text data-detail="context" x="745" y="507" class="t-muted" font-size="7" text-anchor="middle">수신자 자동 SMS(기본 꺼짐)</text>
+        </g>
+
+        <g id="node-sales" data-node-id="sales" data-node-label="영업 허브" tabindex="0" role="button" aria-label="영업 허브 포커스, 결과 읽어감, 04 / 연동" aria-pressed="false" data-node-kind="backend" data-node-sublabel="결과 읽어감" data-node-context="04 / 연동">
+          <title>영업 허브 · 결과 읽어감 · 04 / 연동</title>
+          <rect x="689" y="584" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="689" y="584" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:10" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(695 590) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="745" y="605" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">영업 허브</text>
+          <text data-detail="context" x="745" y="621" class="t-muted" font-size="7" text-anchor="middle">결과 읽어감</text>
         </g>
 
         <!-- Flow labels -->
@@ -5374,44 +5399,52 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text x="207.5" y="325.5" class="t-edge-default" font-size="8" text-anchor="middle">되걸기</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="sh" data-edge-label="이력 기록" data-edge-key="3" data-edge-id="f3">
-          <rect x="394.45" y="185.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="196.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">이력 기록</text>
+          <rect x="389.95" y="185.5" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="418" y="196.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">이력 기록</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="vol" data-edge-label="진행 저장" data-edge-key="4" data-edge-id="f4">
-          <rect x="354.4" y="222" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="382.45" y="233" class="t-edge-default" font-size="8" text-anchor="middle">진행 저장</text>
+          <rect x="350.9" y="217" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="378.95" y="228" class="t-edge-default" font-size="8" text-anchor="middle">진행 저장</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="ai" data-edge-label="음성·대화" data-edge-key="5" data-edge-id="f5">
-          <rect x="533.95" y="207" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="562" y="218" class="t-edge-emphasis" font-size="8" text-anchor="middle">음성·대화</text>
+          <rect x="529.45" y="207" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="557.5" y="218" class="t-edge-emphasis" font-size="8" text-anchor="middle">음성·대화</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="mail" data-edge-label="관심고객" data-edge-key="6" data-edge-id="f6">
-          <rect x="459.15" y="207" width="51.2" height="16" rx="4" class="c-mask"/>
-          <text x="484.75" y="218" class="t-edge-dashed" font-size="8" text-anchor="middle">관심고객</text>
+          <rect x="451.275" y="207" width="51.2" height="16" rx="4" class="c-mask"/>
+          <text x="476.875" y="218" class="t-edge-dashed" font-size="8" text-anchor="middle">관심고객</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="sms" data-edge-label="알림" data-edge-key="7" data-edge-id="f7">
-          <rect x="405.5" y="314.5" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="325.5" class="t-edge-dashed" font-size="8" text-anchor="middle">알림</text>
+          <rect x="379.75" y="294" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="396.75" y="305" class="t-edge-dashed" font-size="8" text-anchor="middle">알림</text>
+        </g>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="auto" data-edge-label="자동 문자" data-edge-key="8" data-edge-id="f8">
+          <rect x="360.4" y="383" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="388.45" y="394" class="t-edge-dashed" font-size="8" text-anchor="middle">자동 문자</text>
+        </g>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="sales" data-edge-label="결과 제공" data-edge-key="9" data-edge-id="f9">
+          <rect x="360.4" y="442.5" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="388.45" y="453.5" class="t-edge-default" font-size="8" text-anchor="middle">결과 제공</text>
         </g>
 
         <!-- Legend -->
         <g data-legend="" data-legend-bridge="">
-          <text x="40" y="456" class="t-primary" font-size="12" font-weight="650">범례</text>
-          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 40 473 L 74 473" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-            <text x="83" y="476" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
+          <text x="40" y="684" class="t-primary" font-size="12" font-weight="650">범례</text>
+          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 40 701 L 74 701" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+            <text x="83" y="704" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
           </g>
-          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 174 473 L 208 473" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
-            <text x="217" y="476" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
+          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 174 701 L 208 701" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+            <text x="217" y="704" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
           </g>
-          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="476" data-legend-width="124">
-            <rect x="308" y="468" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
-            <text x="330" y="476" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
+          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="704" data-legend-width="124">
+            <rect x="308" y="696" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
+            <text x="330" y="704" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
           </g>
-          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 454 473 L 488 473" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-            <text x="497" y="476" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
+          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 454 701 L 488 701" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+            <text x="497" y="704" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
           </g>
         </g>
       </svg>
@@ -5598,17 +5631,19 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>통화 중 음성인식·대화·음성합성을 거쳐 상담하고 이력을 시트에 기록</li>
+          <li>대량발신 명단은 서버에 저장하지 않고 화면 목록에만 채움</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-dot amber"></div>
-          <h3>한도</h3>
+          <h3>자동 정지</h3>
         </div>
         <ul>
+          <li>ClawOps 사용량이 월 한도 5분 전이면 정지</li>
+          <li>연속 3회 실패, 발신 시간대·평일 밖, 동시통화 거절이 반복될 때도 정지</li>
           <li>대량발신은 사람이 시작</li>
-          <li>월 발신 한도 근접 시 자동 정지</li>
         </ul>
       </div>
     </div>

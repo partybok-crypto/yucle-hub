@@ -5203,7 +5203,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / 도판 04">
-      <svg viewBox="0 0 853 512" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
+      <svg viewBox="0 0 853 740" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
         <title id="archify-diagram-title">영업 허브 데이터 흐름</title>
         <desc id="archify-diagram-description">Archify로 생성한 데이터플로우 다이어그램입니다.</desc>
         <!-- Definitions -->
@@ -5229,154 +5229,205 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Data Stages -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="100" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">01 / 입력·원본</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="315" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">02 / 영업 허브 서버</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="530" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">03 / 저장</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="745" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">04 / 연동</text>
 
         <!-- Flow paths -->
-        <path data-edge-from="pub" data-edge-to="srv" data-edge-label="업체·번호" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,256;259,256" d="M 156 157 L 207.5 157 L 207.5 256 L 259 256" class="a-default" data-animate="edge" style="--step:0" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="fm" data-edge-to="srv" data-edge-label="신청 읽기" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;259,271" d="M 156 271 L 259 271" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="hand" data-edge-to="srv" data-edge-label="입력" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;207.5,385;207.5,286;259,286" d="M 156 385 L 207.5 385 L 207.5 286 L 259 286" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="db" data-edge-label="저장" data-edge-key="3" data-edge-id="f3" data-composition-points="371,271;474,271" d="M 371 271 L 474 271" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="bak" data-edge-label="하루 1회" data-edge-key="4" data-edge-id="f4" data-composition-points="371,286;422.5,286;422.5,385;474,385" d="M 371 286 L 422.5 286 L 422.5 385 L 474 385" class="a-dashed" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
-        <path data-edge-from="srv" data-edge-to="ai" data-edge-label="발신 명단" data-edge-key="5" data-edge-id="f5" data-composition-points="371,256;459,256;459,227;665,227;665,271;689,271" d="M 371 256 L 459 256 L 459 227 L 665 227 L 665 271 L 689 271" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="pub" data-edge-to="srv" data-edge-label="업체 정보" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,355;259,355" d="M 156 157 L 207.5 157 L 207.5 355 L 259 355" class="a-default" data-animate="edge" style="--step:0" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="portal" data-edge-to="srv" data-edge-label="번호 조회" data-edge-key="1" data-edge-id="f1" data-composition-points="165,271;212,271;212,370;259,370" d="M 165 271 L 212 271 L 212 370 L 259 370" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="fm" data-edge-to="srv" data-edge-label="신청 가져오기" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;259,385" d="M 156 385 L 259 385" class="a-default" data-animate="edge" style="--step:2" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="hand" data-edge-to="srv" data-edge-label="입력" data-edge-key="3" data-edge-id="f3" data-composition-points="156,499;207.5,499;207.5,400;259,400" d="M 156 499 L 207.5 499 L 207.5 400 L 259 400" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="aiin" data-edge-to="srv" data-edge-label="결과 읽기" data-edge-key="4" data-edge-id="f4" data-composition-points="156,613;207.5,613;207.5,415;259,415" d="M 156 613 L 207.5 613 L 207.5 415 L 259 415" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="db" data-edge-label="저장" data-edge-key="5" data-edge-id="f5" data-composition-points="371,358;422.5,358;422.5,271;474,271" d="M 371 358 L 422.5 358 L 422.5 271 L 474 271" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="bak" data-edge-label="하루 1회" data-edge-key="6" data-edge-id="f6" data-composition-points="371,394;422.5,394;422.5,499;474,499" d="M 371 394 L 422.5 394 L 422.5 499 L 474 499" class="a-dashed" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="srv" data-edge-to="aiout" data-edge-label="명단 최대 500곳" data-edge-key="7" data-edge-id="f7" data-composition-points="371,376;637.5,376;637.5,271;689,271" d="M 371 376 L 637.5 376 L 637.5 271 L 689 271" class="a-emphasis" data-animate="edge" style="--step:7" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="sh" data-edge-label="내보내기" data-edge-key="8" data-edge-id="f8" data-composition-points="371,412;637.5,412;637.5,499;689,499" d="M 371 412 L 637.5 412 L 637.5 499 L 689 499" class="a-default" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead)"/>
 
         <!-- Nodes -->
-        <g id="node-pub" data-node-id="pub" data-node-label="공공데이터·포털" tabindex="0" role="button" aria-label="공공데이터·포털 포커스, 네이버·카카오 번호 찾기, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="네이버·카카오 번호 찾기" data-node-context="01 / 입력·원본">
-          <title>공공데이터·포털 · 네이버·카카오 번호 찾기 · 01 / 입력·원본</title>
+        <g id="node-pub" data-node-id="pub" data-node-label="공공데이터" tabindex="0" role="button" aria-label="공공데이터 포커스, CSV·경기 오픈데이터, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="CSV·경기 오픈데이터" data-node-context="01 / 입력·원본">
+          <title>공공데이터 · CSV·경기 오픈데이터 · 01 / 입력·원본</title>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 134) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="100" y="159" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">공공데이터·포털</text>
-          <text data-detail="context" x="100" y="172.4" class="t-muted" font-size="7" text-anchor="middle">네이버·카카오 번호 찾기</text>
+          <text data-node-label="" data-detail-anchor="" x="100" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">공공데이터</text>
+          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">CSV·경기 오픈데이터</text>
         </g>
 
-        <g id="node-fm" data-node-id="fm" data-node-label="견적신청 시트" tabindex="0" role="button" aria-label="견적신청 시트 포커스, 토스견적신청, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="토스견적신청" data-node-context="01 / 입력·원본">
-          <title>견적신청 시트 · 토스견적신청 · 01 / 입력·원본</title>
-          <rect x="44" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="44" y="242" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:1" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 248) scale(0.6875)">
+        <g id="node-portal" data-node-id="portal" data-node-label="네이버·카카오" tabindex="0" role="button" aria-label="네이버·카카오 포커스, 번호 찾기(네이버 1시간 700회), 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="번호 찾기(네이버 1시간 700회)" data-node-context="01 / 입력·원본">
+          <title>네이버·카카오 · 번호 찾기(네이버 1시간 700회) · 01 / 입력·원본</title>
+          <rect x="35" y="242" width="130" height="58" rx="6" class="c-mask"/>
+          <rect x="35" y="242" width="130" height="58" rx="6" class="c-external" data-animate="node" style="--step:1" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(41 248) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="102" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">견적신청 시트</text>
-          <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">토스견적신청</text>
+          <text data-node-label="" data-detail-anchor="" x="100" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">네이버·카카오</text>
+          <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">번호 찾기(네이버 1시간 700회)</text>
+        </g>
+
+        <g id="node-fm" data-node-id="fm" data-node-label="견적신청 시트" tabindex="0" role="button" aria-label="견적신청 시트 포커스, 수동 가져오기, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="수동 가져오기" data-node-context="01 / 입력·원본">
+          <title>견적신청 시트 · 수동 가져오기 · 01 / 입력·원본</title>
+          <rect x="44" y="356" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="44" y="356" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:2" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 362) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="102" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">견적신청 시트</text>
+          <text data-detail="context" x="100" y="393" class="t-muted" font-size="7" text-anchor="middle">수동 가져오기</text>
         </g>
 
         <g id="node-hand" data-node-id="hand" data-node-label="수동 입력 화면" tabindex="0" role="button" aria-label="수동 입력 화면 포커스, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-context="01 / 입력·원본">
           <title>수동 입력 화면 · 01 / 입력·원본</title>
-          <rect x="44" y="356" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="44" y="356" width="112" height="58" rx="6" class="c-frontend" data-animate="node" style="--step:2" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(50 362) scale(0.6875)">
+          <rect x="44" y="470" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="44" y="470" width="112" height="58" rx="6" class="c-frontend" data-animate="node" style="--step:3" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(50 476) scale(0.6875)">
             <rect x="2" y="3" width="12" height="10" rx="2"/>
             <path d="M2 6.5h12"/>
             <circle cx="4.1" cy="4.8" r=".7" class="sigil-fill"/>
             <circle cx="6.3" cy="4.8" r=".7" class="sigil-fill"/>
           </g>
-          <text data-node-label="" x="105" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">수동 입력 화면</text>
+          <text data-node-label="" x="105" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">수동 입력 화면</text>
+        </g>
+
+        <g id="node-aiin" data-node-id="aiin" data-node-label="AI 전화상담" tabindex="0" role="button" aria-label="AI 전화상담 포커스, 결과·수신거부, 01 / 입력·원본" aria-pressed="false" data-node-kind="backend" data-node-sublabel="결과·수신거부" data-node-tag="10분" data-node-context="01 / 입력·원본">
+          <title>AI 전화상담 · 결과·수신거부 · 01 / 입력·원본 · 10분</title>
+          <rect x="44" y="584" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="44" y="584" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:4" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(50 590) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="100" y="605" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">AI 전화상담</text>
+          <text data-detail="context" x="100" y="621" class="t-muted" font-size="7" text-anchor="middle">결과·수신거부</text>
+        <text data-detail="fine" x="100" y="631" class="t-backend" font-size="7" text-anchor="middle">10분</text>
         </g>
 
         <g id="node-srv" data-node-id="srv" data-node-label="영업 허브 서버" tabindex="0" role="button" aria-label="영업 허브 서버 포커스, 02 / 영업 허브 서버" aria-pressed="false" data-node-kind="backend" data-node-context="02 / 영업 허브 서버">
           <title>영업 허브 서버 · 02 / 영업 허브 서버</title>
-          <rect x="259" y="240" width="112" height="62" rx="6" class="c-mask"/>
-          <rect x="259" y="240" width="112" height="62" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(265 246) scale(0.6875)">
+          <rect x="259" y="339" width="112" height="92" rx="6" class="c-mask"/>
+          <rect x="259" y="339" width="112" height="92" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(265 345) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
-          <text data-node-label="" x="320" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">영업 허브 서버</text>
+          <text data-node-label="" x="320" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">영업 허브 서버</text>
         </g>
 
-        <g id="node-db" data-node-id="db" data-node-label="영업 DB" tabindex="0" role="button" aria-label="영업 DB 포커스, SQLite /data, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="SQLite /data" data-node-tag="업체·수신거부" data-node-context="03 / 저장">
-          <title>영업 DB · SQLite /data · 03 / 저장 · 업체·수신거부</title>
+        <g id="node-db" data-node-id="db" data-node-label="영업 DB" tabindex="0" role="button" aria-label="영업 DB 포커스, sales_hub.db, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="sales_hub.db" data-node-tag="업체·수신거부" data-node-context="03 / 저장">
+          <title>영업 DB · sales_hub.db · 03 / 저장 · 업체·수신거부</title>
           <rect x="474" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:4" stroke-width="1.5"/>
+          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:6" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 248) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="530" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">영업 DB</text>
-          <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">SQLite /data</text>
+          <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">sales_hub.db</text>
         <text data-detail="fine" x="530" y="289" class="t-database" font-size="7" text-anchor="middle">업체·수신거부</text>
         </g>
 
         <g id="node-bak" data-node-id="bak" data-node-label="일일 백업" tabindex="0" role="button" aria-label="일일 백업 포커스, gzip 7일치, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="gzip 7일치" data-node-context="03 / 저장">
           <title>일일 백업 · gzip 7일치 · 03 / 저장</title>
-          <rect x="474" y="356" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="356" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 362) scale(0.6875)">
+          <rect x="474" y="470" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="474" y="470" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:7" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 476) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="530" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">일일 백업</text>
-          <text data-detail="context" x="530" y="393" class="t-muted" font-size="7" text-anchor="middle">gzip 7일치</text>
+          <text data-node-label="" data-detail-anchor="" x="530" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">일일 백업</text>
+          <text data-detail="context" x="530" y="507" class="t-muted" font-size="7" text-anchor="middle">gzip 7일치</text>
         </g>
 
-        <g id="node-ai" data-node-id="ai" data-node-label="AI 전화상담" tabindex="0" role="button" aria-label="AI 전화상담 포커스, 발신 명단 받음, 04 / 연동" aria-pressed="false" data-node-kind="backend" data-node-sublabel="발신 명단 받음" data-node-context="04 / 연동">
-          <title>AI 전화상담 · 발신 명단 받음 · 04 / 연동</title>
+        <g id="node-aiout" data-node-id="aiout" data-node-label="AI 전화상담" tabindex="0" role="button" aria-label="AI 전화상담 포커스, 발신 명단(브라우저 경유), 04 / 연동" aria-pressed="false" data-node-kind="backend" data-node-sublabel="발신 명단(브라우저 경유)" data-node-context="04 / 연동">
+          <title>AI 전화상담 · 발신 명단(브라우저 경유) · 04 / 연동</title>
           <rect x="689" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="689" y="242" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:6" stroke-width="1.5"/>
+          <rect x="689" y="242" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:8" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(695 248) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="745" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">AI 전화상담</text>
-          <text data-detail="context" x="745" y="279" class="t-muted" font-size="7" text-anchor="middle">발신 명단 받음</text>
+          <text data-detail="context" x="745" y="279" class="t-muted" font-size="7" text-anchor="middle">발신 명단(브라우저 경유)</text>
+        </g>
+
+        <g id="node-sh" data-node-id="sh" data-node-label="영업DB 탭" tabindex="0" role="button" aria-label="영업DB 탭 포커스, 시트 보조 보기, 04 / 연동" aria-pressed="false" data-node-kind="database" data-node-sublabel="시트 보조 보기" data-node-context="04 / 연동">
+          <title>영업DB 탭 · 시트 보조 보기 · 04 / 연동</title>
+          <rect x="689" y="470" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="689" y="470" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:9" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(695 476) scale(0.6875)">
+            <ellipse cx="8" cy="4" rx="5" ry="2"/>
+            <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="745" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">영업DB 탭</text>
+          <text data-detail="context" x="745" y="507" class="t-muted" font-size="7" text-anchor="middle">시트 보조 보기</text>
         </g>
 
         <!-- Flow labels -->
-        <g data-detail="context" data-edge-from="pub" data-edge-to="srv" data-edge-label="업체·번호" data-edge-key="0" data-edge-id="f0">
-          <rect x="179.45" y="185.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="207.5" y="196.5" class="t-edge-default" font-size="8" text-anchor="middle">업체·번호</text>
+        <g data-detail="context" data-edge-from="pub" data-edge-to="srv" data-edge-label="업체 정보" data-edge-key="0" data-edge-id="f0">
+          <rect x="179.45" y="235" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="207.5" y="246" class="t-edge-default" font-size="8" text-anchor="middle">업체 정보</text>
         </g>
-        <g data-detail="context" data-edge-from="fm" data-edge-to="srv" data-edge-label="신청 읽기" data-edge-key="1" data-edge-id="f1">
-          <rect x="139.39999999999998" y="222" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="167.45" y="233" class="t-edge-default" font-size="8" text-anchor="middle">신청 읽기</text>
+        <g data-detail="context" data-edge-from="portal" data-edge-to="srv" data-edge-label="번호 조회" data-edge-key="1" data-edge-id="f1">
+          <rect x="218" y="313.5" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="246.05" y="324.5" class="t-edge-default" font-size="8" text-anchor="middle">번호 조회</text>
         </g>
-        <g data-detail="context" data-edge-from="hand" data-edge-to="srv" data-edge-label="입력" data-edge-key="2" data-edge-id="f2">
-          <rect x="190.5" y="314.5" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="207.5" y="325.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">입력</text>
+        <g data-detail="context" data-edge-from="fm" data-edge-to="srv" data-edge-label="신청 가져오기" data-edge-key="2" data-edge-id="f2">
+          <rect x="119.80000000000001" y="336" width="75.7" height="16" rx="4" class="c-mask"/>
+          <text x="157.65" y="347" class="t-edge-default" font-size="8" text-anchor="middle">신청 가져오기</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="db" data-edge-label="저장" data-edge-key="3" data-edge-id="f3">
-          <rect x="431.25" y="281" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="448.25" y="292" class="t-edge-emphasis" font-size="8" text-anchor="middle">저장</text>
+        <g data-detail="context" data-edge-from="hand" data-edge-to="srv" data-edge-label="입력" data-edge-key="3" data-edge-id="f3">
+          <rect x="164.75" y="471" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="181.75" y="482" class="t-edge-emphasis" font-size="8" text-anchor="middle">입력</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="bak" data-edge-label="하루 1회" data-edge-key="4" data-edge-id="f4">
-          <rect x="396.9" y="314.5" width="51.2" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="325.5" class="t-edge-dashed" font-size="8" text-anchor="middle">하루 1회</text>
+        <g data-detail="context" data-edge-from="aiin" data-edge-to="srv" data-edge-label="결과 읽기" data-edge-key="4" data-edge-id="f4">
+          <rect x="213.5" y="507" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="241.55" y="518" class="t-edge-emphasis" font-size="8" text-anchor="middle">결과 읽기</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="ai" data-edge-label="발신 명단" data-edge-key="5" data-edge-id="f5">
-          <rect x="430.95" y="220.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="459" y="231.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">발신 명단</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="db" data-edge-label="저장" data-edge-key="5" data-edge-id="f5">
+          <rect x="405.5" y="293.5" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="422.5" y="304.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">저장</text>
+        </g>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="bak" data-edge-label="하루 1회" data-edge-key="6" data-edge-id="f6">
+          <rect x="396.9" y="425.5" width="51.2" height="16" rx="4" class="c-mask"/>
+          <text x="422.5" y="436.5" class="t-edge-dashed" font-size="8" text-anchor="middle">하루 1회</text>
+        </g>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="aiout" data-edge-label="명단 최대 500곳" data-edge-key="7" data-edge-id="f7">
+          <rect x="594.75" y="302.5" width="85.5" height="16" rx="4" class="c-mask"/>
+          <text x="637.5" y="313.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">명단 최대 500곳</text>
+        </g>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="sh" data-edge-label="내보내기" data-edge-key="8" data-edge-id="f8">
+          <rect x="611.9" y="434.5" width="51.2" height="16" rx="4" class="c-mask"/>
+          <text x="637.5" y="445.5" class="t-edge-default" font-size="8" text-anchor="middle">내보내기</text>
         </g>
 
         <!-- Legend -->
         <g data-legend="" data-legend-bridge="">
-          <text x="40" y="456" class="t-primary" font-size="12" font-weight="650">범례</text>
-          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 40 473 L 74 473" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-            <text x="83" y="476" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
+          <text x="40" y="684" class="t-primary" font-size="12" font-weight="650">범례</text>
+          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 40 701 L 74 701" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+            <text x="83" y="704" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
           </g>
-          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 174 473 L 208 473" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
-            <text x="217" y="476" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
+          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 174 701 L 208 701" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+            <text x="217" y="704" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
           </g>
-          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="476" data-legend-width="124">
-            <rect x="308" y="468" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
-            <text x="330" y="476" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
+          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="704" data-legend-width="124">
+            <rect x="308" y="696" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
+            <text x="330" y="704" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
           </g>
-          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 454 473 L 488 473" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-            <text x="497" y="476" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
+          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 454 701 L 488 701" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+            <text x="497" y="704" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
           </g>
         </g>
       </svg>
@@ -5562,7 +5613,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>주 흐름</h3>
         </div>
         <ul>
-          <li>공공데이터와 포털로 업체·번호를 모아 DB에 저장하고 AI 상담에 발신 명단을 보냄</li>
+          <li>공공데이터와 포털로 업체·번호를 모아 DB에 저장</li>
+          <li>발신 명단은 사용자의 브라우저가 AI 상담 서버에 올리고, 사람이 시작 버튼을 눌러야 걸림</li>
         </ul>
       </div>
 
@@ -5572,8 +5624,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>되돌아오는 값</h3>
         </div>
         <ul>
-          <li>AI 상담 결과를 10분마다 가져옴</li>
-          <li>수신거부·관심고객 연락함 반영</li>
+          <li>AI 상담 결과·수신거부를 10분마다, 알림 5초 뒤, 6시간마다 전체로 가져옴</li>
+          <li>관심고객 &#39;연락함&#39;은 영업 허브가 AI 상담에 되씀</li>
         </ul>
       </div>
     </div>

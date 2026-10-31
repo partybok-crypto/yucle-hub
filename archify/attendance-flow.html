@@ -5203,7 +5203,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / 도판 04">
-      <svg viewBox="0 0 853 626" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
+      <svg viewBox="0 0 853 740" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
         <title id="archify-diagram-title">출퇴근 관리 데이터 흐름</title>
         <desc id="archify-diagram-description">Archify로 생성한 데이터플로우 다이어그램입니다.</desc>
         <!-- Definitions -->
@@ -5229,16 +5229,16 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Data Stages -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="100" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">01 / 입력·원본</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="315" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">02 / 출퇴근 서버</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="530" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">03 / 저장</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="620" rx="10" class="c-lane" stroke-width="1"/>
         <text x="745" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">04 / 읽는 곳</text>
 
         <!-- Flow paths -->
@@ -5248,13 +5248,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <path data-edge-from="srv" data-edge-to="in" data-edge-label="동기화" data-edge-key="3" data-edge-id="f3" data-composition-points="371,262;422.5,262;422.5,157;474,157" d="M 371 262 L 422.5 262 L 422.5 157 L 474 157" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
         <path data-edge-from="srv" data-edge-to="new" data-edge-label="신입 동기화" data-edge-key="4" data-edge-id="f4" data-composition-points="371,280;474,280" d="M 371 280 L 474 280" class="a-default" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead)"/>
         <path data-edge-from="in" data-edge-to="pack" data-edge-label="읽기" data-edge-key="5" data-edge-id="f5" data-composition-points="586,144;689,144" d="M 586 144 L 689 144" class="a-default" data-animate="edge" style="--step:5" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="in" data-edge-to="dry" data-edge-label="읽기" data-edge-key="6" data-edge-id="f6" data-composition-points="586,152.66666666666666;637.5,152.66666666666666;637.5,271;689,271" d="M 586 152.66666666666666 L 637.5 152.66666666666666 L 637.5 271 L 689 271" class="a-default" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="in" data-edge-to="board" data-edge-label="읽기" data-edge-key="7" data-edge-id="f7" data-composition-points="586,161.33333333333334;637.5,161.33333333333334;637.5,385;689,385" d="M 586 161.33333333333334 L 637.5 161.33333333333334 L 637.5 385 L 689 385" class="a-default" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="in" data-edge-to="fin" data-edge-label="읽기" data-edge-key="8" data-edge-id="f8" data-composition-points="586,170;637.5,170;637.5,499;689,499" d="M 586 170 L 637.5 170 L 637.5 499 L 689 499" class="a-default" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="in" data-edge-to="dry" data-edge-label="읽기" data-edge-key="6" data-edge-id="f6" data-composition-points="586,150.5;637.5,150.5;637.5,271;689,271" d="M 586 150.5 L 637.5 150.5 L 637.5 271 L 689 271" class="a-default" data-animate="edge" style="--step:6" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="in" data-edge-to="board" data-edge-label="읽기" data-edge-key="7" data-edge-id="f7" data-composition-points="586,157;637.5,157;637.5,385;689,385" d="M 586 157 L 637.5 157 L 637.5 385 L 689 385" class="a-default" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="in" data-edge-to="fin" data-edge-label="읽기" data-edge-key="8" data-edge-id="f8" data-composition-points="586,163.5;637.5,163.5;637.5,499;689,499" d="M 586 163.5 L 637.5 163.5 L 637.5 499 L 689 499" class="a-default" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="in" data-edge-to="pc" data-edge-label="읽기" data-edge-key="9" data-edge-id="f9" data-composition-points="586,170;637.5,170;637.5,613;689,613" d="M 586 170 L 637.5 170 L 637.5 613 L 689 613" class="a-default" data-animate="edge" style="--step:9" stroke-width="1.4" marker-end="url(#arrowhead)"/>
 
         <!-- Nodes -->
-        <g id="node-names" data-node-id="names" data-node-label="근무자명단 탭" tabindex="0" role="button" aria-label="근무자명단 탭 포커스, 수식 전용, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="수식 전용" data-node-context="01 / 입력·원본">
-          <title>근무자명단 탭 · 수식 전용 · 01 / 입력·원본</title>
+        <g id="node-names" data-node-id="names" data-node-label="근무자명단 탭" tabindex="0" role="button" aria-label="근무자명단 탭 포커스, 수식 전용·재확인 지정, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="수식 전용·재확인 지정" data-node-context="01 / 입력·원본">
+          <title>근무자명단 탭 · 수식 전용·재확인 지정 · 01 / 입력·원본</title>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 134) scale(0.6875)">
@@ -5262,7 +5263,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="102" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">근무자명단 탭</text>
-          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">수식 전용</text>
+          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">수식 전용·재확인 지정</text>
         </g>
 
         <g id="node-tab" data-node-id="tab" data-node-label="출퇴근 웹앱" tabindex="0" role="button" aria-label="출퇴근 웹앱 포커스, 출근·퇴근·신입 등록, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="출근·퇴근·신입 등록" data-node-context="01 / 입력·원본">
@@ -5289,8 +5290,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-node-label="" x="315" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">출퇴근 서버</text>
         </g>
 
-        <g id="node-db" data-node-id="db" data-node-label="출퇴근 DB" tabindex="0" role="button" aria-label="출퇴근 DB 포커스, SQLite /data, 02 / 출퇴근 서버" aria-pressed="false" data-node-kind="database" data-node-sublabel="SQLite /data" data-node-tag="1차 저장소" data-node-context="02 / 출퇴근 서버">
-          <title>출퇴근 DB · SQLite /data · 02 / 출퇴근 서버 · 1차 저장소</title>
+        <g id="node-db" data-node-id="db" data-node-label="출퇴근 DB" tabindex="0" role="button" aria-label="출퇴근 DB 포커스, attendance.db, 02 / 출퇴근 서버" aria-pressed="false" data-node-kind="database" data-node-sublabel="attendance.db" data-node-tag="1차 저장소" data-node-context="02 / 출퇴근 서버">
+          <title>출퇴근 DB · attendance.db · 02 / 출퇴근 서버 · 1차 저장소</title>
           <rect x="259" y="356" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="259" y="356" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:3" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(265 362) scale(0.6875)">
@@ -5298,12 +5299,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="315" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">출퇴근 DB</text>
-          <text data-detail="context" x="315" y="393" class="t-muted" font-size="7" text-anchor="middle">SQLite /data</text>
+          <text data-detail="context" x="315" y="393" class="t-muted" font-size="7" text-anchor="middle">attendance.db</text>
         <text data-detail="fine" x="315" y="403" class="t-database" font-size="7" text-anchor="middle">1차 저장소</text>
         </g>
 
-        <g id="node-in" data-node-id="in" data-node-label="근태입력 탭" tabindex="0" role="button" aria-label="근태입력 탭 포커스, 출퇴근 기록, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="출퇴근 기록" data-node-context="03 / 저장">
-          <title>근태입력 탭 · 출퇴근 기록 · 03 / 저장</title>
+        <g id="node-in" data-node-id="in" data-node-label="근태입력 탭" tabindex="0" role="button" aria-label="근태입력 탭 포커스, 읽기·쓰기, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="읽기·쓰기" data-node-context="03 / 저장">
+          <title>근태입력 탭 · 읽기·쓰기 · 03 / 저장</title>
           <rect x="474" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="474" y="128" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:4" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 134) scale(0.6875)">
@@ -5311,7 +5312,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="530" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">근태입력 탭</text>
-          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">출퇴근 기록</text>
+          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">읽기·쓰기</text>
         </g>
 
         <g id="node-new" data-node-id="new" data-node-label="현장신규등록 탭" tabindex="0" role="button" aria-label="현장신규등록 탭 포커스, 신입 직원, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="신입 직원" data-node-context="03 / 저장">
@@ -5348,14 +5349,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-detail="context" x="745" y="279" class="t-muted" font-size="7" text-anchor="middle">출근 작업자</text>
         </g>
 
-        <g id="node-board" data-node-id="board" data-node-label="전광판" tabindex="0" role="button" aria-label="전광판 포커스, 04 / 읽는 곳" aria-pressed="false" data-node-kind="backend" data-node-context="04 / 읽는 곳">
-          <title>전광판 · 04 / 읽는 곳</title>
+        <g id="node-board" data-node-id="board" data-node-label="전광판" tabindex="0" role="button" aria-label="전광판 포커스, 전원 퇴근 판정, 04 / 읽는 곳" aria-pressed="false" data-node-kind="backend" data-node-sublabel="전원 퇴근 판정" data-node-context="04 / 읽는 곳">
+          <title>전광판 · 전원 퇴근 판정 · 04 / 읽는 곳</title>
           <rect x="689" y="356" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="689" y="356" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:8" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(695 362) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
-          <text data-node-label="" x="745" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">전광판</text>
+          <text data-node-label="" data-detail-anchor="" x="745" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">전광판</text>
+          <text data-detail="context" x="745" y="393" class="t-muted" font-size="7" text-anchor="middle">전원 퇴근 판정</text>
         </g>
 
         <g id="node-fin" data-node-id="fin" data-node-label="재무관리" tabindex="0" role="button" aria-label="재무관리 포커스, 인건비, 04 / 읽는 곳" aria-pressed="false" data-node-kind="backend" data-node-sublabel="인건비" data-node-context="04 / 읽는 곳">
@@ -5367,6 +5369,17 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           </g>
           <text data-node-label="" data-detail-anchor="" x="745" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">재무관리</text>
           <text data-detail="context" x="745" y="507" class="t-muted" font-size="7" text-anchor="middle">인건비</text>
+        </g>
+
+        <g id="node-pc" data-node-id="pc" data-node-label="보조컴퓨터" tabindex="0" role="button" aria-label="보조컴퓨터 포커스, 퇴근 판정, 04 / 읽는 곳" aria-pressed="false" data-node-kind="backend" data-node-sublabel="퇴근 판정" data-node-context="04 / 읽는 곳">
+          <title>보조컴퓨터 · 퇴근 판정 · 04 / 읽는 곳</title>
+          <rect x="689" y="584" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="689" y="584" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:10" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(695 590) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="745" y="605" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">보조컴퓨터</text>
+          <text data-detail="context" x="745" y="621" class="t-muted" font-size="7" text-anchor="middle">퇴근 판정</text>
         </g>
 
         <!-- Flow labels -->
@@ -5395,32 +5408,36 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text x="637.5" y="134" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
         </g>
         <g data-detail="context" data-edge-from="in" data-edge-to="dry" data-edge-label="읽기" data-edge-key="6" data-edge-id="f6">
-          <rect x="597.5" y="204.83333333333331" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="614.5" y="215.83333333333331" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
+          <rect x="597.5" y="203.75" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="614.5" y="214.75" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
         </g>
         <g data-detail="context" data-edge-from="in" data-edge-to="board" data-edge-label="읽기" data-edge-key="7" data-edge-id="f7">
-          <rect x="594.75" y="179.33333333333334" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="611.75" y="190.33333333333334" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
+          <rect x="597.5" y="264" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="614.5" y="275" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
         </g>
         <g data-detail="context" data-edge-from="in" data-edge-to="fin" data-edge-label="읽기" data-edge-key="8" data-edge-id="f8">
-          <rect x="597.5" y="327.5" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="614.5" y="338.5" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
+          <rect x="594.75" y="181.5" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="611.75" y="192.5" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
+        </g>
+        <g data-detail="context" data-edge-from="in" data-edge-to="pc" data-edge-label="읽기" data-edge-key="9" data-edge-id="f9">
+          <rect x="597.5" y="384.5" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="614.5" y="395.5" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
         </g>
 
         <!-- Legend -->
         <g data-legend="" data-legend-bridge="">
-          <text x="40" y="570" class="t-primary" font-size="12" font-weight="650">범례</text>
-          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="590" data-legend-width="112">
-            <path d="M 40 587 L 74 587" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-            <text x="83" y="590" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
+          <text x="40" y="684" class="t-primary" font-size="12" font-weight="650">범례</text>
+          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 40 701 L 74 701" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+            <text x="83" y="704" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
           </g>
-          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="174" data-legend-baseline="590" data-legend-width="124">
-            <rect x="174" y="582" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
-            <text x="196" y="590" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
+          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="174" data-legend-baseline="704" data-legend-width="124">
+            <rect x="174" y="696" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
+            <text x="196" y="704" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
           </g>
-          <g data-legend-semantic-kind="default" data-legend-x="320" data-legend-baseline="590" data-legend-width="112">
-            <path d="M 320 587 L 354 587" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-            <text x="363" y="590" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
+          <g data-legend-semantic-kind="default" data-legend-x="320" data-legend-baseline="704" data-legend-width="112">
+            <path d="M 320 701 L 354 701" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+            <text x="363" y="704" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
           </g>
         </g>
       </svg>
@@ -5607,17 +5624,19 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>로컬 DB에 먼저 저장한 뒤 시트에 동기화</li>
-          <li>출퇴근 직후 자동 동기화, 화면 버튼으로 수동 재전송</li>
+          <li>시트에서 지운 행은 DB에서도 삭제, 관리자 수기 입력값은 덮어쓰지 않음</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-dot amber"></div>
-          <h3>끊김 대비</h3>
+          <h3>동기화 시점</h3>
         </div>
         <ul>
-          <li>인터넷이 끊기면 로컬에 저장하고 나중에 재동기화</li>
+          <li>서버 시작 시 1회, 직원목록 조회 때 한 번씩(45초 간격 이내 중복 방지), 화면 버튼 수동 재전송</li>
+          <li>주기 스케줄러는 없음</li>
+          <li>인터넷이 끊기면 로컬 저장 후 나중에 재동기화</li>
         </ul>
       </div>
     </div>

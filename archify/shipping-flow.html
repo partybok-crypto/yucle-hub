@@ -5203,7 +5203,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <!-- Main Diagram -->
     <div class="diagram-container" data-detail-level="read"
          data-preset-badge-editorial-plate="ARCHIFY / 도판 04">
-      <svg viewBox="0 0 853 512" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
+      <svg viewBox="0 0 853 626" data-reader-fit="intrinsic-height" role="img" lang="ko" aria-labelledby="archify-diagram-title archify-diagram-description" data-animation="trace" data-preset="classic" data-quality-profile="showcase" data-motion-choreography="stream">
         <title id="archify-diagram-title">배송 현황 데이터 흐름</title>
         <desc id="archify-diagram-description">Archify로 생성한 데이터플로우 다이어그램입니다.</desc>
         <!-- Definitions -->
@@ -5229,57 +5229,56 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         <!-- Data Stages -->
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="0" x="16" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
         <text x="100" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">01 / 입력·원본</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="1" x="231" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
         <text x="315" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">02 / 배송 현황 서버</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
-        <text x="530" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">03 / 저장</text>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="2" x="446" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
+        <text x="530" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">03 / 저장·알림</text>
 
-        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="392" rx="10" class="c-lane" stroke-width="1"/>
+        <rect data-graph-role="structural-frame" data-composition-frame-kind="stage" data-composition-frame-id="3" x="661" y="46" width="168" height="506" rx="10" class="c-lane" stroke-width="1"/>
         <text x="745" y="68" class="t-dim" font-size="9" font-weight="600" text-anchor="middle">04 / 읽는 곳</text>
 
         <!-- Flow paths -->
-        <path data-edge-from="sh" data-edge-to="srv" data-edge-label="원장 읽기" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,256;259,256" d="M 156 157 L 207.5 157 L 207.5 256 L 259 256" class="a-default" data-animate="edge" style="--step:0" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="adm" data-edge-to="srv" data-edge-label="관리" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;259,271" d="M 156 271 L 259 271" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="drv" data-edge-to="srv" data-edge-label="수거량 입력" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;207.5,385;207.5,286;259,286" d="M 156 385 L 207.5 385 L 207.5 286 L 259 286" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="map" data-edge-to="srv" data-edge-label="길찾기" data-edge-key="3" data-edge-id="f3" data-composition-points="315,186;315,240" d="M 315 186 L 315 240" class="a-default" data-animate="edge" style="--step:3" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-        <path data-edge-from="srv" data-edge-to="out" data-edge-label="수량 기록" data-edge-key="4" data-edge-id="f4" data-composition-points="371,256;422.5,256;422.5,157;474,157" d="M 371 256 L 422.5 256 L 422.5 157 L 474 157" class="a-emphasis" data-animate="edge" style="--step:4" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="sql" data-edge-label="결과 저장" data-edge-key="5" data-edge-id="f5" data-composition-points="371,271;474,271" d="M 371 271 L 474 271" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="srv" data-edge-to="dt" data-edge-label="기사 입력 기록" data-edge-key="6" data-edge-id="f6" data-composition-points="371,286;422.5,286;422.5,385;474,385" d="M 371 286 L 422.5 286 L 422.5 385 L 474 385" class="a-emphasis" data-animate="edge" style="--step:6" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="out" data-edge-to="rd" data-edge-label="읽기" data-edge-key="7" data-edge-id="f7" data-composition-points="586,157;689,157" d="M 586 157 L 689 157" class="a-default" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="sh" data-edge-to="srv" data-edge-label="원장 읽기" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,362.5;259,362.5" d="M 156 157 L 207.5 157 L 207.5 362.5 L 259 362.5" class="a-default" data-animate="edge" style="--step:0" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="sh2" data-edge-to="srv" data-edge-label="마감수량" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;207.5,271;207.5,377.5;259,377.5" d="M 156 271 L 207.5 271 L 207.5 377.5 L 259 377.5" class="a-default" data-animate="edge" style="--step:1" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="adm" data-edge-to="srv" data-edge-label="관리" data-edge-key="2" data-edge-id="f2" data-composition-points="156,392.5;259,392.5" d="M 156 392.5 L 259 392.5" class="a-emphasis" data-animate="edge" style="--step:2" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="drv" data-edge-to="srv" data-edge-label="수거량 입력" data-edge-key="3" data-edge-id="f3" data-composition-points="156,499;207.5,499;207.5,407.5;259,407.5" d="M 156 499 L 207.5 499 L 207.5 407.5 L 259 407.5" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="map" data-edge-to="srv" data-edge-label="길찾기" data-edge-key="4" data-edge-id="f4" data-composition-points="315,186;315,346.5" d="M 315 186 L 315 346.5" class="a-default" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="srv" data-edge-to="dt" data-edge-label="기사 입력 기록" data-edge-key="5" data-edge-id="f5" data-composition-points="371,367;421,367;421,157;471,157" d="M 371 367 L 421 367 L 421 157 L 471 157" class="a-emphasis" data-animate="edge" style="--step:5" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="sql" data-edge-label="결과·이력 저장" data-edge-key="6" data-edge-id="f6" data-composition-points="371,385;422.5,385;422.5,271;474,271" d="M 371 385 L 422.5 385 L 422.5 271 L 474 271" class="a-emphasis" data-animate="edge" style="--step:6" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path data-edge-from="srv" data-edge-to="sol" data-edge-label="알림" data-edge-key="7" data-edge-id="f7" data-composition-points="371,403;421,403;421,499;471,499" d="M 371 403 L 421 403 L 421 499 L 471 499" class="a-dashed" data-animate="edge" style="--step:7" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+        <path data-edge-from="dt" data-edge-to="fin" data-edge-label="읽기" data-edge-key="8" data-edge-id="f8" data-composition-points="589,157;689,157" d="M 589 157 L 689 157" class="a-default" data-animate="edge" style="--step:8" stroke-width="1.4" marker-end="url(#arrowhead)"/>
 
         <!-- Nodes -->
-        <g id="node-sh" data-node-id="sh" data-node-label="현장입력 시트" tabindex="0" role="button" aria-label="현장입력 시트 포커스, 거래처·기사·수량, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="거래처·기사·수량" data-node-context="01 / 입력·원본">
-          <title>현장입력 시트 · 거래처·기사·수량 · 01 / 입력·원본</title>
+        <g id="node-sh" data-node-id="sh" data-node-label="원장 시트" tabindex="0" role="button" aria-label="원장 시트 포커스, 세탁물 현황(읽기 전용), 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="세탁물 현황(읽기 전용)" data-node-context="01 / 입력·원본">
+          <title>원장 시트 · 세탁물 현황(읽기 전용) · 01 / 입력·원본</title>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="128" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:0" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 134) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="102" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">현장입력 시트</text>
-          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">거래처·기사·수량</text>
+          <text data-node-label="" data-detail-anchor="" x="100" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">원장 시트</text>
+          <text data-detail="context" x="100" y="165" class="t-muted" font-size="7" text-anchor="middle">세탁물 현황(읽기 전용)</text>
+        </g>
+
+        <g id="node-sh2" data-node-id="sh2" data-node-label="현장입력 시트" tabindex="0" role="button" aria-label="현장입력 시트 포커스, 마감수량 읽기, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="마감수량 읽기" data-node-context="01 / 입력·원본">
+          <title>현장입력 시트 · 마감수량 읽기 · 01 / 입력·원본</title>
+          <rect x="44" y="242" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="44" y="242" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:1" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 248) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="102" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">현장입력 시트</text>
+          <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">마감수량 읽기</text>
         </g>
 
         <g id="node-adm" data-node-id="adm" data-node-label="관리자 화면" tabindex="0" role="button" aria-label="관리자 화면 포커스, 새로고침·최적화·배정, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="새로고침·최적화·배정" data-node-context="01 / 입력·원본">
           <title>관리자 화면 · 새로고침·최적화·배정 · 01 / 입력·원본</title>
-          <rect x="44" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="44" y="242" width="112" height="58" rx="6" class="c-frontend" data-animate="node" style="--step:1" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(50 248) scale(0.6875)">
-            <rect x="2" y="3" width="12" height="10" rx="2"/>
-            <path d="M2 6.5h12"/>
-            <circle cx="4.1" cy="4.8" r=".7" class="sigil-fill"/>
-            <circle cx="6.3" cy="4.8" r=".7" class="sigil-fill"/>
-          </g>
-          <text data-node-label="" data-detail-anchor="" x="100" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">관리자 화면</text>
-          <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">새로고침·최적화·배정</text>
-        </g>
-
-        <g id="node-drv" data-node-id="drv" data-node-label="기사 링크" tabindex="0" role="button" aria-label="기사 링크 포커스, 수거량·배송 종료, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="수거량·배송 종료" data-node-context="01 / 입력·원본">
-          <title>기사 링크 · 수거량·배송 종료 · 01 / 입력·원본</title>
           <rect x="44" y="356" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="356" width="112" height="58" rx="6" class="c-frontend" data-animate="node" style="--step:2" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(50 362) scale(0.6875)">
@@ -5288,128 +5287,150 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <circle cx="4.1" cy="4.8" r=".7" class="sigil-fill"/>
             <circle cx="6.3" cy="4.8" r=".7" class="sigil-fill"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="100" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">기사 링크</text>
-          <text data-detail="context" x="100" y="393" class="t-muted" font-size="7" text-anchor="middle">수거량·배송 종료</text>
+          <text data-node-label="" data-detail-anchor="" x="100" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">관리자 화면</text>
+          <text data-detail="context" x="100" y="393" class="t-muted" font-size="7" text-anchor="middle">새로고침·최적화·배정</text>
         </g>
 
-        <g id="node-map" data-node-id="map" data-node-label="TMAP·카카오" tabindex="0" role="button" aria-label="TMAP·카카오 포커스, 길찾기, 02 / 배송 현황 서버" aria-pressed="false" data-node-kind="external" data-node-sublabel="길찾기" data-node-context="02 / 배송 현황 서버">
-          <title>TMAP·카카오 · 길찾기 · 02 / 배송 현황 서버</title>
+        <g id="node-drv" data-node-id="drv" data-node-label="기사 링크" tabindex="0" role="button" aria-label="기사 링크 포커스, 수거량 입력·배송 종료, 01 / 입력·원본" aria-pressed="false" data-node-kind="frontend" data-node-sublabel="수거량 입력·배송 종료" data-node-context="01 / 입력·원본">
+          <title>기사 링크 · 수거량 입력·배송 종료 · 01 / 입력·원본</title>
+          <rect x="44" y="470" width="112" height="58" rx="6" class="c-mask"/>
+          <rect x="44" y="470" width="112" height="58" rx="6" class="c-frontend" data-animate="node" style="--step:3" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="frontend" class="semantic-sigil s-frontend" transform="translate(50 476) scale(0.6875)">
+            <rect x="2" y="3" width="12" height="10" rx="2"/>
+            <path d="M2 6.5h12"/>
+            <circle cx="4.1" cy="4.8" r=".7" class="sigil-fill"/>
+            <circle cx="6.3" cy="4.8" r=".7" class="sigil-fill"/>
+          </g>
+          <text data-node-label="" data-detail-anchor="" x="100" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">기사 링크</text>
+          <text data-detail="context" x="100" y="507" class="t-muted" font-size="7" text-anchor="middle">수거량 입력·배송 종료</text>
+        </g>
+
+        <g id="node-map" data-node-id="map" data-node-label="카카오·TMAP" tabindex="0" role="button" aria-label="카카오·TMAP 포커스, 길찾기, 02 / 배송 현황 서버" aria-pressed="false" data-node-kind="external" data-node-sublabel="길찾기" data-node-context="02 / 배송 현황 서버">
+          <title>카카오·TMAP · 길찾기 · 02 / 배송 현황 서버</title>
           <rect x="259" y="128" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="259" y="128" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:3" stroke-width="1.5"/>
+          <rect x="259" y="128" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:4" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(265 134) scale(0.6875)">
             <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="315" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">TMAP·카카오</text>
+          <text data-node-label="" data-detail-anchor="" x="315" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">카카오·TMAP</text>
           <text data-detail="context" x="315" y="165" class="t-muted" font-size="7" text-anchor="middle">길찾기</text>
         </g>
 
         <g id="node-srv" data-node-id="srv" data-node-label="배송 현황 서버" tabindex="0" role="button" aria-label="배송 현황 서버 포커스, 경로 최적화, 02 / 배송 현황 서버" aria-pressed="false" data-node-kind="backend" data-node-sublabel="경로 최적화" data-node-context="02 / 배송 현황 서버">
           <title>배송 현황 서버 · 경로 최적화 · 02 / 배송 현황 서버</title>
-          <rect x="259" y="240" width="112" height="62" rx="6" class="c-mask"/>
-          <rect x="259" y="240" width="112" height="62" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(265 246) scale(0.6875)">
+          <rect x="259" y="346.5" width="112" height="77" rx="6" class="c-mask"/>
+          <rect x="259" y="346.5" width="112" height="77" rx="6" class="c-backend" data-animate="node" style="--step:1" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(265 352.5) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="320" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">배송 현황 서버</text>
-          <text data-detail="context" x="315" y="279" class="t-muted" font-size="7" text-anchor="middle">경로 최적화</text>
+          <text data-node-label="" data-detail-anchor="" x="320" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">배송 현황 서버</text>
+          <text data-detail="context" x="315" y="393" class="t-muted" font-size="7" text-anchor="middle">경로 최적화</text>
         </g>
 
-        <g id="node-out" data-node-id="out" data-node-label="수량 탭" tabindex="0" role="button" aria-label="수량 탭 포커스, 배송지수량·포대수량, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="배송지수량·포대수량" data-node-context="03 / 저장">
-          <title>수량 탭 · 배송지수량·포대수량 · 03 / 저장</title>
-          <rect x="474" y="128" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="128" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:5" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 134) scale(0.6875)">
+        <g id="node-dt" data-node-id="dt" data-node-label="기사링크_ 탭 3개" tabindex="0" role="button" aria-label="기사링크_ 탭 3개 포커스, 배송지수량·수거량·배송세션, 03 / 저장·알림" aria-pressed="false" data-node-kind="database" data-node-sublabel="배송지수량·수거량·배송세션" data-node-context="03 / 저장·알림">
+          <title>기사링크_ 탭 3개 · 배송지수량·수거량·배송세션 · 03 / 저장·알림</title>
+          <rect x="471" y="128" width="118" height="58" rx="6" class="c-mask"/>
+          <rect x="471" y="128" width="118" height="58" rx="6" class="c-database" data-animate="node" style="--step:6" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(477 134) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="530" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">수량 탭</text>
-          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">배송지수량·포대수량</text>
+          <text data-node-label="" data-detail-anchor="" x="530" y="159" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">기사링크_ 탭 3개</text>
+          <text data-detail="context" x="530" y="172.4" class="t-muted" font-size="7" text-anchor="middle">배송지수량·수거량·배송세션</text>
         </g>
 
-        <g id="node-sql" data-node-id="sql" data-node-label="최적화 DB" tabindex="0" role="button" aria-label="최적화 DB 포커스, 좌표·배정·변경이력, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="좌표·배정·변경이력" data-node-context="03 / 저장">
-          <title>최적화 DB · 좌표·배정·변경이력 · 03 / 저장</title>
+        <g id="node-sql" data-node-id="sql" data-node-label="최적화 DB" tabindex="0" role="button" aria-label="최적화 DB 포커스, app-data.sqlite3·사진, 03 / 저장·알림" aria-pressed="false" data-node-kind="database" data-node-sublabel="app-data.sqlite3·사진" data-node-context="03 / 저장·알림">
+          <title>최적화 DB · app-data.sqlite3·사진 · 03 / 저장·알림</title>
           <rect x="474" y="242" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:6" stroke-width="1.5"/>
+          <rect x="474" y="242" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:7" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 248) scale(0.6875)">
             <ellipse cx="8" cy="4" rx="5" ry="2"/>
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="530" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">최적화 DB</text>
-          <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">좌표·배정·변경이력</text>
+          <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">app-data.sqlite3·사진</text>
         </g>
 
-        <g id="node-dt" data-node-id="dt" data-node-label="기사링크_ 탭" tabindex="0" role="button" aria-label="기사링크_ 탭 포커스, 수거량·배송세션, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="수거량·배송세션" data-node-context="03 / 저장">
-          <title>기사링크_ 탭 · 수거량·배송세션 · 03 / 저장</title>
-          <rect x="474" y="356" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="474" y="356" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:7" stroke-width="1.5"/>
-          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 362) scale(0.6875)">
-            <ellipse cx="8" cy="4" rx="5" ry="2"/>
-            <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
+        <g id="node-sol" data-node-id="sol" data-node-label="솔라피" tabindex="0" role="button" aria-label="솔라피 포커스, 기사 알림톡·SMS(기본 꺼짐), 03 / 저장·알림" aria-pressed="false" data-node-kind="external" data-node-sublabel="기사 알림톡·SMS(기본 꺼짐)" data-node-context="03 / 저장·알림">
+          <title>솔라피 · 기사 알림톡·SMS(기본 꺼짐) · 03 / 저장·알림</title>
+          <rect x="471" y="470" width="118" height="58" rx="6" class="c-mask"/>
+          <rect x="471" y="470" width="118" height="58" rx="6" class="c-external" data-animate="node" style="--step:8" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(477 476) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="530" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">기사링크_ 탭</text>
-          <text data-detail="context" x="530" y="393" class="t-muted" font-size="7" text-anchor="middle">수거량·배송세션</text>
+          <text data-node-label="" data-detail-anchor="" x="530" y="491" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">솔라피</text>
+          <text data-detail="context" x="530" y="507" class="t-muted" font-size="7" text-anchor="middle">기사 알림톡·SMS(기본 꺼짐)</text>
         </g>
 
-        <g id="node-rd" data-node-id="rd" data-node-label="전광판·재무관리" tabindex="0" role="button" aria-label="전광판·재무관리 포커스, 보조컴퓨터, 04 / 읽는 곳" aria-pressed="false" data-node-kind="backend" data-node-sublabel="보조컴퓨터" data-node-context="04 / 읽는 곳">
-          <title>전광판·재무관리 · 보조컴퓨터 · 04 / 읽는 곳</title>
+        <g id="node-fin" data-node-id="fin" data-node-label="재무관리" tabindex="0" role="button" aria-label="재무관리 포커스, 기사링크_수거량 읽기, 04 / 읽는 곳" aria-pressed="false" data-node-kind="backend" data-node-sublabel="기사링크_수거량 읽기" data-node-context="04 / 읽는 곳">
+          <title>재무관리 · 기사링크_수거량 읽기 · 04 / 읽는 곳</title>
           <rect x="689" y="128" width="112" height="58" rx="6" class="c-mask"/>
-          <rect x="689" y="128" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:8" stroke-width="1.5"/>
+          <rect x="689" y="128" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:9" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(695 134) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
-          <text data-node-label="" data-detail-anchor="" x="745" y="159" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">전광판·재무관리</text>
-          <text data-detail="context" x="745" y="172.4" class="t-muted" font-size="7" text-anchor="middle">보조컴퓨터</text>
+          <text data-node-label="" data-detail-anchor="" x="745" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">재무관리</text>
+          <text data-detail="context" x="745" y="165" class="t-muted" font-size="7" text-anchor="middle">기사링크_수거량 읽기</text>
         </g>
 
         <!-- Flow labels -->
         <g data-detail="context" data-edge-from="sh" data-edge-to="srv" data-edge-label="원장 읽기" data-edge-key="0" data-edge-id="f0">
-          <rect x="179.45" y="185.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="207.5" y="196.5" class="t-edge-default" font-size="8" text-anchor="middle">원장 읽기</text>
+          <rect x="179.45" y="238.75" width="56.1" height="16" rx="4" class="c-mask"/>
+          <text x="207.5" y="249.75" class="t-edge-default" font-size="8" text-anchor="middle">원장 읽기</text>
         </g>
-        <g data-detail="context" data-edge-from="adm" data-edge-to="srv" data-edge-label="관리" data-edge-key="1" data-edge-id="f1">
-          <rect x="164.75" y="251" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="181.75" y="262" class="t-edge-emphasis" font-size="8" text-anchor="middle">관리</text>
+        <g data-detail="context" data-edge-from="sh2" data-edge-to="srv" data-edge-label="마감수량" data-edge-key="1" data-edge-id="f1">
+          <rect x="150.3" y="317.25" width="51.2" height="16" rx="4" class="c-mask"/>
+          <text x="175.9" y="328.25" class="t-edge-default" font-size="8" text-anchor="middle">마감수량</text>
         </g>
-        <g data-detail="context" data-edge-from="drv" data-edge-to="srv" data-edge-label="수거량 입력" data-edge-key="2" data-edge-id="f2">
-          <rect x="174.55" y="314.5" width="65.9" height="16" rx="4" class="c-mask"/>
-          <text x="207.5" y="325.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">수거량 입력</text>
+        <g data-detail="context" data-edge-from="adm" data-edge-to="srv" data-edge-label="관리" data-edge-key="2" data-edge-id="f2">
+          <rect x="164.75" y="372.5" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="181.75" y="383.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">관리</text>
         </g>
-        <g data-detail="context" data-edge-from="map" data-edge-to="srv" data-edge-label="길찾기" data-edge-key="3" data-edge-id="f3">
-          <rect x="294.3" y="192" width="41.4" height="16" rx="4" class="c-mask"/>
-          <text x="315" y="203" class="t-edge-default" font-size="8" text-anchor="middle">길찾기</text>
+        <g data-detail="context" data-edge-from="drv" data-edge-to="srv" data-edge-label="수거량 입력" data-edge-key="3" data-edge-id="f3">
+          <rect x="174.55" y="432.25" width="65.9" height="16" rx="4" class="c-mask"/>
+          <text x="207.5" y="443.25" class="t-edge-emphasis" font-size="8" text-anchor="middle">수거량 입력</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="out" data-edge-label="수량 기록" data-edge-key="4" data-edge-id="f4">
-          <rect x="394.45" y="185.5" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="196.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">수량 기록</text>
+        <g data-detail="context" data-edge-from="map" data-edge-to="srv" data-edge-label="길찾기" data-edge-key="4" data-edge-id="f4">
+          <rect x="294.3" y="245.25" width="41.4" height="16" rx="4" class="c-mask"/>
+          <text x="315" y="256.25" class="t-edge-default" font-size="8" text-anchor="middle">길찾기</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="sql" data-edge-label="결과 저장" data-edge-key="5" data-edge-id="f5">
-          <rect x="354.4" y="222" width="56.1" height="16" rx="4" class="c-mask"/>
-          <text x="382.45" y="233" class="t-edge-emphasis" font-size="8" text-anchor="middle">결과 저장</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="dt" data-edge-label="기사 입력 기록" data-edge-key="5" data-edge-id="f5">
+          <rect x="380.7" y="241" width="80.6" height="16" rx="4" class="c-mask"/>
+          <text x="421" y="252" class="t-edge-emphasis" font-size="8" text-anchor="middle">기사 입력 기록</text>
         </g>
-        <g data-detail="context" data-edge-from="srv" data-edge-to="dt" data-edge-label="기사 입력 기록" data-edge-key="6" data-edge-id="f6">
-          <rect x="382.2" y="314.5" width="80.6" height="16" rx="4" class="c-mask"/>
-          <text x="422.5" y="325.5" class="t-edge-emphasis" font-size="8" text-anchor="middle">기사 입력 기록</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="sql" data-edge-label="결과·이력 저장" data-edge-key="6" data-edge-id="f6">
+          <rect x="335.9" y="321" width="80.6" height="16" rx="4" class="c-mask"/>
+          <text x="376.2" y="332" class="t-edge-emphasis" font-size="8" text-anchor="middle">결과·이력 저장</text>
         </g>
-        <g data-detail="context" data-edge-from="out" data-edge-to="rd" data-edge-label="읽기" data-edge-key="7" data-edge-id="f7">
-          <rect x="620.5" y="136" width="34" height="16" rx="4" class="c-mask"/>
-          <text x="637.5" y="147" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
+        <g data-detail="context" data-edge-from="srv" data-edge-to="sol" data-edge-label="알림" data-edge-key="7" data-edge-id="f7">
+          <rect x="404" y="430" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="421" y="441" class="t-edge-dashed" font-size="8" text-anchor="middle">알림</text>
+        </g>
+        <g data-detail="context" data-edge-from="dt" data-edge-to="fin" data-edge-label="읽기" data-edge-key="8" data-edge-id="f8">
+          <rect x="622" y="136" width="34" height="16" rx="4" class="c-mask"/>
+          <text x="639" y="147" class="t-edge-default" font-size="8" text-anchor="middle">읽기</text>
         </g>
 
         <!-- Legend -->
         <g data-legend="" data-legend-bridge="">
-          <text x="40" y="456" class="t-primary" font-size="12" font-weight="650">범례</text>
-          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 40 473 L 74 473" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-            <text x="83" y="476" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
+          <text x="40" y="570" class="t-primary" font-size="12" font-weight="650">범례</text>
+          <g data-legend-semantic-kind="emphasis" data-legend-x="40" data-legend-baseline="590" data-legend-width="112">
+            <path d="M 40 587 L 74 587" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+            <text x="83" y="590" class="t-muted" font-size="10" font-weight="500">주요 데이터</text>
           </g>
-          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="174" data-legend-baseline="476" data-legend-width="124">
-            <rect x="174" y="468" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
-            <text x="196" y="476" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
+          <g data-legend-semantic-kind="dashed" data-legend-x="174" data-legend-baseline="590" data-legend-width="112">
+            <path d="M 174 587 L 208 587" class="a-dashed" stroke-width="1.4" marker-end="url(#arrowhead-dashed)"/>
+            <text x="217" y="590" class="t-muted" font-size="10" font-weight="500">비동기 배치</text>
           </g>
-          <g data-legend-semantic-kind="default" data-legend-x="320" data-legend-baseline="476" data-legend-width="112">
-            <path d="M 320 473 L 354 473" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
-            <text x="363" y="476" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
+          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="데이터 저장소" data-legend-x="308" data-legend-baseline="590" data-legend-width="124">
+            <rect x="308" y="582" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
+            <text x="330" y="590" class="t-muted" font-size="10" font-weight="500">데이터 저장소</text>
+          </g>
+          <g data-legend-semantic-kind="default" data-legend-x="454" data-legend-baseline="590" data-legend-width="112">
+            <path d="M 454 587 L 488 587" class="a-default" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+            <text x="497" y="590" class="t-muted" font-size="10" font-weight="500">데이터 흐름</text>
           </g>
         </g>
       </svg>
@@ -5596,17 +5617,19 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>시트 원장을 읽어 경로를 최적화하고 기사 링크로 수거량을 받음</li>
+          <li>기존 탭에는 쓰지 않고 기사링크_ 탭에만 기록</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-dot amber"></div>
-          <h3>기준</h3>
+          <h3>기준·자동</h3>
         </div>
         <ul>
           <li>운행일은 한국시간 오후 1시 기준, 월요일은 휴무</li>
-          <li>거래처 원장은 저장하지 않고 항상 시트에서 읽음</li>
+          <li>시트 전송 20초 주기, SQLite 일일 백업 14개 보관</li>
+          <li>기사 알림톡 13:00·마감수량 미입력 문자 12:30은 기본 꺼짐</li>
         </ul>
       </div>
     </div>

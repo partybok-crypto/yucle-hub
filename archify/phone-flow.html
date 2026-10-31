@@ -5244,7 +5244,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <!-- Flow paths -->
         <path data-edge-from="st" data-edge-to="srv" data-edge-label="설정·관리" data-edge-key="0" data-edge-id="f0" data-composition-points="156,157;207.5,157;207.5,256;259,256" d="M 156 157 L 207.5 157 L 207.5 256 L 259 256" class="a-emphasis" data-animate="edge" style="--step:0" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
         <path data-edge-from="claw" data-edge-to="srv" data-edge-label="통화 이벤트" data-edge-key="1" data-edge-id="f1" data-composition-points="156,271;259,271" d="M 156 271 L 259 271" class="a-emphasis" data-animate="edge" style="--step:1" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
-        <path data-edge-from="as" data-edge-to="srv" data-edge-label="거래처" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;207.5,385;207.5,286;259,286" d="M 156 385 L 207.5 385 L 207.5 286 L 259 286" class="a-default" data-animate="edge" style="--step:2" stroke-width="1.4" marker-end="url(#arrowhead)"/>
+        <path data-edge-from="as" data-edge-to="srv" data-edge-label="거래처·클레임" data-edge-key="2" data-edge-id="f2" data-composition-points="156,385;207.5,385;207.5,286;259,286" d="M 156 385 L 207.5 385 L 207.5 286 L 259 286" class="a-default" data-animate="edge" style="--step:2" stroke-width="1.4" marker-end="url(#arrowhead)"/>
         <path data-edge-from="srv" data-edge-to="db" data-edge-label="통화·거래처" data-edge-key="3" data-edge-id="f3" data-composition-points="371,256;422.5,256;422.5,157;474,157" d="M 371 256 L 422.5 256 L 422.5 157 L 474 157" class="a-emphasis" data-animate="edge" style="--step:3" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
         <path data-edge-from="srv" data-edge-to="rec" data-edge-label="녹음 보관" data-edge-key="4" data-edge-id="f4" data-composition-points="371,276;474,276" d="M 371 276 L 474 276" class="a-default" data-animate="edge" style="--step:4" stroke-width="1.4" marker-end="url(#arrowhead)"/>
         <path data-edge-from="srv" data-edge-to="ai" data-edge-label="되걸기 문의" data-edge-key="5" data-edge-id="f5" data-composition-points="371,266;459,266;459,227;665,227;665,157;689,157" d="M 371 266 L 459 266 L 459 227 L 665 227 L 665 157 L 689 157" class="a-default" data-animate="edge" style="--step:5" stroke-width="1.4" marker-end="url(#arrowhead)"/>
@@ -5277,8 +5277,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-detail="context" x="100" y="279" class="t-muted" font-size="7" text-anchor="middle">수신·부재중 웹훅</text>
         </g>
 
-        <g id="node-as" data-node-id="as" data-node-label="Apps Script" tabindex="0" role="button" aria-label="Apps Script 포커스, 거래처 자동 동기화, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="거래처 자동 동기화" data-node-context="01 / 입력·원본">
-          <title>Apps Script · 거래처 자동 동기화 · 01 / 입력·원본</title>
+        <g id="node-as" data-node-id="as" data-node-label="Apps Script" tabindex="0" role="button" aria-label="Apps Script 포커스, 거래처 10분·클레임 1분, 01 / 입력·원본" aria-pressed="false" data-node-kind="external" data-node-sublabel="거래처 10분·클레임 1분" data-node-context="01 / 입력·원본">
+          <title>Apps Script · 거래처 10분·클레임 1분 · 01 / 입력·원본</title>
           <rect x="44" y="356" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="44" y="356" width="112" height="58" rx="6" class="c-external" data-animate="node" style="--step:2" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(50 362) scale(0.6875)">
@@ -5286,7 +5286,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="100" y="377" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">Apps Script</text>
-          <text data-detail="context" x="100" y="393" class="t-muted" font-size="7" text-anchor="middle">거래처 자동 동기화</text>
+          <text data-detail="context" x="100" y="393" class="t-muted" font-size="7" text-anchor="middle">거래처 10분·클레임 1분</text>
         </g>
 
         <g id="node-srv" data-node-id="srv" data-node-label="회사전화 서버" tabindex="0" role="button" aria-label="회사전화 서버 포커스, 02 / 회사전화 서버" aria-pressed="false" data-node-kind="backend" data-node-context="02 / 회사전화 서버">
@@ -5299,8 +5299,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-node-label="" x="317" y="263" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">회사전화 서버</text>
         </g>
 
-        <g id="node-db" data-node-id="db" data-node-label="전화 DB" tabindex="0" role="button" aria-label="전화 DB 포커스, SQLite /data, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="SQLite /data" data-node-context="03 / 저장">
-          <title>전화 DB · SQLite /data · 03 / 저장</title>
+        <g id="node-db" data-node-id="db" data-node-label="전화 DB" tabindex="0" role="button" aria-label="전화 DB 포커스, phone.db, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="phone.db" data-node-context="03 / 저장">
+          <title>전화 DB · phone.db · 03 / 저장</title>
           <rect x="474" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="474" y="128" width="112" height="58" rx="6" class="c-database" data-animate="node" style="--step:4" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(480 134) scale(0.6875)">
@@ -5308,7 +5308,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="530" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">전화 DB</text>
-          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">SQLite /data</text>
+          <text data-detail="context" x="530" y="165" class="t-muted" font-size="7" text-anchor="middle">phone.db</text>
         </g>
 
         <g id="node-rec" data-node-id="rec" data-node-label="녹음 파일" tabindex="0" role="button" aria-label="녹음 파일 포커스, recordings/, 03 / 저장" aria-pressed="false" data-node-kind="database" data-node-sublabel="recordings/" data-node-context="03 / 저장">
@@ -5323,15 +5323,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <text data-detail="context" x="530" y="279" class="t-muted" font-size="7" text-anchor="middle">recordings/</text>
         </g>
 
-        <g id="node-ai" data-node-id="ai" data-node-label="AI 전화상담" tabindex="0" role="button" aria-label="AI 전화상담 포커스, 모델2 되걸기, 04 / 연동" aria-pressed="false" data-node-kind="backend" data-node-sublabel="모델2 되걸기" data-node-context="04 / 연동">
-          <title>AI 전화상담 · 모델2 되걸기 · 04 / 연동</title>
+        <g id="node-ai" data-node-id="ai" data-node-label="AI 전화상담" tabindex="0" role="button" aria-label="AI 전화상담 포커스, 되걸기 문의·번호목록, 04 / 연동" aria-pressed="false" data-node-kind="backend" data-node-sublabel="되걸기 문의·번호목록" data-node-context="04 / 연동">
+          <title>AI 전화상담 · 되걸기 문의·번호목록 · 04 / 연동</title>
           <rect x="689" y="128" width="112" height="58" rx="6" class="c-mask"/>
           <rect x="689" y="128" width="112" height="58" rx="6" class="c-backend" data-animate="node" style="--step:6" stroke-width="1.5"/>
           <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(695 134) scale(0.6875)">
             <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
           </g>
           <text data-node-label="" data-detail-anchor="" x="745" y="149" class="t-primary" font-size="10" font-weight="600" text-anchor="middle">AI 전화상담</text>
-          <text data-detail="context" x="745" y="165" class="t-muted" font-size="7" text-anchor="middle">모델2 되걸기</text>
+          <text data-detail="context" x="745" y="165" class="t-muted" font-size="7" text-anchor="middle">되걸기 문의·번호목록</text>
         </g>
 
         <g id="node-sms" data-node-id="sms" data-node-label="솔라피" tabindex="0" role="button" aria-label="솔라피 포커스, 부재중 문자, 04 / 연동" aria-pressed="false" data-node-kind="external" data-node-sublabel="부재중 문자" data-node-context="04 / 연동">
@@ -5355,9 +5355,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <rect x="129.60000000000002" y="222" width="65.9" height="16" rx="4" class="c-mask"/>
           <text x="162.55" y="233" class="t-edge-emphasis" font-size="8" text-anchor="middle">통화 이벤트</text>
         </g>
-        <g data-detail="context" data-edge-from="as" data-edge-to="srv" data-edge-label="거래처" data-edge-key="2" data-edge-id="f2">
-          <rect x="186.8" y="314.5" width="41.4" height="16" rx="4" class="c-mask"/>
-          <text x="207.5" y="325.5" class="t-edge-default" font-size="8" text-anchor="middle">거래처</text>
+        <g data-detail="context" data-edge-from="as" data-edge-to="srv" data-edge-label="거래처·클레임" data-edge-key="2" data-edge-id="f2">
+          <rect x="169.65" y="314.5" width="75.7" height="16" rx="4" class="c-mask"/>
+          <text x="207.5" y="325.5" class="t-edge-default" font-size="8" text-anchor="middle">거래처·클레임</text>
         </g>
         <g data-detail="context" data-edge-from="srv" data-edge-to="db" data-edge-label="통화·거래처" data-edge-key="3" data-edge-id="f3">
           <rect x="389.55" y="185.5" width="65.9" height="16" rx="4" class="c-mask"/>
@@ -5580,6 +5580,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>ClawOps 통화 이벤트를 받아 기록하고 녹음을 보관</li>
+          <li>새 전화마다 AI 상담에 되걸기 여부를 묻고(4초 안에 답 없으면 직원 연결), 60초마다 번호 목록을 캐시</li>
         </ul>
       </div>
 
@@ -5589,7 +5590,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           <h3>자동 동작</h3>
         </div>
         <ul>
-          <li>통화 후 20초·90초·5분·15분 간격으로 녹음·요약 재시도</li>
+          <li>통화 후 20초·90초·5분·15분 간격으로 녹음·받아쓰기·요약 재시도</li>
+          <li>수신이 AI일 때는 부재중 문자를 생략</li>
+          <li>시트 동기화 멈춤은 10분 주기로 감시</li>
         </ul>
       </div>
     </div>
