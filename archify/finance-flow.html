@@ -5618,7 +5618,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         </div>
         <ul>
           <li>입금·시트·결제·광고비를 모아 청구, 미수금, 일일결산을 계산</li>
-          <li>은행 조회는 중계 푸시 수신 경로도 있고, 미수금 반영은 아직 꺼져 있음</li>
+          <li>은행 조회는 BankAPI 기본, 실패 시 CODEF로 전환하고 미수금 반영(LIVE)은 켜져 있음(10-31 확인)</li>
         </ul>
       </div>
 
@@ -5630,7 +5630,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         <ul>
           <li>매일 09:00 전체 동기화</li>
           <li>5분마다 토스 결제 상태 재조회</li>
-          <li>은행 자동조회는 환경설정과 화면 설정이 둘 다 켜져야 동작(운영 상태 미확인)</li>
+          <li>은행 자동조회 켜짐(30분), CODEF 예비는 10-17부터 인증 차단 상태</li>
           <li>은행 조회 실패가 3시간 넘으면 메일</li>
         </ul>
       </div>
