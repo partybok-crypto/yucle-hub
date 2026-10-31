@@ -1,0 +1,17 @@
+{
+ "verified": "2026-10-31",
+ "interval_days": 30,
+ "folders": {
+  "배송입력": "yuseong-attendance/delivery",
+  "포장기록": "yuseong-attendance/packing",
+  "건조기": "yuseong-attendance/dryer",
+  "출퇴근": "yuseong-attendance/attendance",
+  "전광판": "1-전광판",
+  "배송 현황": "배송경로 최적화/app",
+  "재무관리": "재무관리os",
+  "마케팅": "마케팅os",
+  "영업 허브": "DB_TM",
+  "AI 전화상담": "ai-counselor/server",
+  "회사전화": "CRM/yuseong-phone/yuseong-phone"
+ }
+}

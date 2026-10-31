@@ -99,6 +99,13 @@ def main():
                 log("상태 반영" + ("" if p.returncode == 0 else f" 푸시 실패 {p.stderr[:100]}"))
             st["last_push"], st["last_sig"] = time.time(), sig
         json.dump(st, open(STATE, "w", encoding="utf-8"), ensure_ascii=False)
+        try:
+            from archify_check import check as archify_check
+            r = archify_check()
+            if r != "대기":
+                log("구조도 점검: " + r)
+        except Exception as e:
+            log(f"구조도 점검 오류 {type(e).__name__}: {e}")
     except Exception as e:
         log(f"오류 {type(e).__name__}: {e}")
     finally:
