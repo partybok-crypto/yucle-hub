@@ -334,7 +334,7 @@ dialog button.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
 </dialog>
 
 <script>
-const CATS0=["공장·배송","정산·관리","영업·마케팅","구조도","기타"];
+const CATS0=["구조도","공장·배송","정산·관리","영업·마케팅","기타"];
 /*BASE*/
 /*FLOW*/
 /*SHORT*/
@@ -347,7 +347,7 @@ const $=s=>document.querySelector(s);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let custom=load("hub_custom",[]), favs=load("hub_favs",["배송 입력","재무관리","공장 전광판"]), order=load("hub_order",[]);
-let cats=load("hub_cats",null)||[...CATS0]; if(!cats.includes("구조도")){const k=cats.indexOf("기타");cats.splice(k<0?cats.length:k,0,"구조도")}
+let cats=load("hub_cats",null)||[...CATS0]; if(!cats.includes("구조도"))cats.unshift("구조도")
 let catmap=load("hub_catmap",{}), customSites=load("hub_sites",[]);
 const catOf=p=>{const c=catmap[p.n]??p.c;return cats.includes(c)?c:cats[cats.length-1]};
 let theme=location.hash==="#t2"?"2":load("hub_theme2","2");
