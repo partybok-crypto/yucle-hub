@@ -69,6 +69,23 @@
   ]
  },
  {
+  "n": "수건 족보",
+  "d": "거래처별 수건 사진 찾기·등록",
+  "u": "https://towel-jokbo-production.up.railway.app",
+  "c": "공장·배송",
+  "i": "📸",
+  "subs": [
+   {
+    "t": "관리자 (동기화·삭제)",
+    "u": "https://towel-jokbo-production.up.railway.app/admin"
+   },
+   {
+    "t": "A4 안내문 인쇄",
+    "u": "https://towel-jokbo-production.up.railway.app/print"
+   }
+  ]
+ },
+ {
   "n": "배송 현황",
   "d": "배송경로·현황",
   "u": "https://yuseong-shipping-status-production.up.railway.app",

@@ -7,7 +7,7 @@ rd = lambda p: open(os.path.join(HERE, p), encoding="utf-8").read()
 links = json.load(open(os.path.join(HERE, "links.json"), encoding="utf-8"))
 base = "const BASE=" + json.dumps(links, ensure_ascii=False) + ";"
 parts = "".join(rd(f) for f in ("flow_part1.js", "flow_part2.js", "flow_part3.js"))
-order = ["공통 구조 (현장 시트)", "배송 입력", "포장 입력", "건조기 관리", "출퇴근 관리", "공장 전광판", "차량 위치 (CarLive)", "가스 카메라",
+order = ["공통 구조 (현장 시트)", "배송 입력", "포장 입력", "건조기 관리", "출퇴근 관리", "공장 전광판", "수건 족보", "차량 위치 (CarLive)", "가스 카메라",
          "배송 현황", "현황지 출력", "보조컴퓨터 (포장랭킹 카톡)", "재무관리", "마케팅 스튜디오 (마케팅OS)", "영업 허브",
          "AI 전화상담", "회사전화", "청과 수입 판단", "출판 (Bookforge)", "내편지도", "사주도령",
          "쿠팡 주문내역 취합기", "forwarder.kr 수집기", "한글 폰트 변환기"]
