@@ -8,3 +8,4 @@ tools/_*.py
 tools/_list_old.json
 tools/raw_m/
 tools/kpi_hist.json
+tools/__pycache__/
