@@ -238,12 +238,15 @@ def collect():
         k = f.get("kpi") or {}
         pv = f.get("prev") or {}
         pk = pv.get("kpi") or {}
-        v["fin_cost"] = round(k.get("totalCost") or 0)                      # 이번 달 누적 비용
-        if pk:
-            v["fin_prev_profit"] = round(pk.get("estProfit") or 0)          # 지난달 확정 영업이익
-            v["fin_prev_rev"] = round(pk.get("recognizedRevenue") or 0)
-            v["fin_prev_ratio"] = round(pv.get("revenueRatio") or 0)
-            v["fin_prev_label"] = str(pv.get("period", ""))[5:].lstrip("0") + "월"
+        dl = f.get("daily") or {}
+        if "monthProfit" in dl:                                              # 일일결산 기준 실제 운영 손익
+            v["fin_month_profit"] = round(dl.get("monthProfit") or 0)
+            v["fin_week_profit"] = round(dl.get("weekProfit") or 0)
+            v["fin_deficit"] = dl.get("deficitDays")
+            v["fin_yday_profit"] = round(dl.get("profit") or 0)
+            v["fin_yday_label"] = f'{str(dl.get("date", ""))[5:]} ({dl.get("weekday", "")})' + ("" if dl.get("revenue") else " · 매출 없음")
+        else:
+            miss.append("일일결산 손익")
         v["fin_receivable"] = round(k.get("totalReceivable") or pk.get("totalReceivable") or 0)
         v["fin_receivable_cnt"] = k.get("receivableCustomerCount") or pk.get("receivableCustomerCount") or 0
         a = f.get("alerts") or {}

@@ -189,46 +189,43 @@
    "i": "💰",
    "role": "돈이 남는지 확인한다",
    "prog": "재무관리",
-   "link": "https://yucle-finance-live-production.up.railway.app/dashboard",
+   "link": "https://yucle-finance-live-production.up.railway.app/daily-close",
    "metrics": [
     {
-     "k": "fin_prev_profit",
-     "t": "지난달 영업이익",
+     "k": "fin_month_profit",
+     "t": "이번 달 누적 순익(일일결산)",
      "u": "원",
      "dir": "high",
-     "warn": null,
-     "bad": null,
-     "note": "기준 정립 중",
-     "subtxt": "fin_prev_label"
-    },
-    {
-     "k": "fin_prev_ratio",
-     "t": "지난달 매출 대비 비용",
-     "u": "%",
-     "dir": "low",
      "warn": null,
      "bad": null,
      "note": "기준 정립 중"
     },
     {
-     "k": "fin_cost",
-     "t": "이번 달 누적 비용",
+     "k": "fin_week_profit",
+     "t": "최근 6영업일 순익",
      "u": "원",
-     "dir": "low",
+     "dir": "high",
      "warn": null,
      "bad": null,
-     "note": "매출은 월말 청구 확정 후 반영"
+     "note": "기준 정립 중"
     },
     {
-     "k": "fin_receivable",
-     "t": "미수금",
-     "u": "원",
+     "k": "fin_deficit",
+     "t": "최근 6영업일 중 적자일",
+     "u": "일",
      "dir": "low",
+     "warn": 2,
+     "bad": 3
+    },
+    {
+     "k": "fin_yday_profit",
+     "t": "어제 순익",
+     "u": "원",
+     "dir": "high",
      "warn": null,
      "bad": null,
      "note": "기준 정립 중",
-     "sub": "fin_receivable_cnt",
-     "subu": "곳"
+     "subtxt": "fin_yday_label"
     },
     {
      "k": "fin_review",
@@ -246,6 +243,17 @@
      "warn": null,
      "bad": null,
      "note": "기준 정립 중"
+    },
+    {
+     "k": "fin_receivable",
+     "t": "미수금(앱 승인 청구서 기준)",
+     "u": "원",
+     "dir": "low",
+     "warn": null,
+     "bad": null,
+     "note": "기준 정립 중",
+     "sub": "fin_receivable_cnt",
+     "subu": "곳"
     },
     {
      "k": "fin_blocked",
