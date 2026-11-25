@@ -11,7 +11,13 @@
   "d": "포장기록·라벨",
   "u": "https://yuseong-packing-production.up.railway.app",
   "c": "공장·배송",
-  "i": "📦"
+  "i": "📦",
+  "subs": [
+   {
+    "t": "포장 촬영 시험 (프린터 없이 신호)",
+    "u": "https://yuseong-packing-production.up.railway.app/camera-test"
+   }
+  ]
  },
  {
   "n": "건조기 관리",
@@ -70,7 +76,7 @@
  },
  {
   "n": "수건 족보",
-  "d": "거래처별 수건 사진 찾기·등록",
+  "d": "거래처별 수건 사진·포장 이력(자동 촬영)",
   "u": "https://towel-jokbo-production.up.railway.app",
   "c": "공장·배송",
   "i": "📸",
@@ -82,6 +88,10 @@
    {
     "t": "A4 안내문 인쇄",
     "u": "https://towel-jokbo-production.up.railway.app/print"
+   },
+   {
+    "t": "포장 촬영 기기 상태·최근 촬영",
+    "u": "https://towel-jokbo-production.up.railway.app/api/admin/packing"
    }
   ]
  },
