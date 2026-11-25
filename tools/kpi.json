@@ -45,6 +45,15 @@
    "link": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats",
    "metrics": [
     {
+     "k": "inq_today",
+     "t": "오늘 신규 문의",
+     "u": "건",
+     "dir": "high",
+     "warn": null,
+     "bad": null,
+     "note": "기준 정립 중 (전화 문의 → 연락처 'YYMMDD 문의 문의명')"
+    },
+    {
      "k": "ai_dialed",
      "t": "오늘 AI 발신",
      "u": "건",
@@ -183,22 +192,32 @@
    "link": "https://yucle-finance-live-production.up.railway.app/dashboard",
    "metrics": [
     {
-     "k": "fin_profit",
-     "t": "이번 달 예상 영업이익",
+     "k": "fin_prev_profit",
+     "t": "지난달 영업이익",
      "u": "원",
      "dir": "high",
      "warn": null,
      "bad": null,
-     "note": "기준 정립 중"
+     "note": "기준 정립 중",
+     "subtxt": "fin_prev_label"
     },
     {
-     "k": "fin_cost_ratio",
-     "t": "매출 대비 비용",
+     "k": "fin_prev_ratio",
+     "t": "지난달 매출 대비 비용",
      "u": "%",
      "dir": "low",
      "warn": null,
      "bad": null,
      "note": "기준 정립 중"
+    },
+    {
+     "k": "fin_cost",
+     "t": "이번 달 누적 비용",
+     "u": "원",
+     "dir": "low",
+     "warn": null,
+     "bad": null,
+     "note": "매출은 월말 청구 확정 후 반영"
     },
     {
      "k": "fin_receivable",
@@ -213,15 +232,24 @@
     },
     {
      "k": "fin_review",
-     "t": "확인 필요(청구·대사·쿠팡)",
+     "t": "청구·입금 확인 필요",
      "u": "건",
      "dir": "low",
      "warn": 1,
      "bad": 20
     },
     {
+     "k": "fin_coupang",
+     "t": "쿠팡 비용 확인 대기",
+     "u": "건",
+     "dir": "low",
+     "warn": null,
+     "bad": null,
+     "note": "기준 정립 중"
+    },
+    {
      "k": "fin_blocked",
-     "t": "연동 막힘",
+     "t": "연동 막힘(최근 7일)",
      "u": "개",
      "dir": "low",
      "warn": 1,

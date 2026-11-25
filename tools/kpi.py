@@ -22,6 +22,7 @@ URLS = {
     "plan": BOARD + "/api/display/packing-plan", "board": BOARD + "/api/status", "issues": BOARD + "/api/issues",
     "claims": BOARD + "/api/display/claims", "phone": PHONE + "/health", "live": PHONE + "/api/live",
     "fin": FIN + "/api/hub-summary",
+    "inq": SALES + "/api/inquiries/today-count",
 }
 
 
@@ -175,6 +176,11 @@ def collect():
         v["ai_minutes_pct"] = round(u.get("outboundBillableMinutes", 0) * 100 / u["planMinutes"])
     else:
         miss.append("통화 사용량")
+    q = R["inq"]   # 영업 허브 신규 문의(전화 문의 → 구글 연락처) - 건수만
+    if q and "today_new" in q:
+        v["inq_today"] = int(q.get("today_new") or 0)
+    else:
+        miss.append("오늘 신규 문의")
 
     # ---- 운영 (공장 전광판) ----
     p = (R["plan"] or {}).get("plan") if R["plan"] else None
@@ -230,18 +236,26 @@ def collect():
     f = R["fin"]
     if f and f.get("ok"):
         k = f.get("kpi") or {}
-        v["fin_profit"] = round(k.get("estProfit") or 0)
-        v["fin_receivable"] = round(k.get("totalReceivable") or 0)
-        v["fin_receivable_cnt"] = k.get("receivableCustomerCount")
-        v["fin_revenue"] = round(k.get("recognizedRevenue") or 0)
-        v["fin_cost_ratio"] = round(f.get("revenueRatio") or 0)
-        v["fin_closing"] = f.get("closingProgress")
+        pv = f.get("prev") or {}
+        pk = pv.get("kpi") or {}
+        v["fin_cost"] = round(k.get("totalCost") or 0)                      # 이번 달 누적 비용
+        if pk:
+            v["fin_prev_profit"] = round(pk.get("estProfit") or 0)          # 지난달 확정 영업이익
+            v["fin_prev_rev"] = round(pk.get("recognizedRevenue") or 0)
+            v["fin_prev_ratio"] = round(pv.get("revenueRatio") or 0)
+            v["fin_prev_label"] = str(pv.get("period", ""))[5:].lstrip("0") + "월"
+        v["fin_receivable"] = round(k.get("totalReceivable") or pk.get("totalReceivable") or 0)
+        v["fin_receivable_cnt"] = k.get("receivableCustomerCount") or pk.get("receivableCustomerCount") or 0
         a = f.get("alerts") or {}
-        v["fin_review"] = sum(int(a.get(x) or 0) for x in ("invoiceNeedsReview", "manualCandidatesCount", "coupangReviewCount"))
-        v["fin_blocked"] = len(f.get("blocked") or [])
-        v["fin_blocked_txt"] = ", ".join(f.get("blocked") or [])[:80]
+        v["fin_review"] = int(a.get("invoiceNeedsReview") or 0) + int(a.get("manualCandidatesCount") or 0)
+        v["fin_coupang"] = int(a.get("coupangReviewCount") or 0)
+        # 최근 7일 안에 돌았는데 막힌 연동만(그랜터 종료·옛 시험 기록은 제외)
+        lim = (datetime.datetime.utcnow() - datetime.timedelta(days=7)).isoformat()
+        bl = [c["key"] for c in f.get("connectors") or [] if c.get("depth") == "BLOCKED" and str(c.get("at", "")) >= lim]
+        v["fin_blocked"] = len(bl)
+        v["fin_blocked_txt"] = ", ".join(bl)[:80]
     else:
-        miss.append("재무 요약(재무관리 /api/hub-summary 배포 전)")
+        miss.append("재무 요약")
 
     # ---- 날짜별 기록(그날 마지막 값) ----
     try:
