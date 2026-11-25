@@ -1,5 +1,5 @@
 {
- "_설명": "팀 운영 기준표. dir=low(낮을수록 좋음)이면 warn 이상 노랑·bad 이상 빨강, dir=high(높을수록 좋음)이면 warn 미만 노랑·bad 미만 빨강. warn·bad가 null이면 '기준 없음'(측정만 함), note=기준 대신 보일 메모. auto={warn,bad 비율}이면 같은 요일·같은 시각 평균(최근 8회, min_n회 이상 쌓인 뒤) 대비로 판정. 기준을 바꾸면 python tools/build.py 후 푸시.",
+ "_설명": "팀 운영 기준표. dir=low(낮을수록 좋음)이면 warn 이상 노랑·bad 이상 빨강, dir=high(높을수록 좋음)이면 warn 미만 노랑·bad 미만 빨강. warn·bad가 null이면 '기준 없음'(측정만 함), note=기준 대신 보일 메모. sched={key,warn,bad 비율}이면 세탁공장-일정표(주차별 쉬프트 탭)의 오늘 계획 대비로 판정(포장=첫 출근~지난 3주 평균 마감까지 고르게 진행한다고 본 예상 진행률, 인원=지금 시각 계획 인원), 일정표에 오늘이 없으면 auto로. auto={warn,bad 비율}이면 같은 요일·같은 시각 평균(최근 8회, min_n회 이상 쌓인 뒤) 대비로 판정. 기준을 바꾸면 python tools/build.py 후 푸시.",
  "updated": "2026-11-25",
  "teams": [
   {"k": "mkt", "t": "마케팅", "i": "📣", "role": "고객을 데려온다", "prog": "마케팅 스튜디오 (마케팅OS)", "link": "https://yuseong-marketing-os-review-production.up.railway.app/modules",
@@ -18,8 +18,8 @@
    "metrics": [
     {"k": "ops_issue_err", "t": "현장 이상 징후(심각)", "u": "건", "dir": "low", "warn": 1, "bad": 1},
     {"k": "ops_issue_warn", "t": "현장 이상 징후(주의)", "u": "건", "dir": "low", "warn": 1, "bad": 5},
-    {"k": "ops_pack_pct", "t": "오늘 포장 진행률", "u": "%", "dir": "high", "warn": null, "bad": null, "auto": {"warn": 0.85, "bad": 0.7, "min_n": 3, "min_avg": 5}},
-    {"k": "ops_on_shift", "t": "출근 인원", "u": "명", "dir": "high", "warn": null, "bad": null, "auto": {"warn": 0.85, "bad": 0.7, "min_n": 3, "min_avg": 1}}
+    {"k": "ops_pack_pct", "t": "오늘 포장 진행률", "u": "%", "dir": "high", "warn": null, "bad": null, "sched": {"key": "ops_pack_expect", "warn": 0.85, "bad": 0.7, "min": 10, "what": "예상 진행률"}, "auto": {"warn": 0.85, "bad": 0.7, "min_n": 3, "min_avg": 5}},
+    {"k": "ops_on_shift", "t": "출근 인원", "u": "명", "dir": "high", "warn": null, "bad": null, "sched": {"key": "ops_sched_people", "warn": 1.0, "bad": 0.67, "min": 1, "what": "계획 인원"}, "auto": {"warn": 0.85, "bad": 0.7, "min_n": 3, "min_avg": 1}}
    ]},
   {"k": "cs", "t": "CS", "i": "💬", "role": "불편을 빨리 해결한다", "prog": "회사전화", "link": "https://yuseong-phone-production.up.railway.app/calls",
    "metrics": [

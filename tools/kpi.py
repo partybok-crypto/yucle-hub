@@ -45,6 +45,75 @@ def reason(msg):
     return "기타 오류"
 
 
+SCHED_SHEET = "1kqYgHyvl-k1tfKk7qmVXBYfFwh3SVLNJNp41Otgl-u0"   # 세탁공장-일정표
+SCHED_GID = 1369346151                                          # 주차별 쉬프트 탭(오른쪽에 이번 주 일정표·시간별 인원)
+SA = os.path.join(os.path.dirname(os.path.dirname(HERE)), "yuseong-attendance", "attendance", "service_account.json")
+
+
+def _hm(x):
+    """'18:29' 또는 7 / 5.5 -> 시간(소수)."""
+    s = str(x).strip()
+    if ":" in s:
+        h, m = s.split(":")[:2]
+        return int(h) + int(m) / 60
+    return float(s)
+
+
+def schedule_today(now):
+    """일정표에서 오늘 요일의 계획을 읽는다(이름은 읽지 않음).
+    반환: start(첫 출근), end_avg(지난 3주 세탁 마감 평균), people(지금 시각 계획 인원), plan_hours(계획 근무시간 합)."""
+    import gspread
+    ws = gspread.service_account(filename=SA).open_by_key(SCHED_SHEET).get_worksheet_by_id(SCHED_GID)
+    v = ws.get_all_values()
+    head = v[1]
+    tag = f"{now:%m-%d}"
+    out = {}
+    s = next(i for i, c in enumerate(head) if "일정표" in c)
+    day = next((i for i in range(s + 1, min(len(head), s + 40)) if head[i].startswith(tag)), None)
+    if day is not None:
+        starts = []
+        for r in v[3:60]:
+            c = r[day] if day < len(r) else ""
+            if "주" in c:                       # '44주 45주 46주 | 이번주' 행 -> 다음 행: 근무시간, 그다음 행: 세탁 마감 시각
+                i = v.index(r)
+                ends = []
+                for x in v[i + 2][day:day + 3]:
+                    try:
+                        ends.append(_hm(x))
+                    except Exception:
+                        pass
+                if ends:
+                    out["end_avg"] = sum(ends) / len(ends)
+                try:
+                    out["plan_hours"] = float(v[i + 1][day + 4])
+                except Exception:
+                    pass
+                break
+            try:
+                starts.append(_hm(c))
+            except Exception:
+                pass
+        if starts:
+            out["start"] = min(starts)
+    # 시간별 인원표: 날짜 행 -> 다음 행에 시각 숫자(5..18) -> 아래 '인원' 행
+    for ri, r in enumerate(v[:200]):
+        for ci, c in enumerate(r):
+            if c.startswith(tag) and ci > s + 30 and ri + 1 < len(v):
+                hrs = v[ri + 1]
+                col = next((k for k in range(ci + 1, ci + 16) if k < len(hrs) and hrs[k].strip() == str(now.hour)), None)
+                for r2 in v[ri + 2: ri + 30]:
+                    if r2[ci].strip() == "인원":
+                        try:
+                            out["people"] = int(float(r2[col])) if col is not None and r2[col].strip() else 0
+                        except Exception:
+                            out["people"] = 0
+                        break
+                break
+        if "people" in out:
+            break
+    return out
+
+
 def collect():
     with ThreadPoolExecutor(6) as ex:
         R = dict(zip(URLS, ex.map(get, URLS.values())))
@@ -118,6 +187,19 @@ def collect():
         v["ops_on_shift"] = b.get("on_shift_count")
     else:
         miss.append("출근 인원")
+    # 일정표 기준: 지금 시각 계획 인원, 첫 출근~지난 3주 평균 마감까지 고르게 진행한다고 볼 때의 예상 진행률
+    try:
+        now = datetime.datetime.now()
+        sc = schedule_today(now)
+        if "people" in sc:
+            v["ops_sched_people"] = sc["people"]
+        if "start" in sc and "end_avg" in sc and sc["end_avg"] > sc["start"]:
+            hr = now.hour + now.minute / 60
+            v["ops_pack_expect"] = max(0, min(100, round((hr - sc["start"]) * 100 / (sc["end_avg"] - sc["start"]))))
+            f = lambda x: f"{int(x):02d}:{round((x - int(x)) * 60):02d}"
+            v["ops_sched_txt"] = f"{f(sc['start'])} 시작 · 평균 마감 {f(sc['end_avg'])}"
+    except Exception as e:
+        miss.append(f"일정표({type(e).__name__})")
     iss = R["issues"]
     if iss and isinstance(iss.get("issues"), list):
         v["ops_issue_err"] = sum(1 for i in iss["issues"] if i.get("level") == "error")

@@ -598,6 +598,8 @@ const WDK="월화수목금토일";
 const autoB=m=>{const b=kpi()&&kpi().base&&kpi().base[m.k];return m.auto&&b?b:null};
 function kLv(m,v){
   if(v==null||typeof v!=="number")return "none";
+  const sv=m.sched&&kpi()&&kpi().v[m.sched.key];
+  if(m.sched&&typeof sv==="number"){if(sv<m.sched.min)return "info";const r=v/sv;return r<m.sched.bad?"bad":r<m.sched.warn?"warn":"ok"}
   const b=autoB(m);
   if(m.auto){if(!b||b.n<m.auto.min_n||b.avg==null||b.avg<m.auto.min_avg)return "info";const r=v/b.avg;return r<m.auto.bad?"bad":r<m.auto.warn?"warn":"ok"}
   if(m.warn==null&&m.bad==null)return "info";
@@ -605,6 +607,9 @@ function kLv(m,v){
   if(m.bad!=null&&v>=m.bad)return "bad";if(m.warn!=null&&v>=m.warn)return "warn";return "ok";
 }
 function stdTxt(m){
+  const sv=m.sched&&kpi()&&kpi().v[m.sched.key];
+  if(m.sched&&typeof sv==="number"){const st=kpi().v.ops_sched_txt;
+    return `일정표: 지금 ${esc(m.sched.what)} ${sv}${m.u}`+(sv<m.sched.min?" — 이 시각은 판정 안 함":` · ${m.sched.warn<1?"그 "+Math.round(m.sched.warn*100)+"% 밑이면 주의":"모자라면 주의"}`)+(m.k==="ops_pack_pct"&&st?`<br>${esc(st)}`:"")}
   if(m.auto){const b=autoB(m),[wd,hh]=b?b.slot.split("-"):["",""],lb=b?`${WDK[+wd]}요일 ${+hh}시`:"같은 요일·시각";
     if(!b||b.n<m.auto.min_n)return `<span class="nostd">자동 기준 학습 중 — ${lb} 기록 ${b?b.n:0}/${m.auto.min_n}회</span>`;
     if(b.avg==null||b.avg<m.auto.min_avg)return `${lb} 평균 ${b.avg??0}${m.u} — 이 시각은 판정 안 함`;
@@ -626,7 +631,7 @@ function mapTeams(body){
   const K=kpi();
   if(!K){body.innerHTML=`<div class="tmhead"><div><div class="f">팀 운영 지표를 아직 받지 못했어요</div><div class="v">서버 감시(3시간마다)가 한 번 돌면 마케팅·영업·운영·CS 지표가 표시됩니다.</div></div></div>`;return}
   const T=KPI_STD.teams.map(t=>{const ms=t.metrics.map(m=>({...m,v:K.v[m.k],lv:kLv(m,K.v[m.k])}));return {...t,ms,lv:worst(ms.map(m=>m.lv))}});
-  const nostd=T.flatMap(t=>t.ms).filter(m=>m.lv==="info"&&!m.auto).length, learning=T.flatMap(t=>t.ms).filter(m=>m.auto&&m.lv==="info").length;
+  const nostd=T.flatMap(t=>t.ms).filter(m=>m.lv==="info"&&!m.auto).length, learning=T.flatMap(t=>t.ms).filter(m=>m.auto&&m.lv==="info"&&!(m.sched&&typeof K.v[m.sched.key]==="number")).length;
   const worstT=[...T].sort((a,b)=>LVR[b.lv]-LVR[a.lv])[0];
   const reason=t=>t.ms.filter(m=>m.lv===t.lv).map(m=>`${m.t} ${typeof m.v==="number"?m.v.toLocaleString():m.v}${m.u}`).join(", ");
   const verdict=LVR[worstT.lv]>=2?`지금 병목: <b class="${worstT.lv}">${esc(worstT.t)}</b> — ${esc(reason(worstT))}`+(T.filter(t=>t!==worstT&&LVR[t.lv]>=2).length?` · 그 외: ${T.filter(t=>t!==worstT&&LVR[t.lv]>=2).map(t=>`<b class="${t.lv}">${esc(t.t)}</b>`).join(", ")}`:""):`지금 병목: <b class="ok">없음 ✓</b> — 기준이 있는 지표는 모두 정상`;
