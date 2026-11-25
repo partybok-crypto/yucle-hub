@@ -86,7 +86,14 @@ def main():
             send_mail("[허브] 서버 복구: " + ", ".join(recovered), "정상으로 돌아왔습니다.\n" + ", ".join(recovered) + f"\n확인 시각 {now:%Y-%m-%d %H:%M}")
             log("복구: " + ", ".join(recovered))
         out = {"checked_at": now.strftime("%Y-%m-%d %H:%M"), "items": items}
-        sig = json.dumps({n: r["s"] for n, r in items.items()}, sort_keys=True)
+        kpi_sig = ""
+        try:
+            from kpi import collect as kpi_collect   # 팀 운영 지표(개수만) - 연결 지도 '팀 운영' 탭
+            out["kpi"] = kpi_collect()
+            kpi_sig = json.dumps(out["kpi"]["v"], sort_keys=True)
+        except Exception as e:
+            log(f"팀 지표 수집 오류 {type(e).__name__}: {e}")
+        sig = json.dumps({n: r["s"] for n, r in items.items()}, sort_keys=True) + kpi_sig
         due = (time.time() - st.get("last_push", 0)) / 60 >= PUSH_EVERY_MIN
         if (sig != st.get("last_sig") or due) and not refresh_busy():
             json.dump(out, open(os.path.join(HUB, "status.json"), "w", encoding="utf-8"), ensure_ascii=False)

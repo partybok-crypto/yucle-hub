@@ -16,6 +16,7 @@
 - `tools/build.py` : 위 파일들로 index.html 생성
 - `tools/refresh.py` : 캡처 + 빌드 + 커밋 + 푸시 (`python tools/refresh.py`, 캡처 생략은 `--no-capture`). 문제가 있으면 메일 발송
 - `tools/monitor.py` : 서버 감시(링크 전체를 curl로 점검) → `status.json` 갱신 → 이상이 확인되면 메일(3시간마다 점검, 연속 2회 이상일 때), 복구 시 메일. 404·410도 오류로 본다(주소 연결이 끊긴 서버). 변화가 있거나 2시간마다만 허브에 푸시
+- `tools/kpi.json` + `tools/kpi.py` : 연결 지도 "팀 운영" 탭(마케팅·영업·운영·CS 신호등). kpi.json=기준표(warn/bad, null이면 "기준 없음"), kpi.py=각 프로그램 공개 API에서 **개수만** 수집(monitor.py가 3시간마다 호출 → status.json의 `kpi`). 마케팅OS 모듈별 상태·오류(`/api/modules`·`/api/errors`·`/api/today-glance`)도 여기서 읽어 연결 지도·상단 안내줄에 표시. 날짜별 기록은 `tools/kpi_hist.json`(로컬, 30일). 이름·전화·금액은 넣지 말 것(status.json은 공개)
 - `tools/notify.py` : 메일 발송(마케팅OS 서버의 Brevo 설정을 Railway에서 그때그때 읽음 — 파일에 저장하지 않음)
 - `tools/projects.json` : 데이터 흐름 항목 ↔ 프로그램 폴더 연결(코드 마지막 변경일 표시용). 변경일이 설명 점검일(`FLOW_DATE` 또는 항목의 `v`)보다 늦으면 카드에 "설명 점검 필요"
 - `sw.js`(자동 생성) : 오프라인·빠른 로딩용 서비스 워커
