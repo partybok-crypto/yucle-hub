@@ -222,6 +222,7 @@ body.still .tm.bad .lamp{animation:none}
 .kp.bad .kv{color:#dc2626}.kp.warn .kv{color:#b45309}.kp.ok .kv{color:#16a34a}
 .kp .ks{grid-column:1/-1;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--sub)}
 .kp .ks svg{flex:none}
+.tmflow .pp{flex-basis:30px}.tm{padding:10px}.kp{grid-template-columns:1fr}.kp .kv{text-align:left}
 .kp .ks .nostd{color:#b45309;font-weight:700}
 .tm .go2{margin-top:auto;font-size:12.5px;color:var(--blue);text-decoration:none;font-weight:700;padding-top:4px}
 .tmloop{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
@@ -593,7 +594,8 @@ function modsHtml(){
     <div class="mchips">${bad.map(chip).join("")||'<span class="mchip ok"><i class="dot ok"></i>모든 모듈 정상</span>'}</div>
     <details><summary>정상 모듈 ${ok.length}개 보기</summary><div class="mchips" style="margin-top:6px">${ok.map(chip).join("")}</div></details></div>`;
 }
-const fmtV=(v,u)=>v==null?"—":(typeof v==="number"?v.toLocaleString():esc(v))+(u&&v!=null&&typeof v==="number"?`<small style="font-size:12px;font-weight:600"> ${esc(u)}</small>`:"");
+const won=v=>{const a=Math.abs(v),s=v<0?"-":"";if(a>=1e8)return s+(a/1e8).toFixed(1).replace(/\.0$/,"")+"억";if(a>=1e4)return s+Math.round(a/1e4).toLocaleString()+"만";return v.toLocaleString()};
+const fmtV=(v,u)=>v==null?"—":(typeof v==="number"?(u==="원"?won(v):v.toLocaleString()):esc(v))+(u&&v!=null&&typeof v==="number"?`<small style="font-size:12px;font-weight:600"> ${esc(u)}</small>`:"");
 const WDK="월화수목금토일";
 const autoB=m=>{const b=kpi()&&kpi().base&&kpi().base[m.k];return m.auto&&b?b:null};
 function kLv(m,v){
@@ -636,7 +638,7 @@ function mapTeams(body){
   const reason=t=>t.ms.filter(m=>m.lv===t.lv).map(m=>`${m.t} ${typeof m.v==="number"?m.v.toLocaleString():m.v}${m.u}`).join(", ");
   const verdict=LVR[worstT.lv]>=2?`지금 병목: <b class="${worstT.lv}">${esc(worstT.t)}</b> — ${esc(reason(worstT))}`+(T.filter(t=>t!==worstT&&LVR[t.lv]>=2).length?` · 그 외: ${T.filter(t=>t!==worstT&&LVR[t.lv]>=2).map(t=>`<b class="${t.lv}">${esc(t.t)}</b>`).join(", ")}`:""):`지금 병목: <b class="ok">없음 ✓</b> — 기준이 있는 지표는 모두 정상`;
   const card=t=>`<div class="tm ${t.lv==="info"||t.lv==="none"?"":t.lv}"><h3>${t.i} ${esc(t.t)}<span class="lamp" title="${({bad:"위험",warn:"주의",ok:"정상"})[t.lv]||"기준 없음"}"></span></h3><div class="role">${esc(t.role)}</div>
-    ${t.ms.map(m=>`<div class="kp ${m.lv}"><span class="kn">${esc(m.t)}</span><span class="kv">${fmtV(m.v,m.u)}</span><span class="ks">${stdTxt(m)}</span>${typeof m.v==="number"&&spark(m.k)?`<span class="ks">${spark(m.k)}</span>`:""}</div>`).join("")}
+    ${t.ms.map(m=>`<div class="kp ${m.lv}"><span class="kn">${esc(m.t)}</span><span class="kv">${fmtV(m.v,m.u)}</span>${m.sub&&K.v[m.sub]!=null?`<span class="ks">${K.v[m.sub]}${esc(m.subu||"")}</span>`:""}${m.subtxt&&K.v[m.subtxt]?`<span class="ks">${esc(K.v[m.subtxt])}</span>`:""}<span class="ks">${stdTxt(m)}</span>${typeof m.v==="number"&&spark(m.k)?`<span class="ks">${spark(m.k)}</span>`:""}</div>`).join("")}
     ${t.k==="ops"&&K.v.ops_dryers?`<div class="kp info"><span class="kn">건조기 가동</span><span class="kv">${esc(K.v.ops_dryers)}</span></div>`:""}
     <a class="go2" href="${esc(t.link)}" target="_blank" rel="noopener">${esc(shortName(t.prog))} 열기 ↗</a></div>`;
   let flow=`<span class="tmsrc">고객</span>`;

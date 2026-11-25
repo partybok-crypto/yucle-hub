@@ -15,11 +15,13 @@ SALES = "https://yuseong-sales-hub-production.up.railway.app"
 AI = "https://server-production-8d8f.up.railway.app"
 BOARD = "https://yuseong-display-board-production.up.railway.app"
 PHONE = "https://yuseong-phone-production.up.railway.app"
+FIN = "https://yucle-finance-live-production.up.railway.app"
 URLS = {
     "glance": MKT + "/api/today-glance", "modules": MKT + "/api/modules", "errors": MKT + "/api/errors",
     "ai_today": AI + "/api/model2/today", "ai_usage": AI + "/api/bulk/usage",
     "plan": BOARD + "/api/display/packing-plan", "board": BOARD + "/api/status", "issues": BOARD + "/api/issues",
     "claims": BOARD + "/api/display/claims", "phone": PHONE + "/health", "live": PHONE + "/api/live",
+    "fin": FIN + "/api/hub-summary",
 }
 
 
@@ -223,6 +225,23 @@ def collect():
         v["cs_sync"] = len(ph.get("sync_problems") or [])
     else:
         miss.append("회사전화 동기화")
+
+    # ---- 재무 (재무관리) ----
+    f = R["fin"]
+    if f and f.get("ok"):
+        k = f.get("kpi") or {}
+        v["fin_profit"] = round(k.get("estProfit") or 0)
+        v["fin_receivable"] = round(k.get("totalReceivable") or 0)
+        v["fin_receivable_cnt"] = k.get("receivableCustomerCount")
+        v["fin_revenue"] = round(k.get("recognizedRevenue") or 0)
+        v["fin_cost_ratio"] = round(f.get("revenueRatio") or 0)
+        v["fin_closing"] = f.get("closingProgress")
+        a = f.get("alerts") or {}
+        v["fin_review"] = sum(int(a.get(x) or 0) for x in ("invoiceNeedsReview", "manualCandidatesCount", "coupangReviewCount"))
+        v["fin_blocked"] = len(f.get("blocked") or [])
+        v["fin_blocked_txt"] = ", ".join(f.get("blocked") or [])[:80]
+    else:
+        miss.append("재무 요약(재무관리 /api/hub-summary 배포 전)")
 
     # ---- 날짜별 기록(그날 마지막 값) ----
     try:
