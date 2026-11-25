@@ -8,6 +8,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 HIST = os.path.join(HERE, "kpi_hist.json")
 CURL = "C:/Windows/System32/curl.exe"
 NOWIN = 0x08000000
+AUTO_KEYS = ("ops_pack_pct", "ops_on_shift")   # 요일·시각마다 달라서 같은 요일·같은 시각 평균을 기준으로 삼는 지표
 
 MKT = "https://yuseong-marketing-os-review-production.up.railway.app"
 SALES = "https://yuseong-sales-hub-production.up.railway.app"
@@ -146,12 +147,28 @@ def collect():
         h = json.load(open(HIST, encoding="utf-8")) if os.path.exists(HIST) else {}
     except Exception:
         h = {}
+    slots = h.pop("_slots", {})
     h[today] = {k: x for k, x in v.items() if isinstance(x, (int, float))}
     h = dict(sorted(h.items())[-30:])
+    # 같은 요일·같은 시각 기록(자동 기준용): "요일-시" -> {지표: [[날짜, 값], ...최근 8회]}
+    now = datetime.datetime.now()
+    sk = f"{now.weekday()}-{now.hour:02d}"
+    base = {}
+    for k in AUTO_KEYS:
+        if not isinstance(v.get(k), (int, float)):
+            continue
+        rec = [r for r in slots.setdefault(sk, {}).get(k, []) if r[0] != today]
+        if rec:
+            vals = [r[1] for r in rec]
+            base[k] = {"avg": round(sum(vals) / len(vals), 1), "n": len(vals), "slot": sk}
+        else:
+            base[k] = {"avg": None, "n": 0, "slot": sk}
+        slots[sk][k] = (rec + [[today, v[k]]])[-8:]
+    h["_slots"] = slots
     json.dump(h, open(HIST, "w", encoding="utf-8"), ensure_ascii=False)
-
-    return {"at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"), "v": v, "miss": miss, "mods": mods,
-            "hist": dict(list(h.items())[-14:])}
+    days = {d: x for d, x in h.items() if not d.startswith("_")}
+    return {"at": now.strftime("%Y-%m-%d %H:%M"), "v": v, "miss": miss, "mods": mods, "base": base,
+            "hist": dict(list(days.items())[-14:])}
 
 
 if __name__ == "__main__":

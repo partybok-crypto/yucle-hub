@@ -1760,7 +1760,7 @@ const MAP={
 }
 ;
 const KPI_STD={
- "_설명": "팀 운영 기준표. dir=low(낮을수록 좋음)이면 warn 이상 노랑·bad 이상 빨강, dir=high(높을수록 좋음)이면 warn 미만 노랑·bad 미만 빨강. warn·bad가 null이면 '기준 없음'(측정만 함). 기준을 바꾸면 python tools/build.py 후 푸시.",
+ "_설명": "팀 운영 기준표. dir=low(낮을수록 좋음)이면 warn 이상 노랑·bad 이상 빨강, dir=high(높을수록 좋음)이면 warn 미만 노랑·bad 미만 빨강. warn·bad가 null이면 '기준 없음'(측정만 함), note=기준 대신 보일 메모. auto={warn,bad 비율}이면 같은 요일·같은 시각 평균(최근 8회, min_n회 이상 쌓인 뒤) 대비로 판정. 기준을 바꾸면 python tools/build.py 후 푸시.",
  "updated": "2026-11-25",
  "teams": [
   {"k": "mkt", "t": "마케팅", "i": "📣", "role": "고객을 데려온다", "prog": "마케팅 스튜디오 (마케팅OS)", "link": "https://yuseong-marketing-os-review-production.up.railway.app/modules",
@@ -1771,16 +1771,16 @@ const KPI_STD={
    ]},
   {"k": "sales", "t": "영업", "i": "📞", "role": "상담으로 고객을 만든다", "prog": "영업 허브", "link": "https://yuseong-sales-hub-production.up.railway.app/ai-call-stats",
    "metrics": [
-    {"k": "ai_dialed", "t": "오늘 AI 발신", "u": "건", "dir": "high", "warn": null, "bad": null},
-    {"k": "ai_interest", "t": "오늘 관심 고객", "u": "명", "dir": "high", "warn": null, "bad": null},
+    {"k": "ai_dialed", "t": "오늘 AI 발신", "u": "건", "dir": "high", "warn": null, "bad": null, "note": "기준 정립 중"},
+    {"k": "ai_interest", "t": "오늘 관심 고객", "u": "명", "dir": "high", "warn": null, "bad": null, "note": "기준 검토 중 (하루 2명 이상 문의 전화 목표 — 측정 방식 고민 중)"},
     {"k": "ai_minutes_pct", "t": "이번 달 통화 분 사용", "u": "%", "dir": "low", "warn": 80, "bad": 95}
    ]},
   {"k": "ops", "t": "운영", "i": "🏭", "role": "세탁·포장·배송을 해낸다", "prog": "공장 전광판", "link": "https://yuseong-display-board-production.up.railway.app/admin/progress",
    "metrics": [
     {"k": "ops_issue_err", "t": "현장 이상 징후(심각)", "u": "건", "dir": "low", "warn": 1, "bad": 1},
     {"k": "ops_issue_warn", "t": "현장 이상 징후(주의)", "u": "건", "dir": "low", "warn": 1, "bad": 5},
-    {"k": "ops_pack_pct", "t": "오늘 포장 진행률", "u": "%", "dir": "high", "warn": null, "bad": null},
-    {"k": "ops_on_shift", "t": "출근 인원", "u": "명", "dir": "high", "warn": null, "bad": null}
+    {"k": "ops_pack_pct", "t": "오늘 포장 진행률", "u": "%", "dir": "high", "warn": null, "bad": null, "auto": {"warn": 0.85, "bad": 0.7, "min_n": 3, "min_avg": 5}},
+    {"k": "ops_on_shift", "t": "출근 인원", "u": "명", "dir": "high", "warn": null, "bad": null, "auto": {"warn": 0.85, "bad": 0.7, "min_n": 3, "min_avg": 1}}
    ]},
   {"k": "cs", "t": "CS", "i": "💬", "role": "불편을 빨리 해결한다", "prog": "회사전화", "link": "https://yuseong-phone-production.up.railway.app/calls",
    "metrics": [
@@ -1967,14 +1967,22 @@ function modsHtml(){
     <details><summary>정상 모듈 ${ok.length}개 보기</summary><div class="mchips" style="margin-top:6px">${ok.map(chip).join("")}</div></details></div>`;
 }
 const fmtV=(v,u)=>v==null?"—":(typeof v==="number"?v.toLocaleString():esc(v))+(u&&v!=null&&typeof v==="number"?`<small style="font-size:12px;font-weight:600"> ${esc(u)}</small>`:"");
+const WDK="월화수목금토일";
+const autoB=m=>{const b=kpi()&&kpi().base&&kpi().base[m.k];return m.auto&&b?b:null};
 function kLv(m,v){
   if(v==null||typeof v!=="number")return "none";
+  const b=autoB(m);
+  if(m.auto){if(!b||b.n<m.auto.min_n||b.avg==null||b.avg<m.auto.min_avg)return "info";const r=v/b.avg;return r<m.auto.bad?"bad":r<m.auto.warn?"warn":"ok"}
   if(m.warn==null&&m.bad==null)return "info";
   if(m.dir==="high"){if(m.bad!=null&&v<m.bad)return "bad";if(m.warn!=null&&v<m.warn)return "warn";return "ok"}
   if(m.bad!=null&&v>=m.bad)return "bad";if(m.warn!=null&&v>=m.warn)return "warn";return "ok";
 }
 function stdTxt(m){
-  if(m.warn==null&&m.bad==null)return `<span class="nostd">기준 없음 — 정해 주세요</span>`;
+  if(m.auto){const b=autoB(m),[wd,hh]=b?b.slot.split("-"):["",""],lb=b?`${WDK[+wd]}요일 ${+hh}시`:"같은 요일·시각";
+    if(!b||b.n<m.auto.min_n)return `<span class="nostd">자동 기준 학습 중 — ${lb} 기록 ${b?b.n:0}/${m.auto.min_n}회</span>`;
+    if(b.avg==null||b.avg<m.auto.min_avg)return `${lb} 평균 ${b.avg??0}${m.u} — 이 시각은 판정 안 함`;
+    return `${lb} 평균 ${b.avg}${m.u} 대비 · ${Math.round(m.auto.warn*100)}% 미만 주의`}
+  if(m.warn==null&&m.bad==null)return `<span class="nostd">${esc(m.note||"기준 없음 — 정해 주세요")}</span>`;
   const u=m.u||"";
   return m.dir==="high"?`주의 ${m.warn}${u} 미만 · 위험 ${m.bad}${u} 미만`:(m.warn===m.bad?`${m.bad}${u}부터 위험`:`주의 ${m.warn}${u}↑ · 위험 ${m.bad}${u}↑`);
 }
@@ -1991,7 +1999,7 @@ function mapTeams(body){
   const K=kpi();
   if(!K){body.innerHTML=`<div class="tmhead"><div><div class="f">팀 운영 지표를 아직 받지 못했어요</div><div class="v">서버 감시(3시간마다)가 한 번 돌면 마케팅·영업·운영·CS 지표가 표시됩니다.</div></div></div>`;return}
   const T=KPI_STD.teams.map(t=>{const ms=t.metrics.map(m=>({...m,v:K.v[m.k],lv:kLv(m,K.v[m.k])}));return {...t,ms,lv:worst(ms.map(m=>m.lv))}});
-  const nostd=T.flatMap(t=>t.ms).filter(m=>m.lv==="info").length;
+  const nostd=T.flatMap(t=>t.ms).filter(m=>m.lv==="info"&&!m.auto).length, learning=T.flatMap(t=>t.ms).filter(m=>m.auto&&m.lv==="info").length;
   const worstT=[...T].sort((a,b)=>LVR[b.lv]-LVR[a.lv])[0];
   const reason=t=>t.ms.filter(m=>m.lv===t.lv).map(m=>`${m.t} ${typeof m.v==="number"?m.v.toLocaleString():m.v}${m.u}`).join(", ");
   const verdict=LVR[worstT.lv]>=2?`지금 병목: <b class="${worstT.lv}">${esc(worstT.t)}</b> — ${esc(reason(worstT))}`+(T.filter(t=>t!==worstT&&LVR[t.lv]>=2).length?` · 그 외: ${T.filter(t=>t!==worstT&&LVR[t.lv]>=2).map(t=>`<b class="${t.lv}">${esc(t.t)}</b>`).join(", ")}`:""):`지금 병목: <b class="ok">없음 ✓</b> — 기준이 있는 지표는 모두 정상`;
@@ -2005,7 +2013,7 @@ function mapTeams(body){
   <div class="tmflow">${flow}</div>
   ${modsHtml()?`<section class="lane" style="padding:12px 16px">${modsHtml()}</section>`:""}
   <div class="tmloop"><div class="x">측정하지 않으면 → <b>올바른 의사결정 ✗</b><small>${K.miss&&K.miss.length?"이번에 못 읽은 지표: "+esc(K.miss.join(", ")):"모든 지표를 읽었어요"}</small></div>
-  <div class="o">기준 세우기 → 측정 → 개선 <b class="spin">↻</b> 끊임없이<small>${nostd?`기준 없는 지표 ${nostd}개 — 기준을 정하면 신호등이 켜져요`:"모든 지표에 기준이 있어요"} (기준표 ${esc(KPI_STD.updated)})</small></div></div>`;
+  <div class="o">기준 세우기 → 측정 → 개선 <b class="spin">↻</b> 끊임없이<small>${nostd?`기준 정립 중인 지표 ${nostd}개`:"모든 지표에 기준이 있어요"}${learning?` · 요일·시각 자동 기준 학습 중 ${learning}개`:""} (기준표 ${esc(KPI_STD.updated)})</small></div></div>`;
 }
 function mapSummary(){
   const lsum=l=>{const ic=l.t.split(" ")[0];return ic+" "+l.cols.map((c,i)=>(c.m.length>2?(c.h?c.h.replace(/^[①②③④⑤] /,""):"")+" "+c.m.length+"곳":c.m.map(plain).map(x=>shortName(x)).join("·"))+(c.a?" "+c.a+" ":"")).join("")};
